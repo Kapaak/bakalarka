@@ -1,11 +1,15 @@
-import { Button, User } from "@/ui";
+import { Logo, MaxWidth, User } from "@/ui";
 import { Navigation } from "./Navigation";
 
 export const Header = () => {
   return (
-    <header className="flex justify-between py-6 px-4">
-      <h1>Logo</h1>
-      <Navigation />
+    <header className="bg-main-yellow py-6 px-4">
+      <MaxWidth>
+        <div className="flex justify-between">
+          <Logo />
+          <Navigation />
+        </div>
+      </MaxWidth>
     </header>
   );
 };
