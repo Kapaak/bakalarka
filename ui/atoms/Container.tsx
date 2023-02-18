@@ -12,9 +12,5 @@ export const Container = ({
   maxHeight,
   className,
 }: ContainerProps) => {
-  return (
-    <div className={`h-screen border border-red-500 ${className}`}>
-      {children}
-    </div>
-  );
+  return <div className={`h-screen ${className}`}>{children}</div>;
 };
