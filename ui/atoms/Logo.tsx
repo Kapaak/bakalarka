@@ -1,5 +1,10 @@
 import React from "react";
+import { Link } from "./Link";
 
 export const Logo = () => {
-  return <div className="text-4xl font-bold">Routist</div>;
+  return (
+    <Link href="/" className="text-4xl font-bold before:hover:w-0">
+      Routist //
+    </Link>
+  );
 };

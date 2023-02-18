@@ -13,7 +13,7 @@ export const HomePageScreen = () => {
   return (
     <section className="relative bg-main-yellow">
       <MaxWidth>
-        <Container>
+        <Container fullHeight>
           <HorizontalStack className="h-full justify-between gap-4">
             <div>
               <MainHeadline className="font-bold">

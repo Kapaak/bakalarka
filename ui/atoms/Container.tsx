@@ -2,15 +2,17 @@ import { ClassName } from "@/domains";
 import { HTMLAttributes, PropsWithChildren } from "react";
 
 interface ContainerProps extends PropsWithChildren {
-  maxHeight?: boolean;
   className?: ClassName;
+  fullHeight?: boolean;
 }
 
 //todo .. add CVA abych mohl delat podminky v tailwind, prozatim dam natvrdo 100vh
 export const Container = ({
   children,
-  maxHeight,
+  fullHeight,
   className,
 }: ContainerProps) => {
-  return <div className={`h-screen ${className}`}>{children}</div>;
+  return (
+    <div className={`${fullHeight && "h-screen"} ${className}`}>{children}</div>
+  );
 };

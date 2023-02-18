@@ -2,6 +2,7 @@ export * from "./Button";
 export * from "./Container";
 export * from "./HorizontalStack";
 export * from "./Input";
+export * from "./Link";
 export * from "./Logo";
 export * from "./MainHeadline";
 export * from "./MainSubheadline";
