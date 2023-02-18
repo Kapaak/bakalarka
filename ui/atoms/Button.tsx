@@ -10,9 +10,15 @@ interface ButtonProps
     HTMLButtonElement
   > {}
 
-export const Button = ({ children }: PropsWithChildren<ButtonProps>) => {
+export const Button = ({
+  children,
+  ...rest
+}: PropsWithChildren<ButtonProps>) => {
   return (
-    <button className="rounded-small bg-black px-6 py-2 text-white shadow-lg">
+    <button
+      {...rest}
+      className="rounded-small bg-black px-6 py-2 text-white shadow-lg"
+    >
       {children}
     </button>
   );
