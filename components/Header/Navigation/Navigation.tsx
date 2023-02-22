@@ -7,9 +7,8 @@ export const Navigation = () => {
       <Link href="/">domů</Link>
       <Link href="/locations">trasy</Link>
       <Link href="/contact">kontakt</Link>
-      {!session && (
-        <Button onClick={() => signIn("google")}>Přihlásit se</Button>
-      )}
+      {/* //todo v signIn("google") aby slo prihlasit se, FYI */}
+      {!session && <Button onClick={() => signIn()}>Přihlásit se</Button>}
       {session && session?.user?.name && (
         <User userName={session?.user?.name} />
       )}

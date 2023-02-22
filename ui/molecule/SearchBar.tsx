@@ -7,7 +7,7 @@ export const SearchBar = ({ options }: AutocompleteProps) => {
   return (
     <HorizontalStack className="gap-3">
       <Autocomplete options={options} />
-      <Button>vyhledat</Button>
+      <Button color="secondary">Najít</Button>
     </HorizontalStack>
   );
 };
