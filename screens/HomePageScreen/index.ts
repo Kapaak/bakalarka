@@ -1,1 +1,1 @@
-export * from "./HomePageScreen";
+export * from './HomePageScreen';

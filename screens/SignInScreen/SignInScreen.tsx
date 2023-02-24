@@ -8,11 +8,14 @@ import {
   Button,
   VerticalStack,
   Link,
+  IconButton,
 } from "@/ui";
 import { FormProvider, useForm } from "react-hook-form";
 import { SignUpFormModel } from "@/domains";
+import { FacebookLogo, GithubLogo, GoogleLogo } from "phosphor-react";
+import { signIn } from "next-auth/react";
 
-export const SignUpScreen = () => {
+export const SignInScreen = () => {
   const form = useForm<SignUpFormModel>();
 
   const { handleSubmit } = form;
@@ -35,25 +38,43 @@ export const SignUpScreen = () => {
         <MaxWidth className="flex-1">
           <Container fullHeight centerXY>
             <FormProvider {...form}>
-              <form onSubmit={handleSubmit(onSubmit)} className="w-[26rem]">
+              <form onSubmit={handleSubmit(onSubmit)} className="w-[27rem]">
                 <MainHeadline className="mb-20 text-center font-bold">
-                  Vítejte!
+                  Rádi tě opět vidíme!
                 </MainHeadline>
                 <VerticalStack className="mx-auto w-full gap-6">
-                  <FormInput name="name" label="Jméno" />
                   <FormInput name="email" label="E-mail" />
                   <FormInput name="password" label="Heslo" />
-                  <FormInput name="verifyPassword" label="Potvrzení hesla" />
                 </VerticalStack>
                 <HorizontalStack className="mt-20 items-center">
                   <HorizontalStack className="gap-2">
-                    <p>Už máte účet?</p>
-                    <Link color="secondary" href="/sign-in">
-                      Přihlásit se
+                    <p>Ještě nemáš účet?</p>
+                    <Link color="secondary" href="/sign-up">
+                      Registruj se
                     </Link>
                   </HorizontalStack>
                   <Button color="secondary" className="ml-auto">
                     Vytvořit účet
+                  </Button>
+                </HorizontalStack>
+                <br />
+                <hr />
+                <br />
+                <HorizontalStack className=" justify-between gap-2 py-2 ">
+                  <Button
+                    className="flex  items-center gap-2"
+                    onClick={() => signIn("google")}
+                  >
+                    <GoogleLogo size={20} weight="bold" />
+                    <span>Google</span>
+                  </Button>
+                  <Button className="flex  items-center gap-2">
+                    <FacebookLogo size={20} weight="bold" />
+                    <span>Facebook</span>
+                  </Button>
+                  <Button className="flex  items-center gap-2">
+                    <GithubLogo size={20} weight="bold" />
+                    <span>GitHub</span>
                   </Button>
                 </HorizontalStack>
               </form>
