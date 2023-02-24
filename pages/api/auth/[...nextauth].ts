@@ -7,6 +7,8 @@ import { NextAuthOptions } from "next-auth";
 //providers
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import FacebookProvider from "next-auth/providers/facebook";
+import GitHubProvider from "next-auth/providers/github";
 //others
 // import { getUserByEmail } from "prisma/user";
 // import { verifyPassword } from "../../../utils/index";
@@ -42,6 +44,14 @@ export const authOptions = {
     GoogleProvider({
       clientId: process.env.NEXT_AUTH_GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.NEXT_AUTH_GOOGLE_CLIENT_SECRET || "",
+    }),
+    FacebookProvider({
+      clientId: process.env.NEXT_AUTH_FACEBOOK_CLIENT_ID || "",
+      clientSecret: process.env.NEXT_AUTH_FACEBOOK_CLIENT_SECRET || "",
+    }),
+    GitHubProvider({
+      clientId: process.env.NEXT_AUTH_GITHUB_CLIENT_ID || "",
+      clientSecret: process.env.NEXT_AUTH_GITHUB_CLIENT_SECRET || "",
     }),
   ],
   session: {

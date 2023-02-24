@@ -68,11 +68,17 @@ export const SignInScreen = () => {
                     <GoogleLogo size={20} weight="bold" />
                     <span>Google</span>
                   </Button>
-                  <Button className="flex  items-center gap-2">
+                  <Button
+                    className="flex  items-center gap-2"
+                    onClick={() => signIn("facebook")}
+                  >
                     <FacebookLogo size={20} weight="bold" />
                     <span>Facebook</span>
                   </Button>
-                  <Button className="flex  items-center gap-2">
+                  <Button
+                    className="flex  items-center gap-2"
+                    onClick={() => signIn("github")}
+                  >
                     <GithubLogo size={20} weight="bold" />
                     <span>GitHub</span>
                   </Button>
