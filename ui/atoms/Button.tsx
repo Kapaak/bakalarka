@@ -1,9 +1,5 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import {
-  ButtonHTMLAttributes,
-  DetailedHTMLProps,
-  PropsWithChildren,
-} from "react";
+import { PropsWithChildren } from "react";
 
 // interface ButtonProps
 //   extends DetailedHTMLProps<

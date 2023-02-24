@@ -4,15 +4,22 @@ import {
   PropsWithChildren,
 } from "react";
 
-interface InputProps
+export interface InputProps
   extends DetailedHTMLProps<
     InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
   > {}
 
-export const Input = ({ children }: PropsWithChildren<InputProps>) => {
+export const Input = ({
+  className,
+  children,
+  ...rest
+}: PropsWithChildren<InputProps>) => {
   return (
-    <input className="rounded-small border border-red-500  px-6 py-2 shadow-lg">
+    <input
+      {...rest}
+      className={`rounded-small px-6 py-2 shadow-regular ${className}`}
+    >
       {children}
     </input>
   );

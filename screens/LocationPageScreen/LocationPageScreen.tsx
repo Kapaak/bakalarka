@@ -11,7 +11,7 @@ export const LocationPageScreen = () => {
   return (
     <section className="relative bg-main-yellow">
       <MaxWidth>
-        <Container fullHeight>
+        <Container fullHeight className="pt-20">
           <HorizontalStack>
             <div>
               <MainHeadline>Oblíbené destinace ve vašem okolí</MainHeadline>

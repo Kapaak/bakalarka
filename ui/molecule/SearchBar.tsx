@@ -1,13 +1,30 @@
+import { AutocompleteOption } from "@/domains";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import { Button, HorizontalStack } from "../atoms";
-import { Autocomplete, AutocompleteProps } from "./Autocomplete";
+import { Autocomplete } from "./Autocomplete";
 
-export const SearchBar = ({ options }: AutocompleteProps) => {
-  //todo tady by to asi mohl byt form a nebo neco, abych ty data vytahl a poslal
-  // ale ten form asi ani netreba
+interface SearchBarProps {
+  options: AutocompleteOption[];
+}
+
+export const SearchBar = ({ options }: SearchBarProps) => {
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const router = useRouter();
+
+  const handleLocationSelect = (location: string) => {
+    setSelectedLocation(location);
+  };
+
   return (
-    <HorizontalStack className="gap-3">
-      <Autocomplete options={options} />
-      <Button color="secondary">Najít</Button>
+    <HorizontalStack className="max-w-lg gap-3 rounded-md px-4 py-2 shadow-md">
+      <Autocomplete options={options} onSelect={handleLocationSelect} />
+      <Button
+        color="secondary"
+        onClick={() => router.push(`/locations/${selectedLocation}`)}
+      >
+        Najít
+      </Button>
     </HorizontalStack>
   );
 };

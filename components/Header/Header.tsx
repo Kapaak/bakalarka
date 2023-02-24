@@ -3,7 +3,7 @@ import { Navigation } from "./Navigation";
 
 export const Header = () => {
   return (
-    <header className="bg-main-yellow py-6 px-4">
+    <header className="bg-main-yellow py-6 px-8">
       <MaxWidth>
         <div className="flex justify-between">
           <Logo />
