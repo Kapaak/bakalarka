@@ -1,14 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { PropsWithChildren } from "react";
 
-// interface ButtonProps
-//   extends DetailedHTMLProps<
-//     ButtonHTMLAttributes<HTMLButtonElement>,
-//     HTMLButtonElement
-//   > {}
-
 const buttonVariant = cva(["rounded-small"], {
-  // ["rounded-small", " px-6", " py-2", " shadow-lg"],
   variants: {
     color: {
       primary: ["bg-black", "text-white"],

@@ -48,7 +48,9 @@ export const SignUpScreen = () => {
                 <HorizontalStack className="mt-20 items-center">
                   <HorizontalStack className="gap-2">
                     <p>Už máte účet?</p>
-                    <Link href="/sign-in">Přihlásit se</Link>
+                    <Link color="secondary" href="/sign-in">
+                      Přihlásit se
+                    </Link>
                   </HorizontalStack>
                   <Button color="secondary" className="ml-auto">
                     Vytvořit účet
