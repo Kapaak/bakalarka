@@ -15,14 +15,12 @@ export const Navigation = () => {
       <Link variant="underlined" href="/contact">
         kontakt
       </Link>
-      {/* //todo v signIn("google") aby slo prihlasit se, FYI */}
       {!session && (
         <Button onClick={() => router.push("/sign-in")}>Přihlásit se</Button>
       )}
       {session && session?.user?.name && (
         <User userName={session?.user?.name} />
       )}
-      {session && <Button onClick={() => signOut()}>Odhlásit se</Button>}
     </nav>
   );
 };
