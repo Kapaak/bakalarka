@@ -1,8 +1,8 @@
 import { NextPage } from "next";
-import { SignInScreen } from "../screens";
+import { SignInPageScreen } from "@/screens";
 
 const SignInPage: NextPage = () => {
-  return <SignInScreen />;
+  return <SignInPageScreen />;
 };
 
 export default SignInPage;

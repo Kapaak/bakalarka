@@ -1,7 +1,7 @@
-import { SignUpScreen } from "../screens";
+import { SignUpPageScreen } from "@/screens";
 
 export const SignInPage = () => {
-  return <SignUpScreen />;
+  return <SignUpPageScreen />;
 };
 
 export default SignInPage;

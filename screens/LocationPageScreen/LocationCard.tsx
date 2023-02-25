@@ -5,7 +5,10 @@ interface LocationCardProps {
   title: string;
   liked?: boolean;
   likesNumber?: number;
+  href: string;
 }
+
+//todo -> tady asi pridat jeste
 
 export const LocationCard = ({
   title,
@@ -13,7 +16,7 @@ export const LocationCard = ({
   likesNumber = 32,
 }: LocationCardProps) => {
   return (
-    <div className="relative z-10 h-[320px] w-[276px] rounded-md border-8 border-[#ffeaae] bg-slate-300 px-4 py-2 shadow-md ">
+    <div className="relative z-10 h-[320px] min-w-[276px] rounded-md border-8 border-[#ffeaae] bg-slate-300 px-4 py-2 shadow-md ">
       <div className="flex h-full flex-col justify-between">
         <div className="flex items-center justify-end gap-2">
           <p>{likesNumber}</p>
