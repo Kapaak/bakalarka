@@ -9,9 +9,11 @@ import {
 } from "@/ui";
 import Image from "next/image";
 
+import CyclistHeroImage from "../../public/images/hero-img.jpg";
+
 export const HomePageScreen = () => {
   return (
-    <section className="relative bg-main-yellow">
+    <section className="relative bg-gradient-to-r from-main-yellow to-main-orange ">
       <MaxWidth>
         <Container fullHeight className="max-h-[calc(100vh-5.5rem)]">
           <HorizontalStack className="h-full justify-between gap-4">
@@ -25,7 +27,7 @@ export const HomePageScreen = () => {
             </div>
             <div className="relative z-20 flex-1 border border-red-500 ">
               <Image
-                src="/images/hero-img.jpg"
+                src={CyclistHeroImage}
                 alt="Cyklista sprintující na kole"
                 fill
                 className="z-0 max-h-full max-w-full object-contain object-right pb-8"

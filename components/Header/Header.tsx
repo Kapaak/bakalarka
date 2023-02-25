@@ -1,9 +1,9 @@
-import { Logo, MaxWidth, User } from "@/ui";
+import { Logo, MaxWidth } from "@/ui";
 import { Navigation } from "./Navigation";
 
 export const Header = () => {
   return (
-    <header className="bg-main-yellow py-6 px-8">
+    <header className="bg-gradient-to-r from-main-yellow to-main-orange py-6 px-8">
       <MaxWidth>
         <div className="flex justify-between">
           <Logo />
