@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import { PropsWithChildren } from "react";
+import { ButtonHTMLAttributes, PropsWithChildren } from "react";
 
 const buttonVariant = cva(["rounded-small"], {
   variants: {
@@ -12,13 +12,13 @@ const buttonVariant = cva(["rounded-small"], {
       medium: ["text-base", "py-2", "px-6"],
     },
     variant: {
-      contained: "",
+      contained: "border border-black",
       outlined: "border border-black border-dashed ",
       tinted: "",
     },
   },
   compoundVariants: [
-    { variant: "outlined", class: "bg-gray-50" },
+    { variant: "outlined", class: "bg-transparent text-black" },
     {
       variant: "tinted",
       color: "secondary",
@@ -34,7 +34,7 @@ const buttonVariant = cva(["rounded-small"], {
   },
 });
 
-export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof buttonVariant>;
 
 export const Button = ({

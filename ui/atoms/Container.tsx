@@ -16,7 +16,7 @@ export const Container = ({
 }: ContainerProps) => {
   return (
     <div
-      className={`${fullHeight && "h-screen px-8"} ${
+      className={`${fullHeight && "h-screen max-h-[calc(100vh-5.5rem)] px-8"} ${
         centerXY && "grid place-items-center"
       } ${className}`}
     >

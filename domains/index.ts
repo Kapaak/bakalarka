@@ -14,3 +14,36 @@ export type SignUpFormModel = {
   password?: string;
   verifyPassword?: string;
 };
+
+export enum BikeType {
+  GRAVEL = "gravel",
+  MTB = "mtb",
+  ROAD = "road",
+}
+
+export type BikeTypes = {
+  gravel: boolean;
+  mtb: boolean;
+  road: boolean;
+};
+
+export enum PlaceOfInterest {
+  SWIMMING = "swimming",
+  PUB = "pub",
+  NATURE = "nature",
+  TRAIL = "trail",
+}
+
+export type PlacesOfInterest = {
+  swimming: boolean;
+  pub: boolean;
+  nature: boolean;
+  trail: boolean;
+};
+
+export type RouteEditFormModel = {
+  name: string;
+  description: string;
+  bikeTypes: BikeTypes;
+  placesOfInterest: PlacesOfInterest;
+};

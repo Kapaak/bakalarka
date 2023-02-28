@@ -6,6 +6,7 @@ interface FormInputProps extends InputProps {
   name: string;
 }
 
+//todo -> nejsem si jistej jestli tohle neni atom
 export const FormInput = ({
   name,
   placeholder,

@@ -21,7 +21,7 @@ const linkVariant = cva(["relative"], {
   },
 });
 
-export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+export type LinkProps = React.LinkHTMLAttributes<HTMLLinkElement> &
   VariantProps<typeof linkVariant> &
   NextLinkProps;
 
@@ -31,7 +31,7 @@ export const Link = ({
   children,
   color,
   variant,
-}: PropsWithChildren<ButtonProps>) => {
+}: PropsWithChildren<LinkProps>) => {
   return (
     <NextLink
       className={linkVariant({ color, variant, className })}

@@ -3,6 +3,7 @@ export * from './Container';
 export * from './HorizontalStack';
 export * from './IconButton';
 export * from './Input';
+export * from './LabelContainer';
 export * from './Link';
 export * from './Logo';
 export * from './MainHeadline';
