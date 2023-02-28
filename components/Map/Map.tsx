@@ -1,4 +1,4 @@
-import { LatLngLiteral, MapOptions } from "@/domains";
+import { LatLngLiteral, Map as MapType, MapOptions } from "@/domains";
 import { GoogleMap } from "@react-google-maps/api";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { Places } from "./Places";
@@ -6,18 +6,20 @@ import { Places } from "./Places";
 export const Map = () => {
   const [office, setOffice] = useState<LatLngLiteral>();
 
-  const mapRef = useRef<GoogleMap>();
+  const mapRef = useRef<MapType>();
 
   const center = useMemo<LatLngLiteral>(() => ({ lat: 49, lng: 16 }), []);
   const options = useMemo<MapOptions>(
     () => ({
-      mapId: "d8bed295e8601b2d", //vzhled mapy - ale nejak mi to nefunguje
+      mapId: "d8bed295e8601b2d",
       disableDefaultUI: true, //abych nevidel to ui kolem
       clickableIcons: false, //abych nemohl zaklikavat veci,
     }),
     []
   );
-  const onLoad = useCallback((map) => (mapRef.current = map), []);
+  const onLoad = useCallback((map: MapType) => {
+    mapRef.current = map;
+  }, []);
 
   const handleSetStart = (position: any) => {
     setOffice(position);
@@ -31,7 +33,6 @@ export const Map = () => {
         zoom={10}
         center={center}
         mapContainerStyle={{ height: "inherit" }}
-        // options={options}
         options={options}
         onLoad={onLoad}
       ></GoogleMap>
