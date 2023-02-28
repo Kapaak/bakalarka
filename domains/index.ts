@@ -31,6 +31,7 @@ export enum PlaceOfInterest {
   SWIMMING = "swimming",
   PUB = "pub",
   NATURE = "nature",
+  CULTURE = "culture",
   TRAIL = "trail",
 }
 
@@ -39,6 +40,7 @@ export type PlacesOfInterest = {
   pub: boolean;
   nature: boolean;
   trail: boolean;
+  culture: boolean;
 };
 
 export type RouteEditFormModel = {

@@ -4,16 +4,16 @@ import { ButtonHTMLAttributes, PropsWithChildren } from "react";
 const buttonVariant = cva(["rounded-small"], {
   variants: {
     color: {
-      primary: ["bg-black", "text-white"],
-      secondary: ["bg-main-orange", "text-black"],
+      primary: ["bg-black", "text-white", "border-black"],
+      secondary: ["bg-main-orange", "text-black", " border-main-orange"],
     },
     size: {
       small: ["text-sm", "py-1", "px-2"],
       medium: ["text-base", "py-2", "px-6"],
     },
     variant: {
-      contained: "border border-black",
-      outlined: "border border-black border-dashed ",
+      contained: "border",
+      outlined: "border  border-dashed ",
       tinted: "",
     },
   },

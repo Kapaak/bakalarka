@@ -114,7 +114,7 @@ export const RouteEditPageScreen = () => {
                   variant={placesOfInterest.pub ? "contained" : "outlined"}
                   onClick={() => handleInterestType(PlaceOfInterest.PUB)}
                 >
-                  Hospoda
+                  Občerstvení
                 </Button>
                 <Button
                   type="button"
@@ -129,6 +129,13 @@ export const RouteEditPageScreen = () => {
                   onClick={() => handleInterestType(PlaceOfInterest.TRAIL)}
                 >
                   Trail
+                </Button>
+                <Button
+                  type="button"
+                  variant={placesOfInterest.culture ? "contained" : "outlined"}
+                  onClick={() => handleInterestType(PlaceOfInterest.CULTURE)}
+                >
+                  Památky
                 </Button>
               </HorizontalStack>
             </LabelContainer>
