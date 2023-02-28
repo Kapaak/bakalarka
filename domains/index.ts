@@ -47,3 +47,7 @@ export type RouteEditFormModel = {
   bikeTypes: BikeTypes;
   placesOfInterest: PlacesOfInterest;
 };
+
+export type LatLngLiteral = google.maps.LatLngLiteral;
+export type DirectionsResult = google.maps.DirectionsResult;
+export type MapOptions = google.maps.MapOptions;

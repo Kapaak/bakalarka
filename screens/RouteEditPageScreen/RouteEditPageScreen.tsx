@@ -7,6 +7,7 @@ import {
   FormInput,
   LabelContainer,
 } from "@/ui";
+import { MapContainer } from "@/components";
 import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -143,7 +144,7 @@ export const RouteEditPageScreen = () => {
           </VerticalStack>
 
           <div className="flex-1 border border-red-500 p-4">
-            <div className="h-full border border-red-500">mapa</div>
+            <MapContainer />
           </div>
         </TransparentCard>
       </form>
