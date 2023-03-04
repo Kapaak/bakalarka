@@ -1,14 +1,20 @@
 import { LatLngLiteral, Map as MapType, MapOptions } from "@/domains";
-import { GoogleMap } from "@react-google-maps/api";
+import { GoogleMap, Marker } from "@react-google-maps/api";
+import { ArrowDownLeft, MapPin } from "phosphor-react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { Places } from "./Places";
 
 export const Map = () => {
-  const [office, setOffice] = useState<LatLngLiteral>();
+  const [start, setStart] = useState<LatLngLiteral>();
 
   const mapRef = useRef<MapType>();
 
-  const center = useMemo<LatLngLiteral>(() => ({ lat: 49, lng: 16 }), []);
+  const center = useMemo<LatLngLiteral>(
+    () => ({ lat: 50.0343092, lng: 15.7811994 }),
+    []
+  );
+
+  //promaz ty knihony z videa, co nepouzivam <)
   const options = useMemo<MapOptions>(
     () => ({
       mapId: "d8bed295e8601b2d",
@@ -22,7 +28,7 @@ export const Map = () => {
   }, []);
 
   const handleSetStart = (position: any) => {
-    setOffice(position);
+    setStart(position);
     mapRef.current?.panTo(position);
   };
 
@@ -35,7 +41,9 @@ export const Map = () => {
         mapContainerStyle={{ height: "inherit" }}
         options={options}
         onLoad={onLoad}
-      ></GoogleMap>
+      >
+        {start && <Marker position={start} icon="/icons/map_pin_start.svg" />}
+      </GoogleMap>
     </div>
   );
 };

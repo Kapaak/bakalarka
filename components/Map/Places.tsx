@@ -1,27 +1,24 @@
 import { LatLngLiteral } from "@/domains";
-import { Autocomplete } from "@/ui";
+import { GoogleAutocomplete } from "@/ui";
+// import GoogleAutocomplete from "react-google-autocomplete";
 import usePlacesAutocomplete from "use-places-autocomplete";
 
 interface PlacesProps {
   setStart(position: LatLngLiteral): void;
 }
-// https://www.youtube.com/watch?v=2po9_CIRW7I
+// https://www.youtube.com/watch?v=2po9_CIRW7I 25:36
 export const Places = ({ setStart }: PlacesProps) => {
-  const {
-    ready,
-    value,
-    setValue,
-    suggestions: { status, data },
-    clearSuggestions,
-  } = usePlacesAutocomplete();
+  const handleSelect = (lat: number, lng: number) => {
+    setStart({ lat, lng });
+  };
 
   return (
-    <div>
+    <div className="z-50 border border-blue-500">
       <p>Places</p>
-      <button type="button" onClick={() => console.log(value, "val")}>
-        val
-      </button>
-      {/* <Autocomplete /> */}
+      <GoogleAutocomplete onSelect={handleSelect} />
+      {/* <GoogleAutocomplete //netreba, muzu smazat
+        options={{ componentRestrictions: { country: "cz" } }}
+      /> */}
     </div>
   );
 };
