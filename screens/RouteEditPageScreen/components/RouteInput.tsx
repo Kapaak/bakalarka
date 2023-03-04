@@ -13,7 +13,7 @@ export const RouteInput = ({
   onPointRemove,
 }: RouteInputProps) => {
   return (
-    <HorizontalStack className="max-w-3xl rounded-md bg-white">
+    <HorizontalStack className="max-w-3xl rounded-md bg-white shadow-regular">
       <GoogleAutocomplete placeholder={placeholder} />
 
       {onPointRemove && (
