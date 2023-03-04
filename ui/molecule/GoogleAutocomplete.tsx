@@ -6,9 +6,12 @@ import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from "use-places-autocomplete";
+import { Input } from "../atoms";
 
 interface GoogleAutocompleteProps {
   onSelect?(lat: number, lng: number): void;
+  placeholder?: string;
+  className?: string;
 }
 
 const defaultValue: AutocompletePrediction = {
@@ -28,9 +31,12 @@ const defaultValue: AutocompletePrediction = {
   types: ["locality", "political", "geocode"],
 };
 
-export const GoogleAutocomplete = ({ onSelect }: GoogleAutocompleteProps) => {
-  const [selected, setSelected] =
-    useState<AutocompletePrediction>(defaultValue);
+export const GoogleAutocomplete = ({
+  onSelect,
+  placeholder,
+  className,
+}: GoogleAutocompleteProps) => {
+  const [selected, setSelected] = useState<AutocompletePrediction | null>(null);
 
   const {
     ready,
@@ -67,22 +73,26 @@ export const GoogleAutocomplete = ({ onSelect }: GoogleAutocompleteProps) => {
   };
 
   return (
-    <div className="16 w-72 flex-1">
+    <div className={`16 h-full w-full flex-1 ${className}`}>
       <Combobox value={selected} onChange={handleSelect}>
-        <div className="relative mt-1">
+        <div
+          className="relative
+        "
+        >
           <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
-            <Combobox.Button className="absolute inset-y-0 left-0 flex items-center pl-2">
+            <Combobox.Button className="absolute inset-y-0 left-0 flex items-center pl-4">
               <MagnifyingGlass
-                className="h-5 w-5 text-main-orange"
+                className="h-6 w-6 text-main-orange"
                 aria-hidden="true"
               />
             </Combobox.Button>
             <Combobox.Input
-              className="w-full border-none py-2 pl-10 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
+              className="w-full border-none py-[2.5rem] pl-13  pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
               displayValue={(option: AutocompletePrediction) =>
                 option?.structured_formatting?.main_text
               }
               onChange={(event) => setValue(event.target.value)}
+              placeholder={placeholder}
             />
           </div>
           <Transition

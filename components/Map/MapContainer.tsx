@@ -20,7 +20,7 @@ export const MapContainer = () => {
 
   if (!isLoaded) return <div>Načítá....</div>;
   return (
-    <div className="h-full border border-red-500">
+    <div className="h-full ">
       <Map />
     </div>
   );

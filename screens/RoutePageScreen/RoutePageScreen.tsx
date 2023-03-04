@@ -6,6 +6,7 @@ import {
   TransparentCard,
   VerticalStack,
 } from "@/ui";
+import { MapContainer } from "components/Map";
 import { useRouter } from "next/router";
 
 export const RoutePageScreen = () => {
@@ -38,7 +39,7 @@ export const RoutePageScreen = () => {
         </Button>
       </VerticalStack>
       <div className="flex-1 border border-red-500 p-4">
-        <div className="h-full border border-red-500">mapa</div>
+        <MapContainer />
       </div>
     </TransparentCard>
   );

@@ -1,6 +1,5 @@
 import { LatLngLiteral, Map as MapType, MapOptions } from "@/domains";
 import { GoogleMap, Marker } from "@react-google-maps/api";
-import { ArrowDownLeft, MapPin } from "phosphor-react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { Places } from "./Places";
 
@@ -33,8 +32,8 @@ export const Map = () => {
   };
 
   return (
-    <div className="h-[inherit]">
-      <Places setStart={handleSetStart} />
+    <div className="h-[inherit] overflow-hidden rounded-md">
+      {/* <Places setStart={handleSetStart} /> */}
       <GoogleMap
         zoom={10}
         center={center}
