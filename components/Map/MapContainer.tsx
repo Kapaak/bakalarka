@@ -1,6 +1,10 @@
 import { useLoadScript } from "@react-google-maps/api";
-import { useMemo } from "react";
+import dynamic from "next/dynamic";
+import { useEffect, useMemo, useState } from "react";
 import { Map } from "./Map";
+// const Map = dynamic<{}>(() => import("./Map").then((module) => module.Map), {
+//   ssr: false,
+// });
 
 type Libraries = (
   | "drawing"

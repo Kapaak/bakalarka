@@ -39,7 +39,7 @@ export const RoutePageScreen = () => {
         </Button>
       </VerticalStack>
       <div className="flex-1 border border-red-500 p-4">
-        <MapContainer />
+        {/* <MapContainer /> */}
       </div>
     </TransparentCard>
   );

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@gegeweb/leaflet-routing-machine-openroute": "^0.1.10",
     "@headlessui/react": "^1.7.8",
     "@next/font": "13.1.6",
     "@react-google-maps/api": "^2.18.1",
@@ -18,6 +19,10 @@
     "class-variance-authority": "^0.4.0",
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",
+    "leaflet": "^1.9.3",
+    "leaflet-defaulticon-compatibility": "^0.1.1",
+    "leaflet-routing-machine": "^3.2.12",
+    "mapbox-gl": "^2.13.0",
     "nanoid": "^4.0.1",
     "next": "13.1.6",
     "next-auth": "^4.19.2",
@@ -26,10 +31,14 @@
     "react-dom": "18.2.0",
     "react-google-autocomplete": "^2.7.3",
     "react-hook-form": "^7.43.2",
+    "react-leaflet": "^4.2.1",
     "typescript": "4.9.5",
     "use-places-autocomplete": "^4.0.0"
   },
   "devDependencies": {
+    "@types/leaflet": "^1.9.1",
+    "@types/leaflet-routing-machine": "^3.2.4",
+    "@types/mapbox-gl": "^2.7.10",
     "autoprefixer": "^10.4.13",
     "barrelsby": "^2.5.1",
     "postcss": "^8.4.21",
