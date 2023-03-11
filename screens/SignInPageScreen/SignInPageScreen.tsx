@@ -26,7 +26,7 @@ export const SignInPageScreen = () => {
   return (
     <section>
       <HorizontalStack className="h-full">
-        <div className="relative flex-1 before:absolute before:h-full before:w-full before:bg-gradient-to-r before:from-main-yellow before:to-main-orange before:opacity-50 before:content-['']">
+        <div className="relative hidden flex-1 before:absolute before:h-full before:w-full before:bg-gradient-to-r before:from-main-yellow before:to-main-orange before:opacity-50 before:content-[''] lg:block">
           <Image
             className="z-negative object-cover object-left"
             src="/images/girls-on-ride.jpg"
