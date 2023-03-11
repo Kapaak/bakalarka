@@ -3,6 +3,7 @@ import { useState } from "react";
 import { nanoid } from "nanoid";
 import { RouteInput } from "./RouteInput";
 import { useRouteContext } from "@/contexts";
+import { useGoogleAutocomplete } from "@/hooks";
 
 type CrossingPoint = {
   id: string;
@@ -15,6 +16,7 @@ interface EditRouteProps {
 export const EditRoute = ({ onReturn }: EditRouteProps) => {
   const [crossingPoints, setCrossingPoints] = useState<CrossingPoint[]>([]);
   const { updateStartPoint } = useRouteContext();
+  const { isLoaded } = useGoogleAutocomplete();
 
   const handleAddCrossingPointAfter = (index: number) => {
     console.log(index, "ind", crossingPoints);
@@ -40,20 +42,24 @@ export const EditRoute = ({ onReturn }: EditRouteProps) => {
 
   return (
     <VerticalStack className="h-full flex-1  gap-4 p-12">
-      <RouteInput
-        placeholder="Zadejte start"
-        onSelect={updateStartPoint}
-        onPointAdd={handleAddBeforeFirst}
-      />
-      {crossingPoints?.map((crossingPoint, index) => (
-        <RouteInput
-          key={crossingPoint.id}
-          placeholder="Zadejte průjezdový bod"
-          onPointRemove={() => handleRemoveCrossingPoint(crossingPoint.id)}
-          onPointAdd={() => handleAddCrossingPointAfter(index)}
-        />
-      ))}
-      <RouteInput placeholder="Zadejte cíl" />
+      {isLoaded && (
+        <>
+          <RouteInput
+            placeholder="Zadejte start"
+            onSelect={updateStartPoint}
+            onPointAdd={handleAddBeforeFirst}
+          />
+          {crossingPoints?.map((crossingPoint, index) => (
+            <RouteInput
+              key={crossingPoint.id}
+              placeholder="Zadejte průjezdový bod"
+              onPointRemove={() => handleRemoveCrossingPoint(crossingPoint.id)}
+              onPointAdd={() => handleAddCrossingPointAfter(index)}
+            />
+          ))}
+          <RouteInput placeholder="Zadejte cíl" />
+        </>
+      )}
 
       <Button className="mt-auto mr-auto" onClick={onReturn}>
         Zpět do editace popisu

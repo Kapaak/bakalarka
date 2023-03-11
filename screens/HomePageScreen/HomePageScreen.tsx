@@ -13,28 +13,14 @@ import {
 import Image from "next/image";
 
 import CyclistHeroImage from "../../public/images/hero-img.jpg";
-import { useLoadScript } from "@react-google-maps/api";
 import { useRouter } from "next/router";
-
-type Libraries = (
-  | "drawing"
-  | "geometry"
-  | "localContext"
-  | "places"
-  | "visualization"
-)[];
+import { useGoogleAutocomplete } from "@/hooks";
 
 export const HomePageScreen = () => {
   const [selectedCity, setSelectedCity] = useState("");
 
   const router = useRouter();
-
-  const libraries = useMemo<Libraries>(() => ["places"], []);
-
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS || "",
-    libraries,
-  });
+  const { isLoaded } = useGoogleAutocomplete();
 
   const handleFindSelected = () => {
     selectedCity.length > 0 && router.push(`/locations/${selectedCity}`);

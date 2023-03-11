@@ -1,28 +1,19 @@
-import { useLoadScript } from "@react-google-maps/api";
 import { useRouteContext } from "@/contexts";
-import { useMemo } from "react";
 import { Map } from "./Map";
 
-type Libraries = (
-  | "drawing"
-  | "geometry"
-  | "localContext"
-  | "places"
-  | "visualization"
-)[];
-
 export const MapContainer = () => {
-  const libraries = useMemo<Libraries>(() => ["places"], []);
+  // const libraries = useMemo<Libraries>(() => ["places"], []);
 
-  const { isLoaded } = useLoadScript({
-    //to isloaded tu nedava smysl ... kam s tim ale, tam jak jsou ty vyhledavani ?
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS || "",
-    libraries,
-  });
+  // const { isLoaded } = useLoadScript({
+  //   //to isloaded tu nedava smysl ... kam s tim ale, tam jak jsou ty vyhledavani ?
+  //   googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS || "",
+  //   libraries,
+  // });
 
   const { startPoint } = useRouteContext();
+  //teoreticky ale timhle muzu ohandlovat to, kdy bude mapa rdy
 
-  if (!isLoaded) return <div>Načítá....</div>;
+  // if (!isLoaded) return <div>Načítá....</div>;
   return (
     <div className="h-full ">
       <Map startPoint={startPoint} />
