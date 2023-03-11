@@ -6,6 +6,7 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import "leaflet-defaulticon-compatibility";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "leaflet-routing-machine";
+import { LatLngLiteral } from "@/domains";
 
 const greenIcon = new L.Icon({
   iconUrl: "/icons/map_pin_start.svg",
@@ -14,11 +15,16 @@ const greenIcon = new L.Icon({
 const accessToken =
   "pk.eyJ1Ijoia2FwYWFraW5vcyIsImEiOiJjbGV2YWp1OWQwcmxuM3FvN2g5cHh5ZWhrIn0.HKjc7CJ_vDFEx8DoyPnhBA";
 
-export const LeafletMap = () => {
+interface LeafletMapProps {
+  startPoint?: LatLngLiteral;
+}
+
+export const LeafletMap = ({ startPoint }: LeafletMapProps) => {
   const createRoutingMachineLayer = (props) => {
     const instance = L.Routing.control({
       waypoints: [
-        L.latLng(49.1839069, 16.5304978),
+        L.latLng(startPoint?.lat, startPoint?.lng),
+        // L.latLng(49.1839069, 16.5304978),
         L.latLng(49.1839069, 16.7809511),
       ],
       lineOptions: {
@@ -65,10 +71,10 @@ export const LeafletMap = () => {
   };
   return (
     <MapContainer
-      // center={[50.0343092, 15.7811994]}
+      center={[50.0343092, 15.7811994]}
       zoom={13}
       id="map-box"
-      // scrollWheelZoom={false}
+      scrollWheelZoom={false}
       className="z-0 h-full"
     >
       <button type="button" onClick={handleElevation}>
@@ -78,13 +84,12 @@ export const LeafletMap = () => {
         attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
         url={`https://api.mapbox.com/styles/v1/kapaakinos/clevb09lv001n01lsal61f8ys/tiles/256/{z}/{x}/{y}@2x?access_token=${accessToken}`}
       />
-      <RoutingMachine />
-      {/* <div id="map"></div> */}
-      <Marker position={[50.0343092, 15.7811994]} icon={greenIcon}>
+      {startPoint && <RoutingMachine />}
+      {/* <Marker position={[50.0343092, 15.7811994]} icon={greenIcon}>
         <Popup>
           A pretty CSS3 popup. <br /> Easily customizable.
         </Popup>
-      </Marker>
+      </Marker> */}
     </MapContainer>
   );
 };

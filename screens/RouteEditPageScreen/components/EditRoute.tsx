@@ -2,6 +2,7 @@ import { Button, VerticalStack } from "@/ui";
 import { useState } from "react";
 import { nanoid } from "nanoid";
 import { RouteInput } from "./RouteInput";
+import { useRouteContext } from "@/contexts";
 
 type CrossingPoint = {
   id: string;
@@ -13,6 +14,7 @@ interface EditRouteProps {
 
 export const EditRoute = ({ onReturn }: EditRouteProps) => {
   const [crossingPoints, setCrossingPoints] = useState<CrossingPoint[]>([]);
+  const { updateStartPoint } = useRouteContext();
 
   const handleAddCrossingPointAfter = (index: number) => {
     console.log(index, "ind", crossingPoints);
@@ -40,6 +42,7 @@ export const EditRoute = ({ onReturn }: EditRouteProps) => {
     <VerticalStack className="h-full flex-1  gap-4 p-12">
       <RouteInput
         placeholder="Zadejte start"
+        onSelect={updateStartPoint}
         onPointAdd={handleAddBeforeFirst}
       />
       {crossingPoints?.map((crossingPoint, index) => (

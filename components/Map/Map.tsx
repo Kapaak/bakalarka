@@ -1,17 +1,21 @@
+import { LatLngLiteral } from "@/domains";
 import dynamic from "next/dynamic";
-import { Suspense } from "react";
-// import { Sracka } from "./Sracka";
-const LeafletMap = dynamic<{}>(
+
+const LeafletMap = dynamic<{ startPoint?: LatLngLiteral }>(
   () => import("./LeafletMap").then((module) => module.LeafletMap),
   {
     ssr: false,
   }
 );
 
-export const Map = () => {
+interface MapProps {
+  startPoint?: LatLngLiteral;
+}
+
+export const Map = ({ startPoint }: MapProps) => {
   return (
     <div className="h-full border border-red-500">
-      <LeafletMap />
+      <LeafletMap startPoint={startPoint} />
     </div>
   );
 };

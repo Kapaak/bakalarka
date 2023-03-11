@@ -20,6 +20,8 @@
       "@/screens":["screens/index.ts"],
       "@/domains":["domains/index.ts"],
       "@/ui":["ui/index.ts"],
+      "@/hooks":["hooks/index.ts"],
+      "@/contexts":["contexts/index.ts"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

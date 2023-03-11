@@ -5,16 +5,18 @@ interface RouteInputProps {
   placeholder: string;
   onPointAdd?(): void;
   onPointRemove?(): void;
+  onSelect?(): void;
 }
 
 export const RouteInput = ({
   placeholder,
   onPointAdd,
   onPointRemove,
+  onSelect,
 }: RouteInputProps) => {
   return (
     <HorizontalStack className="max-w-3xl rounded-md bg-white shadow-regular">
-      <GoogleAutocomplete placeholder={placeholder} />
+      <GoogleAutocomplete onSelect={onSelect} placeholder={placeholder} />
 
       {onPointRemove && (
         <IconButton

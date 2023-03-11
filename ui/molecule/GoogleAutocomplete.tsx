@@ -69,7 +69,7 @@ export const GoogleAutocomplete = ({
       autocompletePrediction.description
     );
 
-    onSelect && onSelect(lat, lng);
+    onSelect && onSelect({ lat, lng });
   };
 
   return (
