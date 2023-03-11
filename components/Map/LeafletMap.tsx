@@ -1,5 +1,12 @@
 import L from "leaflet";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import {
+  MapContainer,
+  Marker,
+  Popup,
+  TileLayer,
+  useMapEvents,
+  ZoomControl,
+} from "react-leaflet";
 import { createControlComponent } from "@react-leaflet/core";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
@@ -56,7 +63,7 @@ export const LeafletMap = ({
         L.latLng(finishPoint?.lat, finishPoint?.lng),
       ],
       lineOptions: {
-        styles: [{ color: "#6FA1EC", weight: 4 }],
+        styles: [{ color: "blue", weight: 2 }],
         extendToWaypoints: true,
         missingRouteTolerance: 20,
       },
@@ -99,6 +106,16 @@ export const LeafletMap = ({
     // const highestElevation = Math.max(...elevations);
     // console.log(highestElevation);
   };
+
+  const LocationFinderDummy = () => {
+    const map = useMapEvents({
+      click(e) {
+        console.log(e.latlng);
+      },
+    });
+
+    return null;
+  };
   return (
     <MapContainer
       center={[50.0343092, 15.7811994]}
@@ -106,10 +123,10 @@ export const LeafletMap = ({
       id="map-box"
       scrollWheelZoom={false}
       className="z-0 h-full"
+      zoomControl={false}
     >
-      <button type="button" onClick={handleElevation}>
-        show
-      </button>
+      <ZoomControl position="topright" />
+      {/* <LocationFinderDummy /> */}
       <TileLayer
         attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
         url={`https://api.mapbox.com/styles/v1/kapaakinos/clevb09lv001n01lsal61f8ys/tiles/256/{z}/{x}/{y}@2x?access_token=${accessToken}`}
