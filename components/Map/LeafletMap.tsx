@@ -12,8 +12,7 @@ const greenIcon = new L.Icon({
   iconUrl: "/icons/map_pin_start.svg",
 });
 
-const accessToken =
-  "pk.eyJ1Ijoia2FwYWFraW5vcyIsImEiOiJjbGV2YWp1OWQwcmxuM3FvN2g5cHh5ZWhrIn0.HKjc7CJ_vDFEx8DoyPnhBA";
+const accessToken = process.env.NEXT_PUBLIC_MAPBOX || "";
 
 interface LeafletMapProps {
   startPoint?: LatLngLiteral;
