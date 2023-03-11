@@ -11,8 +11,8 @@ const containerVariant = cva("", {
   variants: {
     height: {
       default: "",
-      full: "h-screen max-h-[calc(100vh-5.5rem)]",
-      "min-full": "min-h-[calc(100vh-5.5rem)]",
+      full: "h-screen max-h-[calc(100vh-9rem)]",
+      "min-full": "min-h-[calc(100vh-9rem)]",
     },
     place: {
       default: "",
