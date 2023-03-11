@@ -9,10 +9,14 @@ export const useRoute = () => {
     setStartPoint(coordinates);
   };
 
+  const updateFinishPoint = (coordinates: LatLngLiteral) => {
+    setFinishPoint(coordinates);
+  };
+
   return {
     startPoint,
-    updateStartPoint,
-    setFinishPoint,
     finishPoint,
+    updateStartPoint,
+    updateFinishPoint,
   };
 };

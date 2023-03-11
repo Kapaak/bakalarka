@@ -6,6 +6,7 @@ type RouteContextType = {
   startPoint: LatLngLiteral;
   finishPoint: LatLngLiteral;
   updateStartPoint(coordinates: LatLngLiteral): void;
+  updateFinishPoint(coordinates: LatLngLiteral): void;
 };
 
 const defaultValues = {
@@ -18,6 +19,7 @@ const defaultValues = {
     lat: 0,
   },
   updateStartPoint: () => {},
+  updateFinishPoint: () => {},
 };
 
 const RouteContext = createContext<RouteContextType>(defaultValues);

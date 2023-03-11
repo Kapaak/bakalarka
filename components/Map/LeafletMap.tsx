@@ -16,10 +16,14 @@ const greenIcon = new L.Icon({
 const accessToken = process.env.NEXT_PUBLIC_MAPBOX || "";
 
 interface LeafletMapProps {
-  startPoint?: LatLngLiteral;
+  startPoint: LatLngLiteral;
+  finishPoint: LatLngLiteral;
 }
 
-export const LeafletMap = ({ startPoint }: LeafletMapProps) => {
+export const LeafletMap = ({ startPoint, finishPoint }: LeafletMapProps) => {
+  //ta elevation se bude potitat z koordinatu co prijdou v props
+  //tam bude start point atd
+
   const { data } = useElevation({
     coordinates: { lat: 49.0039069, lng: 16.1304978 },
   });
@@ -29,20 +33,22 @@ export const LeafletMap = ({ startPoint }: LeafletMapProps) => {
   //   coordinatesTo: { lat: 49.1839069, lng: 16.7809511 },
   // });
 
-  const createRoutingMachineLayer = (props) => {
+  const createRoutingMachineLayer = () => {
     const instance = L.Routing.control({
       waypoints: [
         L.latLng(startPoint?.lat, startPoint?.lng),
         // L.latLng(49.1839069, 16.5304978),
-        L.latLng(49.1839069, 16.7809511),
+        L.latLng(finishPoint?.lat, finishPoint?.lng),
       ],
       lineOptions: {
         styles: [{ color: "#6FA1EC", weight: 4 }],
+        extendToWaypoints: true,
+        missingRouteTolerance: 20,
       },
       show: false,
       addWaypoints: false,
       routeWhileDragging: true,
-      draggableWaypoints: true,
+      // draggableWaypoints: true, //funguje i bez
       fitSelectedRoutes: true,
       showAlternatives: false,
       router: L.Routing.mapbox(accessToken, {
@@ -73,10 +79,10 @@ export const LeafletMap = ({ startPoint }: LeafletMapProps) => {
 
     const allFeatures = data.features;
 
-    const elevations = allFeatures.map((feature) => feature.properties.ele);
+    // const elevations = allFeatures.map((feature) => feature.properties.ele);
 
-    const highestElevation = Math.max(...elevations);
-    console.log(highestElevation);
+    // const highestElevation = Math.max(...elevations);
+    // console.log(highestElevation);
   };
   return (
     <MapContainer

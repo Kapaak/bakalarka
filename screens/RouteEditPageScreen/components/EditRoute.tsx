@@ -15,7 +15,8 @@ interface EditRouteProps {
 
 export const EditRoute = ({ onReturn }: EditRouteProps) => {
   const [crossingPoints, setCrossingPoints] = useState<CrossingPoint[]>([]);
-  const { updateStartPoint } = useRouteContext();
+  const { updateStartPoint, updateFinishPoint } = useRouteContext();
+
   const { isLoaded } = useGoogleAutocomplete();
 
   const handleAddCrossingPointAfter = (index: number) => {
@@ -57,7 +58,7 @@ export const EditRoute = ({ onReturn }: EditRouteProps) => {
               onPointAdd={() => handleAddCrossingPointAfter(index)}
             />
           ))}
-          <RouteInput placeholder="Zadejte cíl" />
+          <RouteInput placeholder="Zadejte cíl" onSelect={updateFinishPoint} />
         </>
       )}
 

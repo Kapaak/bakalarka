@@ -7,12 +7,31 @@ import {
   VerticalStack,
 } from "@/ui";
 import { MapContainer } from "components/Map";
+import { useRouteContext } from "@/contexts";
 import { useRouter } from "next/router";
+
+//   from: { lat: 49.1839069, lng: 16.5304978 },
+//   to: { lat: 49.1839069, lng: 16.7809511 },
 
 export const RoutePageScreen = () => {
   const router = useRouter();
+  const { updateStartPoint, updateFinishPoint, startPoint } = useRouteContext();
+
   return (
     <TransparentCard>
+      <button onClick={() => console.log(startPoint, "dsa")}>
+        start poitn
+      </button>
+      <Button
+        onClick={() => updateStartPoint({ lat: 49.1839069, lng: 16.5304978 })}
+      >
+        update start point
+      </Button>
+      <Button
+        onClick={() => updateFinishPoint({ lat: 49.1839069, lng: 16.7809511 })}
+      >
+        update finish point
+      </Button>
       <VerticalStack className="hidden flex-1 p-12 lg:flex">
         <div>
           <p>Název trasy</p>
