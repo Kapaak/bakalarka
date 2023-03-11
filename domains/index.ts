@@ -55,3 +55,8 @@ export type DirectionsResult = google.maps.DirectionsResult;
 export type MapOptions = google.maps.MapOptions;
 export type Map = google.maps.Map;
 export type AutocompletePrediction = google.maps.places.AutocompletePrediction;
+
+export type Location = {
+  coordinates: LatLngLiteral;
+  name: string;
+};

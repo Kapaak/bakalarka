@@ -1,4 +1,4 @@
-import { AutocompletePrediction } from "@/domains";
+import { AutocompletePrediction, Location } from "@/domains";
 import { Combobox, Transition } from "@headlessui/react";
 import { MagnifyingGlass } from "phosphor-react";
 import { Fragment, useState } from "react";
@@ -6,15 +6,6 @@ import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from "use-places-autocomplete";
-import { Input } from "../atoms";
-
-type Location = {
-  coordinates: {
-    lat: number;
-    lng: number;
-  };
-  name: string;
-};
 
 interface GoogleAutocompleteProps {
   onSelect?(location: Location): void;

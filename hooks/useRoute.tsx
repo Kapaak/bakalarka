@@ -2,8 +2,8 @@ import { LatLngLiteral } from "@/domains";
 import { useState } from "react";
 
 export const useRoute = () => {
-  const [startPoint, setStartPoint] = useState({ lat: null, lng: null });
-  const [finishPoint, setFinishPoint] = useState({ lat: null, lng: null });
+  const [startPoint, setStartPoint] = useState({ lat: 0, lng: 0 });
+  const [finishPoint, setFinishPoint] = useState({ lat: 0, lng: 0 });
 
   const updateStartPoint = (coordinates: LatLngLiteral) => {
     setStartPoint(coordinates);
