@@ -4,7 +4,7 @@ import { PropsWithChildren } from "react";
 export const TransparentCard = ({ children }: PropsWithChildren) => {
   return (
     <section className="relative bg-gradient-to-r from-main-yellow to-main-orange">
-      <MaxWidth>
+      <MaxWidth className="px-0 md:px-0 lg:px-14">
         <Container height="full">
           <HorizontalStack className="relative z-10 h-full rounded-lg bg-transparent before:absolute before:z-negative before:h-full before:w-full before:rounded-lg before:bg-white before:opacity-50 before:content-['']">
             {children}

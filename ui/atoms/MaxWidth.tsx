@@ -7,7 +7,7 @@ interface MaxWidthProps extends PropsWithChildren {
 
 export const MaxWidth = ({ children, className }: MaxWidthProps) => {
   return (
-    <div className={`mx-auto max-w-screen-2xl px-8 ${className} md:px-14`}>
+    <div className={`mx-auto max-w-screen-2xl px-8  md:px-14 ${className}`}>
       {children}
     </div>
   );

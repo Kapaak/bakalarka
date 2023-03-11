@@ -13,7 +13,7 @@ export const RoutePageScreen = () => {
   const router = useRouter();
   return (
     <TransparentCard>
-      <VerticalStack className="flex-1 p-12">
+      <VerticalStack className="hidden flex-1 p-12 lg:flex">
         <div>
           <p>Název trasy</p>
           <p>Okolo potoka</p>
@@ -38,8 +38,12 @@ export const RoutePageScreen = () => {
           Upravit
         </Button>
       </VerticalStack>
-      <div className="flex-1 border border-red-500 p-4">
-        {/* <MapContainer /> */}
+      <div className="relative flex-1 lg:p-4">
+        <MapContainer />
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-md bg-white p-4 lg:hidden">
+          <p>Název trasy</p>
+          <p>Okolo potoka</p>
+        </div>
       </div>
     </TransparentCard>
   );
