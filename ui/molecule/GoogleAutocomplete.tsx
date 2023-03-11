@@ -8,8 +8,16 @@ import usePlacesAutocomplete, {
 } from "use-places-autocomplete";
 import { Input } from "../atoms";
 
+type Location = {
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
+  name: string;
+};
+
 interface GoogleAutocompleteProps {
-  onSelect?(lat: number, lng: number): void;
+  onSelect?(location: Location): void;
   placeholder?: string;
   className?: string;
 }
@@ -69,16 +77,22 @@ export const GoogleAutocomplete = ({
       autocompletePrediction.description
     );
 
-    onSelect && onSelect({ lat, lng });
+    const location = {
+      coordinates: {
+        lat,
+        lng,
+      },
+      name: autocompletePrediction?.structured_formatting?.main_text,
+    };
+
+    onSelect && onSelect(location);
+    console.log(selected);
   };
 
   return (
-    <div className={`16 h-full w-full flex-1 ${className}`}>
+    <div className={`w-full flex-1 md:h-full ${className}`}>
       <Combobox value={selected} onChange={handleSelect}>
-        <div
-          className="relative
-        "
-        >
+        <div className="relative">
           <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
             <Combobox.Button className="absolute inset-y-0 left-0 flex items-center pl-4">
               <MagnifyingGlass

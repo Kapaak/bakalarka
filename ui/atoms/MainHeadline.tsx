@@ -6,5 +6,9 @@ interface MainHeadlineProps extends PropsWithChildren {
 }
 
 export const MainHeadline = ({ children, className }: MainHeadlineProps) => {
-  return <h1 className={`text-6xl ${className}`}>{children}</h1>;
+  return (
+    <h1 className={`text-4xl lg:text-5xl lg:leading-[1.1] ${className}`}>
+      {children}
+    </h1>
+  );
 };

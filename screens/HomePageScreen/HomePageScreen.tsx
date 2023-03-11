@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import {
+  Button,
   Container,
+  GoogleAutocomplete,
   HorizontalStack,
+  VerticalStack,
   MainHeadline,
   MainSubheadline,
   MaxWidth,
@@ -10,33 +13,75 @@ import {
 import Image from "next/image";
 
 import CyclistHeroImage from "../../public/images/hero-img.jpg";
+import { useLoadScript } from "@react-google-maps/api";
+import { useRouter } from "next/router";
+
+type Libraries = (
+  | "drawing"
+  | "geometry"
+  | "localContext"
+  | "places"
+  | "visualization"
+)[];
 
 export const HomePageScreen = () => {
+  const [selectedCity, setSelectedCity] = useState("");
+
+  const router = useRouter();
+
+  const libraries = useMemo<Libraries>(() => ["places"], []);
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS || "",
+    libraries,
+  });
+
+  const handleFindSelected = () => {
+    selectedCity.length > 0 && router.push(`/locations/${selectedCity}`);
+  };
+
   return (
     <section className="relative bg-gradient-to-r from-main-yellow to-main-orange ">
       <MaxWidth>
-        <Container fullHeight className="max-h-[calc(100vh-5.5rem)]">
-          <HorizontalStack className="h-full justify-between gap-4">
-            <div className="flex-1">
-              <MainHeadline className="max-w-md font-bold">
-                Cestujte a objevujte nové kouty
-              </MainHeadline>
-              <MainSubheadline className="font-bold">
-                ze sedla svého kola
-              </MainSubheadline>
-            </div>
-            <div className="relative z-20 flex-1 border border-red-500 ">
+        <Container height="full">
+          <HorizontalStack className="h-full justify-end gap-4 lg:justify-between">
+            <VerticalStack className="mb-5 flex-1 justify-end gap-4 lg:justify-center">
+              <div>
+                <MainHeadline className="max-w-lg font-bold">
+                  Cestujte a objevujte nové kouty
+                </MainHeadline>
+                <MainSubheadline className="font-bold">
+                  ze sedla svého kola
+                </MainSubheadline>
+              </div>
+
+              <VerticalStack className="mb-10 gap-2 rounded-md lg:flex-row lg:items-center lg:bg-white lg:px-2 lg:py-1 lg:shadow-regular">
+                {isLoaded && (
+                  <GoogleAutocomplete
+                    onSelect={(val) => setSelectedCity(val.name)}
+                    placeholder="Vyhledejte místo své trasy"
+                  />
+                )}
+                <Button
+                  className="py-4 lg:border-main-orange lg:bg-main-orange lg:text-black"
+                  onClick={handleFindSelected}
+                >
+                  Najít
+                </Button>
+              </VerticalStack>
+            </VerticalStack>
+            <div className="relative z-20 hidden flex-1 lg:block">
               <Image
                 src={CyclistHeroImage}
                 alt="Cyklista sprintující na kole"
                 fill
-                className="z-0 max-h-full max-w-full object-contain object-right pb-8"
+                className="z-0 m-auto max-h-[70rem] max-w-full object-cover object-center pl-[20%] md:object-right"
               />
             </div>
           </HorizontalStack>
         </Container>
       </MaxWidth>
-      <div className="absolute bottom-0 z-10 h-1/4 w-full bg-white pt-8">
+      {/* <div className="absolute bottom-0 z-10 h-1/4 w-full bg-white pt-8">
         <MaxWidth>
           <SearchBar
             options={[
@@ -45,7 +90,7 @@ export const HomePageScreen = () => {
             ]}
           />
         </MaxWidth>
-      </div>
+      </div> */}
     </section>
   );
 };

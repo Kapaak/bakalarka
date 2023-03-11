@@ -33,7 +33,7 @@ export const SignUpPageScreen = () => {
         </div>
 
         <MaxWidth className="flex-1">
-          <Container fullHeight centerXY>
+          <Container height="full" place="center">
             <FormProvider {...form}>
               <form onSubmit={handleSubmit(onSubmit)} className="w-[26rem]">
                 <MainHeadline className="mb-20 text-center font-bold">
