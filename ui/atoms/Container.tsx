@@ -7,11 +7,12 @@ import { HtmlHTMLAttributes, PropsWithChildren } from "react";
 //   centerXY?: boolean;
 // }
 
-const containerVariant = cva([""], {
+const containerVariant = cva("", {
   variants: {
     height: {
       default: "",
       full: "h-screen max-h-[calc(100vh-5.5rem)]",
+      "min-full": "min-h-[calc(100vh-5.5rem)]",
     },
     place: {
       default: "",
@@ -27,7 +28,6 @@ const containerVariant = cva([""], {
 export type ContainerProps = HtmlHTMLAttributes<HTMLDivElement> &
   VariantProps<typeof containerVariant>;
 
-//todo .. add CVA abych mohl delat podminky v tailwind, prozatim dam natvrdo 100vh
 export const Container = ({
   children,
   height,
@@ -35,12 +35,7 @@ export const Container = ({
   className,
 }: PropsWithChildren<ContainerProps>) => {
   return (
-    <div
-      className={containerVariant({ height, place, className })}
-      // className={`${fullHeight && "h-screen max-h-[calc(100vh-5.5rem)] px-8"} ${
-      //   centerXY && "grid place-items-center"
-      // } ${className}`}
-    >
+    <div className={containerVariant({ height, place, className })}>
       {children}
     </div>
   );

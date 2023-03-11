@@ -18,7 +18,7 @@ export const MobileBurgerMenu = ({
     <div
       className={`${
         !isOpen ? "translate-x-full" : "translate-x-0"
-      } border-green fixed left-0 top-0 z-20 flex h-full w-full flex-col items-end gap-10 border bg-main-yellow py-6 px-8 transition-all lg:hidden`}
+      } border-green fixed left-0 top-0 z-20 flex h-full w-full flex-col items-end gap-10 border bg-main-yellow py-6  px-8 transition-all lg:hidden`}
     >
       <IconButton icon={<X size={40} />} onClick={onClose} />
 

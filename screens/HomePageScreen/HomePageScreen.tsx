@@ -58,7 +58,9 @@ export const HomePageScreen = () => {
               <VerticalStack className="mb-10 gap-2 rounded-md lg:flex-row lg:items-center lg:bg-white lg:px-2 lg:py-1 lg:shadow-regular">
                 {isLoaded && (
                   <GoogleAutocomplete
-                    onSelect={(val) => setSelectedCity(val.name)}
+                    onSelect={(val) =>
+                      setSelectedCity(val.name.toLocaleLowerCase())
+                    }
                     placeholder="Vyhledejte místo své trasy"
                   />
                 )}
