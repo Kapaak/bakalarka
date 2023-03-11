@@ -1,20 +1,18 @@
 import {
   Button,
   Container,
-  GoogleAutocomplete,
+  GoogleComboBox,
   HorizontalStack,
   MainHeadline,
   MainSubheadline,
   MaxWidth,
   VerticalStack,
 } from "@/ui";
-import { useGoogleAutocomplete } from "@/hooks";
 import { useRouter } from "next/router";
 import { LocationCard } from "./components";
 
 export const LocationPageScreen = () => {
   const router = useRouter();
-  const { isLoaded } = useGoogleAutocomplete();
   return (
     <section className="relative bg-gradient-to-r from-main-yellow to-main-orange">
       <MaxWidth className="max-w-[60rem] lg:max-w-screen-2xl">
@@ -31,12 +29,12 @@ export const LocationPageScreen = () => {
               <Button color="secondary" className="mb-4 lg:hidden">
                 Upřesnit výběr
               </Button>
-              {isLoaded && (
-                <div className="hidden bg-white p-2 lg:flex">
-                  <GoogleAutocomplete />
-                  <Button color="secondary">Změnit</Button>
-                </div>
-              )}
+              <GoogleComboBox
+                label="Změnit"
+                placeholder="Změňte místo trasy"
+                onSelect={() => {}}
+                className="hidden lg:flex"
+              />
             </VerticalStack>
             <VerticalStack className="flex-1 basis-1/3 gap-4 overflow-x-scroll lg:flex-row">
               <LocationCard

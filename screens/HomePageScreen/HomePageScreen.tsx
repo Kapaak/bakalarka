@@ -1,29 +1,22 @@
-import React, { useMemo, useState } from "react";
 import {
-  Button,
   Container,
-  GoogleAutocomplete,
   HorizontalStack,
   VerticalStack,
   MainHeadline,
   MainSubheadline,
   MaxWidth,
-  SearchBar,
+  GoogleComboBox,
 } from "@/ui";
 import Image from "next/image";
 
 import CyclistHeroImage from "../../public/images/hero-img.jpg";
 import { useRouter } from "next/router";
-import { useGoogleAutocomplete } from "@/hooks";
 
 export const HomePageScreen = () => {
-  const [selectedCity, setSelectedCity] = useState("");
-
   const router = useRouter();
-  const { isLoaded } = useGoogleAutocomplete();
 
-  const handleFindSelected = () => {
-    selectedCity.length > 0 && router.push(`/locations/${selectedCity}`);
+  const handleFindSelected = (locationName: string) => {
+    router.push(`/locations/${locationName}`);
   };
 
   return (
@@ -40,23 +33,11 @@ export const HomePageScreen = () => {
                   ze sedla svého kola
                 </MainSubheadline>
               </div>
-
-              <VerticalStack className="mb-10 gap-2 rounded-md lg:flex-row lg:items-center lg:bg-white lg:px-2 lg:py-1 lg:shadow-regular">
-                {isLoaded && (
-                  <GoogleAutocomplete
-                    onSelect={(val) =>
-                      setSelectedCity(val.name.toLocaleLowerCase())
-                    }
-                    placeholder="Vyhledejte místo své trasy"
-                  />
-                )}
-                <Button
-                  className="py-4 lg:border-main-orange lg:bg-main-orange lg:text-black"
-                  onClick={handleFindSelected}
-                >
-                  Najít
-                </Button>
-              </VerticalStack>
+              <GoogleComboBox
+                label="Najít"
+                placeholder="Vyhledejte místo své trasy"
+                onSelect={(locationName) => handleFindSelected(locationName)}
+              />
             </VerticalStack>
             <div className="relative z-20 hidden flex-1 lg:block">
               <Image
@@ -69,16 +50,6 @@ export const HomePageScreen = () => {
           </HorizontalStack>
         </Container>
       </MaxWidth>
-      {/* <div className="absolute bottom-0 z-10 h-1/4 w-full bg-white pt-8">
-        <MaxWidth>
-          <SearchBar
-            options={[
-              { id: "1", label: "Brno", value: "brno" },
-              { id: "2", label: "Olomouc", value: "olomouc" },
-            ]}
-          />
-        </MaxWidth>
-      </div> */}
     </section>
   );
 };

@@ -8,6 +8,7 @@ import {
   Button,
   VerticalStack,
   Link,
+  ImageDividerLayout,
 } from "@/ui";
 import { FormProvider, useForm } from "react-hook-form";
 import { SignUpFormModel } from "@/domains";
@@ -22,16 +23,10 @@ export const SignUpPageScreen = () => {
   };
   return (
     <section>
-      <HorizontalStack className="h-full">
-        <div className="relative hidden flex-1 before:absolute before:h-full before:w-full before:bg-gradient-to-r before:from-main-yellow before:to-main-orange before:opacity-50 before:content-[''] lg:block">
-          <Image
-            className="z-negative object-cover object-left"
-            src="/images/girls-on-ride.jpg"
-            fill
-            alt="Two girls riding a bike."
-          />
-        </div>
-
+      <ImageDividerLayout
+        image="/images/girls-on-ride.jpg"
+        alt="Two girls riding a bike."
+      >
         <MaxWidth className="flex-1">
           <Container height="full" place="center">
             <FormProvider {...form}>
@@ -60,7 +55,7 @@ export const SignUpPageScreen = () => {
             </FormProvider>
           </Container>
         </MaxWidth>
-      </HorizontalStack>
+      </ImageDividerLayout>
     </section>
   );
 };
