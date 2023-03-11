@@ -15,7 +15,12 @@ interface EditRouteProps {
 
 export const EditRoute = ({ onReturn }: EditRouteProps) => {
   const [crossingPoints, setCrossingPoints] = useState<CrossingPoint[]>([]);
-  const { updateStartPoint, updateFinishPoint } = useRouteContext();
+  const {
+    updateStartPoint,
+    updateFinishPoint,
+    addCrossingPoint,
+    removeCrossingPointByIndex,
+  } = useRouteContext();
 
   const { isLoaded } = useGoogleAutocomplete();
 
@@ -36,8 +41,10 @@ export const EditRoute = ({ onReturn }: EditRouteProps) => {
     setCrossingPoints(newCrossingPoints);
   };
 
-  const handleRemoveCrossingPoint = (id: string) => {
+  const handleRemoveCrossingPoint = (id: string, index: number) => {
     const filteredPoints = crossingPoints.filter((point) => point.id !== id);
+
+    removeCrossingPointByIndex(index);
     setCrossingPoints(filteredPoints);
   };
 
@@ -54,8 +61,14 @@ export const EditRoute = ({ onReturn }: EditRouteProps) => {
             <RouteInput
               key={crossingPoint.id}
               placeholder="Zadejte průjezdový bod"
-              onPointRemove={() => handleRemoveCrossingPoint(crossingPoint.id)}
+              onPointRemove={() =>
+                handleRemoveCrossingPoint(crossingPoint.id, index)
+              }
               onPointAdd={() => handleAddCrossingPointAfter(index)}
+              onSelect={(val) => {
+                console.log(val, "vvv");
+                addCrossingPoint(val);
+              }}
             />
           ))}
           <RouteInput placeholder="Zadejte cíl" onSelect={updateFinishPoint} />

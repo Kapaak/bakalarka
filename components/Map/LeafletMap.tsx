@@ -8,6 +8,7 @@ import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "leaflet-routing-machine";
 import { LatLngLiteral } from "@/domains";
 import { useDistance, useElevation } from "@/hooks";
+import { useMemo } from "react";
 
 const greenIcon = new L.Icon({
   iconUrl: "/icons/map_pin_start.svg",
@@ -15,12 +16,17 @@ const greenIcon = new L.Icon({
 
 const accessToken = process.env.NEXT_PUBLIC_MAPBOX || "";
 
-interface LeafletMapProps {
+export interface LeafletMapProps {
   startPoint: LatLngLiteral;
+  crossingPoints?: LatLngLiteral[];
   finishPoint: LatLngLiteral;
 }
 
-export const LeafletMap = ({ startPoint, finishPoint }: LeafletMapProps) => {
+export const LeafletMap = ({
+  startPoint,
+  finishPoint,
+  crossingPoints,
+}: LeafletMapProps) => {
   //ta elevation se bude potitat z koordinatu co prijdou v props
   //tam bude start point atd
 
@@ -33,11 +39,20 @@ export const LeafletMap = ({ startPoint, finishPoint }: LeafletMapProps) => {
   //   coordinatesTo: { lat: 49.1839069, lng: 16.7809511 },
   // });
 
+  //turf.js na pocitani distance atd .. mozna i na pocitani elevation
+  const waypointsFromCoordinates = useMemo(() => {
+    return (crossingPoints ?? []).map((crossingPoint) =>
+      L.latLng(crossingPoint?.lat, crossingPoint?.lng)
+    );
+  }, [crossingPoints]);
+
+  console.log(waypointsFromCoordinates, "wa");
+
   const createRoutingMachineLayer = () => {
     const instance = L.Routing.control({
       waypoints: [
         L.latLng(startPoint?.lat, startPoint?.lng),
-        // L.latLng(49.1839069, 16.5304978),
+        ...waypointsFromCoordinates,
         L.latLng(finishPoint?.lat, finishPoint?.lng),
       ],
       lineOptions: {

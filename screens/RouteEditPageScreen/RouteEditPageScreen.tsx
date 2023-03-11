@@ -18,15 +18,6 @@ export const RouteEditPageScreen = () => {
 
   return (
     <TransparentCard>
-      <Button
-        type="button"
-        onClick={() => updateStartPoint({ lat: 49.0039069, lng: 16.1304978 })}
-      >
-        upd point
-      </Button>
-      <Button type="button" onClick={() => console.log(startPoint, "star")}>
-        show start point
-      </Button>
       {isDetailPage && <EditDetail />}
       {isRoutePage && (
         <EditRoute onReturn={() => setPage(RouteEditSteps.DETAIL)} />
