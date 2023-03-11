@@ -7,6 +7,7 @@ import "leaflet-defaulticon-compatibility";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "leaflet-routing-machine";
 import { LatLngLiteral } from "@/domains";
+import { useDistance, useElevation } from "@/hooks";
 
 const greenIcon = new L.Icon({
   iconUrl: "/icons/map_pin_start.svg",
@@ -19,6 +20,15 @@ interface LeafletMapProps {
 }
 
 export const LeafletMap = ({ startPoint }: LeafletMapProps) => {
+  const { data } = useElevation({
+    coordinates: { lat: 49.0039069, lng: 16.1304978 },
+  });
+
+  // const { distance } = useDistance({
+  //   coordinatesFrom: { lat: 49.1839069, lng: 16.5304978 },
+  //   coordinatesTo: { lat: 49.1839069, lng: 16.7809511 },
+  // });
+
   const createRoutingMachineLayer = (props) => {
     const instance = L.Routing.control({
       waypoints: [

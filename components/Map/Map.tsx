@@ -14,7 +14,7 @@ interface MapProps {
 
 export const Map = ({ startPoint }: MapProps) => {
   return (
-    <div className="h-full border border-red-500">
+    <div className="h-full">
       <LeafletMap startPoint={startPoint} />
     </div>
   );
