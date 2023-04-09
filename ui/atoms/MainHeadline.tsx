@@ -1,5 +1,6 @@
+import { PropsWithChildren } from "react";
+
 import { ClassName } from "@/domains";
-import React, { PropsWithChildren } from "react";
 
 interface MainHeadlineProps extends PropsWithChildren {
   className?: ClassName;

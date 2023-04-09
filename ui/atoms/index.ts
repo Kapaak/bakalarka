@@ -9,4 +9,5 @@ export * from './Logo';
 export * from './MainHeadline';
 export * from './MainSubheadline';
 export * from './MaxWidth';
+export * from './Text';
 export * from './VerticalStack';

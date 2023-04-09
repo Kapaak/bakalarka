@@ -1,5 +1,6 @@
-import { Header, Footer } from "@/components";
 import { PropsWithChildren } from "react";
+
+import { Header } from "@/components";
 import { Karla } from "@next/font/google";
 
 interface MainLayoutProps extends PropsWithChildren {}
@@ -11,7 +12,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
     <>
       <Header />
       <main className={karla.className}>{children}</main>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

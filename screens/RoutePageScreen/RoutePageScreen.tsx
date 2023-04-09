@@ -4,12 +4,20 @@ import { useRouteContext } from "@/contexts";
 import { Button, TransparentCard, VerticalStack } from "@/ui";
 import { MapContainer } from "components/Map";
 
+import { RouteLabel } from "./components";
+
 //   from: { lat: 49.1839069, lng: 16.5304978 },
 //   to: { lat: 49.1839069, lng: 16.7809511 },
 
 export const RoutePageScreen = () => {
   const router = useRouter();
   const { updateStartPoint, updateFinishPoint, startPoint } = useRouteContext();
+
+  const dummyRoute = {
+    name: "Okolo potoka",
+    description: "Příjemné posezení, kolem rybníku. Dalo se zde i koupat.",
+    distance: "32",
+  };
 
   return (
     <TransparentCard>
@@ -29,27 +37,17 @@ export const RoutePageScreen = () => {
       <div className="relative flex-1 lg:p-4">
         <MapContainer />
       </div>
-      <VerticalStack className="flex-1 p-12 lg:flex">
-        <div>
-          <p>Název trasy</p>
-          <p>Okolo potoka</p>
-        </div>
-        <div>
-          <p>Popis trasy</p>
-          <p>Příjemné posezení, kolem rybníku. Dalo se zde i koupat.</p>
-        </div>
-        <div>
-          <div>
-            <p>počet km</p>
-            <p>32</p>
-          </div>
-        </div>
+      <VerticalStack className="flex-1 gap-4 p-12 lg:flex">
+        <RouteLabel title="Název trasy" description={dummyRoute.name} />
+        <RouteLabel title="Popis trasy" description={dummyRoute.description} />
+        <RouteLabel title="Počet kilometrů" description={dummyRoute.distance} />
+
         <Button
           onClick={() => {
             const { locationId, routeId } = router.query;
             router.push(`/locations/${locationId}/${routeId}/edit`);
           }}
-          className="mt-auto mr-auto"
+          className="mt-auto mr-auto hidden lg:block"
         >
           Upravit
         </Button>

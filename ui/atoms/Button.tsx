@@ -1,5 +1,6 @@
-import { cva, type VariantProps } from "class-variance-authority";
 import { ButtonHTMLAttributes, PropsWithChildren } from "react";
+
+import { cva, type VariantProps } from "class-variance-authority";
 
 const buttonVariant = cva(["rounded-small"], {
   variants: {
