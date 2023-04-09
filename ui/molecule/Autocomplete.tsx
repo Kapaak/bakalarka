@@ -14,7 +14,10 @@ export const Autocomplete = ({
   placeholder,
   onSelect,
 }: AutocompleteProps) => {
-  const [selected, setSelected] = useState<AutocompleteOption>();
+  const [selected, setSelected] = useState<AutocompleteOption>({
+    label: "",
+    value: "",
+  });
   const [query, setQuery] = useState("");
 
   const filteredOptions =
@@ -65,7 +68,7 @@ export const Autocomplete = ({
               ) : (
                 filteredOptions.map((option) => (
                   <Combobox.Option
-                    key={option.id}
+                    key={option.value}
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 ${
                         active ? "bg-main-yellow text-black" : "text-gray-900"

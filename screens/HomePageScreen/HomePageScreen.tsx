@@ -47,6 +47,7 @@ export const HomePageScreen = () => {
               </div>
               <SearchBar
                 placeholder="Vyhledej kraj mé trasy..."
+                baseRoute="/locations"
                 options={searchOptions}
               />
             </VerticalStack>
