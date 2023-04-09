@@ -32,7 +32,7 @@ export const SearchBar = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      <HorizontalStack className="gap-3 rounded-md bg-white px-4 py-2 shadow-md ">
+      <HorizontalStack className="gap-3 rounded-md bg-white px-4 py-2 shadow-regular ">
         <Autocomplete
           placeholder={placeholder}
           options={options}

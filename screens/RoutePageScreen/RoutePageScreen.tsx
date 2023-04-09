@@ -1,11 +1,4 @@
-import {
-  Button,
-  Container,
-  HorizontalStack,
-  MaxWidth,
-  TransparentCard,
-  VerticalStack,
-} from "@/ui";
+import { Button, TransparentCard, VerticalStack } from "@/ui";
 import { MapContainer } from "components/Map";
 import { useRouteContext } from "@/contexts";
 import { useRouter } from "next/router";
@@ -19,7 +12,7 @@ export const RoutePageScreen = () => {
 
   return (
     <TransparentCard>
-      <button onClick={() => console.log(startPoint, "dsa")}>
+      {/* <button onClick={() => console.log(startPoint, "dsa")}>
         start poitn
       </button>
       <Button
@@ -31,7 +24,7 @@ export const RoutePageScreen = () => {
         onClick={() => updateFinishPoint({ lat: 49.1839069, lng: 16.7809511 })}
       >
         update finish point
-      </Button>
+      </Button> */}
       <VerticalStack className="hidden flex-1 p-12 lg:flex">
         <div>
           <p>Název trasy</p>
