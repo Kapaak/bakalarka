@@ -1,6 +1,6 @@
 import { LatLngLiteral } from "@/domains";
-import { HorizontalStack, GoogleAutocomplete, IconButton } from "@/ui";
-import { MinusCircle, PlusCircle } from "phosphor-react";
+import { GoogleAutocomplete, HorizontalStack, IconButton } from "@/ui";
+import { MinusCircle, PlusCircle } from "@phosphor-icons/react";
 
 interface RouteInputProps {
   placeholder: string;

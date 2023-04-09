@@ -1,5 +1,5 @@
 import { HorizontalStack, IconButton } from "@/ui";
-import { Heart } from "phosphor-react";
+import { Heart } from "@phosphor-icons/react";
 
 interface LikeBarProps {
   liked?: boolean;

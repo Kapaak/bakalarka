@@ -1,12 +1,5 @@
 import { Menu, Transition } from "@headlessui/react";
 import { signOut } from "next-auth/react";
-import {
-  ArrowDown,
-  CircleNotch,
-  CircleWavy,
-  Pencil,
-  PencilLine,
-} from "phosphor-react";
 import { Fragment } from "react";
 import { Button } from "ui/atoms";
 

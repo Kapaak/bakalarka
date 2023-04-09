@@ -50,6 +50,17 @@ export type RouteEditFormModel = {
   placesOfInterest: PlacesOfInterest;
 };
 
+export type RouteRow = {
+  id: string;
+  name: string;
+  distance: number;
+  elevation: number;
+  likes: number;
+  author: string;
+  createdAt: string;
+  placesOfInterest: any; //todo -> update type
+};
+
 export type LatLngLiteral = google.maps.LatLngLiteral;
 export type DirectionsResult = google.maps.DirectionsResult;
 export type MapOptions = google.maps.MapOptions;

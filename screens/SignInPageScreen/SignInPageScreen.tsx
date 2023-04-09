@@ -1,20 +1,18 @@
-import Image from "next/image";
+import { SignUpFormModel } from "@/domains";
 import {
+  Button,
   Container,
+  FormInput,
   HorizontalStack,
+  ImageDividerLayout,
+  Link,
   MainHeadline,
   MaxWidth,
-  FormInput,
-  Button,
   VerticalStack,
-  Link,
-  IconButton,
-  ImageDividerLayout,
 } from "@/ui";
-import { FormProvider, useForm } from "react-hook-form";
-import { SignUpFormModel } from "@/domains";
-import { FacebookLogo, GithubLogo, GoogleLogo } from "phosphor-react";
+import { FacebookLogo, GithubLogo, GoogleLogo } from "@phosphor-icons/react";
 import { signIn } from "next-auth/react";
+import { FormProvider, useForm } from "react-hook-form";
 
 export const SignInPageScreen = () => {
   const form = useForm<SignUpFormModel>();

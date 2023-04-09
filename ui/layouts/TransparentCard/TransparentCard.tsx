@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { PropsWithChildren } from "react";
 
 import { Container, MaxWidth, VerticalStack } from "@/ui";
-import { ArrowLeft } from "phosphor-react";
+import { ArrowLeft } from "@phosphor-icons/react";
 
 export const TransparentCard = ({ children }: PropsWithChildren) => {
   const { query } = useRouter();

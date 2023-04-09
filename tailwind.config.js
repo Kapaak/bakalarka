@@ -27,12 +27,13 @@ module.exports = {
       },
       boxShadow: {
         regular: "0px 0px 10px 2px rgba(0, 0, 0, 0.06)",
+        border: "0 0 1px 1px rgba(0,0,0,.2)",
       },
       zIndex: {
         negative: "-1",
       },
-      gridTemplateColumns:{
-        fluid:"repeat(auto-fit, minmax(20rem, 1fr))",
+      gridTemplateColumns: {
+        fluid: "repeat(auto-fit, minmax(20rem, 1fr))",
       },
       spacing: () => ({
         ...Array.from({ length: 96 }, (_, index) => index * 0.5)

@@ -1,7 +1,7 @@
+import { Button, IconButton, Link, User } from "@/ui";
+import { X } from "@phosphor-icons/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { Button, IconButton, Link, User } from "@/ui";
-import { X } from "phosphor-react";
 
 interface MobileBurgerMenuProps {
   isOpen: boolean;

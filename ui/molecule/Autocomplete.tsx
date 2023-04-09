@@ -2,7 +2,7 @@ import { Fragment, useState } from "react";
 
 import { AutocompleteOption } from "@/domains";
 import { Combobox, Transition } from "@headlessui/react";
-import { CheckCircle, MagnifyingGlass } from "phosphor-react";
+import { CheckCircle, MagnifyingGlass } from "@phosphor-icons/react";
 
 export interface AutocompleteProps {
   options: AutocompleteOption[];

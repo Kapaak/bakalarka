@@ -1,6 +1,6 @@
 import { AutocompletePrediction, Location } from "@/domains";
 import { Combobox, Transition } from "@headlessui/react";
-import { MagnifyingGlass } from "phosphor-react";
+import { MagnifyingGlass } from "@phosphor-icons/react";
 import { Fragment, useState } from "react";
 import usePlacesAutocomplete, {
   getGeocode,

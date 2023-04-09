@@ -1,7 +1,7 @@
 import { Button, IconButton, Link, User } from "@/ui";
-import { signOut, useSession } from "next-auth/react";
+import { List } from "@phosphor-icons/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { List } from "phosphor-react";
 import { useState } from "react";
 import { MobileBurgerMenu } from "./MobileBurgerMenu";
 export const Navigation = () => {
