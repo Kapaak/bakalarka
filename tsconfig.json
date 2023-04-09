@@ -22,6 +22,7 @@
       "@/ui":["ui/index.ts"],
       "@/hooks":["hooks/index.ts"],
       "@/contexts":["contexts/index.ts"],
+      "@/utils":["utils/index.ts"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

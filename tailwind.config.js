@@ -31,6 +31,9 @@ module.exports = {
       zIndex: {
         negative: "-1",
       },
+      gridTemplateColumns:{
+        fluid:"repeat(auto-fit, minmax(20rem, 1fr))",
+      },
       spacing: () => ({
         ...Array.from({ length: 96 }, (_, index) => index * 0.5)
           .filter((i) => i)
