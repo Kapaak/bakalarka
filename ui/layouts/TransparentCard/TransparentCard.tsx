@@ -1,4 +1,4 @@
-import { Container, HorizontalStack, MaxWidth } from "@/ui";
+import { Container, VerticalStack, MaxWidth } from "@/ui";
 import { PropsWithChildren } from "react";
 import NextLink from "next/link";
 import { ArrowLeft } from "phosphor-react";
@@ -18,9 +18,9 @@ export const TransparentCard = ({ children }: PropsWithChildren) => {
             <ArrowLeft weight="bold" /> Zpět na seznam všech tras
           </NextLink>
 
-          <HorizontalStack className="relative z-10 h-full rounded-lg bg-transparent before:absolute before:z-negative before:h-full before:w-full before:rounded-lg before:bg-white before:opacity-50 before:content-['']">
+          <VerticalStack className="relative z-10 h-full rounded-lg bg-transparent before:absolute before:z-negative before:h-full before:w-full before:rounded-lg before:bg-white before:opacity-50 before:content-[''] lg:flex-row-reverse">
             {children}
-          </HorizontalStack>
+          </VerticalStack>
         </Container>
       </MaxWidth>
     </section>
