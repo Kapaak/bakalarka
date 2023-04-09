@@ -4,6 +4,7 @@ import {
   Marker,
   Popup,
   TileLayer,
+  useMapEvent,
   useMapEvents,
   ZoomControl,
 } from "react-leaflet";
@@ -15,7 +16,7 @@ import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "leaflet-routing-machine";
 import { LatLngLiteral } from "@/domains";
 import { useDistance, useElevation } from "@/hooks";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 const greenIcon = new L.Icon({
   iconUrl: "/icons/map_pin_start.svg",
@@ -34,6 +35,7 @@ export const LeafletMap = ({
   finishPoint,
   crossingPoints,
 }: LeafletMapProps) => {
+  const [position, setPosition] = useState(null);
   //ta elevation se bude potitat z koordinatu co prijdou v props
   //tam bude start point atd
 
@@ -52,8 +54,6 @@ export const LeafletMap = ({
       L.latLng(crossingPoint?.lat, crossingPoint?.lng)
     );
   }, [crossingPoints]);
-
-  console.log(waypointsFromCoordinates, "wa");
 
   const createRoutingMachineLayer = () => {
     const instance = L.Routing.control({
@@ -137,6 +137,20 @@ export const LeafletMap = ({
           A pretty CSS3 popup. <br /> Easily customizable.
         </Popup>
       </Marker> */}
+      <MyComponent />
     </MapContainer>
   );
 };
+
+function MyComponent() {
+  const map = useMapEvents({
+    click: () => {
+      map.locate();
+      console.log("click");
+    },
+    locationfound: (location) => {
+      console.log("location found:", location);
+    },
+  });
+  return null;
+}

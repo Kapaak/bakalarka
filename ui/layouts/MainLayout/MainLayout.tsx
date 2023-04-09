@@ -4,7 +4,7 @@ import { Karla } from "@next/font/google";
 
 interface MainLayoutProps extends PropsWithChildren {}
 
-const karla = Karla({ subsets: ["latin"] });
+const karla = Karla({ subsets: ["latin", "latin-ext"] });
 
 export const MainLayout = ({ children }: MainLayoutProps) => {
   return (

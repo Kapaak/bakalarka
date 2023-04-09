@@ -5,20 +5,32 @@ import {
   MainHeadline,
   MainSubheadline,
   MaxWidth,
-  GoogleComboBox,
+  SearchBar,
 } from "@/ui";
 import Image from "next/image";
 
 import CyclistHeroImage from "../../public/images/hero-img.jpg";
-import { useRouter } from "next/router";
+import { useMemo } from "react";
 
 export const HomePageScreen = () => {
-  const router = useRouter();
-
-  const handleFindSelected = (locationName: string) => {
-    router.push(`/locations/${locationName}`);
-  };
-
+  const searchOptions = useMemo(
+    () => [
+      { value: "olomoucky-kraj", label: "Olomoucký kraj" },
+      { value: "jihomoravsky-kraj", label: "Jihomoravský kraj" },
+      { value: "moravskoslezsky-kraj", label: "Moravskoslezský kraj" },
+      { value: "zlinsky-kraj", label: "Zlínský kraj" },
+      { value: "vysocina-kraj", label: "Kraj Vysočina" },
+      { value: "pardubicky-kraj", label: "Pardubický kraj" },
+      { value: "kralovehradecky-kraj", label: "Královehradecký kraj" },
+      { value: "liberecky-kraj", label: "Liberecký kraj" },
+      { value: "ustecky-kraj", label: "Ústecký kraj" },
+      { value: "karlovarsky-kraj", label: "Karlovarský kraj" },
+      { value: "plzensky-kraj", label: "Plzeňský kraj" },
+      { value: "jihocesky-kraj", label: "Jihočeský kraj" },
+      { value: "stredocesky-kraj", label: "Středočeský kraj" },
+    ],
+    []
+  );
   return (
     <section className="relative bg-gradient-to-r from-main-yellow to-main-orange ">
       <MaxWidth>
@@ -33,10 +45,9 @@ export const HomePageScreen = () => {
                   ze sedla svého kola
                 </MainSubheadline>
               </div>
-              <GoogleComboBox
-                label="Najít"
-                placeholder="Vyhledejte místo své trasy"
-                onSelect={(locationName) => handleFindSelected(locationName)}
+              <SearchBar
+                placeholder="Vyhledej kraj mé trasy..."
+                options={searchOptions}
               />
             </VerticalStack>
             <div className="relative z-20 hidden flex-1 lg:block">

@@ -5,11 +5,16 @@ import { Fragment, useState } from "react";
 
 export interface AutocompleteProps {
   options: AutocompleteOption[];
+  placeholder?: string;
   onSelect(location: string): void;
 }
 
-export const Autocomplete = ({ options = [], onSelect }: AutocompleteProps) => {
-  const [selected, setSelected] = useState(options?.[0]);
+export const Autocomplete = ({
+  options = [],
+  placeholder,
+  onSelect,
+}: AutocompleteProps) => {
+  const [selected, setSelected] = useState<AutocompleteOption>();
   const [query, setQuery] = useState("");
 
   const filteredOptions =
@@ -39,9 +44,10 @@ export const Autocomplete = ({ options = [], onSelect }: AutocompleteProps) => {
               />
             </Combobox.Button>
             <Combobox.Input
-              className="w-full border-none py-2 pl-10 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
+              className="w-full border-none py-2 pl-10 pr-10 text-sm leading-5 text-gray-900 focus:outline-none"
               displayValue={(option: AutocompleteOption) => option.label}
               onChange={(event) => setQuery(event.target.value)}
+              placeholder={placeholder}
             />
           </div>
           <Transition
