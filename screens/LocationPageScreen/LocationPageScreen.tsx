@@ -1,5 +1,4 @@
 import { Container, MainHeadline, MainSubheadline, MaxWidth } from "@/ui";
-import { FavoriteLocations, LocationCard } from "./components";
 
 interface LocationpageScreenProps {
   locationName?: string;

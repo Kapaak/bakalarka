@@ -1,7 +1,8 @@
+import { useRouter } from "next/router";
+
+import { useRouteContext } from "@/contexts";
 import { Button, TransparentCard, VerticalStack } from "@/ui";
 import { MapContainer } from "components/Map";
-import { useRouteContext } from "@/contexts";
-import { useRouter } from "next/router";
 
 //   from: { lat: 49.1839069, lng: 16.5304978 },
 //   to: { lat: 49.1839069, lng: 16.7809511 },

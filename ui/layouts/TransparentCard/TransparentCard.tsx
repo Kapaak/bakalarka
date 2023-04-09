@@ -1,8 +1,9 @@
-import { Container, VerticalStack, MaxWidth } from "@/ui";
-import { PropsWithChildren } from "react";
 import NextLink from "next/link";
-import { ArrowLeft } from "phosphor-react";
 import { useRouter } from "next/router";
+import { PropsWithChildren } from "react";
+
+import { Container, MaxWidth, VerticalStack } from "@/ui";
+import { ArrowLeft } from "phosphor-react";
 
 export const TransparentCard = ({ children }: PropsWithChildren) => {
   const { query } = useRouter();

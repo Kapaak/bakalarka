@@ -1,5 +1,6 @@
-import { locations } from "@/utils";
 import { Container, MainHeadline, MaxWidth } from "@/ui";
+import { locations } from "@/utils";
+
 import { LocationCard } from "./components";
 
 export const LocationsPageScreen = () => {

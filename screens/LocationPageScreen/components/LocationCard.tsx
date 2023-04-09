@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
-import { Heart } from "phosphor-react";
-import { HorizontalStack, IconButton, VerticalStack } from "ui/atoms";
+
+import { HorizontalStack } from "ui/atoms";
+
 import { LikeBar } from "./LikeBar";
 
 interface LocationCardProps {

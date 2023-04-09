@@ -1,16 +1,17 @@
+import Image from "next/image";
+
 import {
   Container,
   HorizontalStack,
-  VerticalStack,
   MainHeadline,
   MainSubheadline,
   MaxWidth,
   SearchBar,
+  VerticalStack,
 } from "@/ui";
-import Image from "next/image";
+import { locations } from "@/utils";
 
 import CyclistHeroImage from "../../public/images/hero-img.jpg";
-import { locations } from "@/utils";
 
 export const HomePageScreen = () => {
   return (

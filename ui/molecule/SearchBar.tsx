@@ -1,9 +1,12 @@
-import { AutocompleteOption } from "@/domains";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { BaseSyntheticEvent, useState } from "react";
+
+import { AutocompleteOption } from "@/domains";
+
 import { Button, HorizontalStack } from "../atoms";
+// eslint-disable-next-line import/order
 import { Autocomplete } from "./Autocomplete";
-import NextLink from "next/link";
 
 interface SearchBarProps {
   options: AutocompleteOption[];

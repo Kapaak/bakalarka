@@ -4,6 +4,7 @@ import {
   MainSubheadline,
   VerticalStack,
 } from "@/ui";
+
 import { LocationCard } from "./LocationCard";
 
 interface FavoriteLocationsProps {

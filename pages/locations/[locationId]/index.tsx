@@ -1,7 +1,8 @@
 import { GetServerSideProps, NextPage } from "next";
+
+import { AutocompleteOption } from "@/domains";
 import { LocationPageScreen } from "@/screens";
 import { locations } from "@/utils";
-import { AutocompleteOption } from "@/domains";
 
 interface LocationPageProps {
   location: AutocompleteOption;

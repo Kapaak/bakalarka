@@ -1,22 +1,20 @@
-import L from "leaflet";
+import { useMemo, useState } from "react";
 import {
   MapContainer,
-  Marker,
-  Popup,
   TileLayer,
-  useMapEvent,
-  useMapEvents,
   ZoomControl,
+  useMapEvents,
 } from "react-leaflet";
-import { createControlComponent } from "@react-leaflet/core";
-import "leaflet/dist/leaflet.css";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
-import "leaflet-defaulticon-compatibility";
-import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
-import "leaflet-routing-machine";
+
 import { LatLngLiteral } from "@/domains";
-import { useDistance, useElevation } from "@/hooks";
-import { useMemo, useState } from "react";
+import { useElevation } from "@/hooks";
+import { createControlComponent } from "@react-leaflet/core";
+import L from "leaflet";
+import "leaflet-defaulticon-compatibility";
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+import "leaflet-routing-machine";
+import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
+import "leaflet/dist/leaflet.css";
 
 const greenIcon = new L.Icon({
   iconUrl: "/icons/map_pin_start.svg",
