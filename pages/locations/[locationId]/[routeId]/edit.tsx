@@ -1,5 +1,7 @@
-import { RouteContextProvider } from "@/contexts";
 import { NextPage } from "next";
+
+import { RouteContextProvider } from "@/contexts";
+
 import { RouteEditPageScreen } from "../../../../screens";
 
 const EditPage: NextPage = () => {

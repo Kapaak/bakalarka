@@ -1,8 +1,10 @@
-import { Button, TransparentCard } from "@/ui";
-import { MapContainer } from "@/components";
-import { EditDetail, EditRoute } from "./components";
 import { useState } from "react";
+
+import { MapContainer } from "@/components";
 import { useRouteContext } from "@/contexts";
+import { Button, TransparentCard } from "@/ui";
+
+import { EditDetail, EditRoute } from "./components";
 
 enum RouteEditSteps {
   DETAIL = "detail",

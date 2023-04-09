@@ -34,9 +34,7 @@ export const RoutePageScreen = () => {
       >
         update finish point
       </Button> */}
-      <div className="relative flex-1 lg:p-4">
-        <MapContainer />
-      </div>
+
       <VerticalStack className="flex-1 gap-4 p-12 lg:flex">
         <RouteLabel title="Název trasy" description={dummyRoute.name} />
         <RouteLabel title="Popis trasy" description={dummyRoute.description} />
@@ -52,6 +50,9 @@ export const RoutePageScreen = () => {
           Upravit
         </Button>
       </VerticalStack>
+      <div className="relative h-[35rem] border border-red-500 lg:h-full lg:flex-1 lg:p-4">
+        <MapContainer />
+      </div>
     </TransparentCard>
   );
 };

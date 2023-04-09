@@ -1,6 +1,7 @@
-import { useRouteContext } from "@/contexts";
 import dynamic from "next/dynamic";
-import { LatLngLiteral } from "@/domains";
+
+import { useRouteContext } from "@/contexts";
+
 import { LeafletMapProps } from "./LeafletMap";
 
 const LeafletMap = dynamic<LeafletMapProps>(
@@ -13,7 +14,7 @@ const LeafletMap = dynamic<LeafletMapProps>(
 export const MapContainer = () => {
   const { startPoint, finishPoint, crossingPoints } = useRouteContext();
   return (
-    <div className="h-full">
+    <div className="h-[inherit] w-full lg:h-full">
       <LeafletMap
         startPoint={startPoint}
         finishPoint={finishPoint}
