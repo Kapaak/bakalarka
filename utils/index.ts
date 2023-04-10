@@ -27,7 +27,7 @@ export const locations = [
 //   return [];
 // };
 
-export const handleReverseGeocoding = async (location: LatLngLiteral) => {
+export const reverseGeocoding = async (location: LatLngLiteral) => {
   const data = await axios.get(
     `https://api.mapbox.com/geocoding/v5/mapbox.places/${location?.lng},${location?.lat}.json?access_token=${process.env.NEXT_PUBLIC_MAPBOX}`
   );

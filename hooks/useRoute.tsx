@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { LatLngLiteral, TranslatedPoints } from "@/domains";
-import { handleReverseGeocoding } from "@/utils";
+import { reverseGeocoding } from "@/utils";
 
 export const useRoute = () => {
   const [startPoint, setStartPoint] = useState({ lat: 0, lng: 0 });
@@ -32,7 +32,7 @@ export const useRoute = () => {
   };
 
   useEffect(() => {
-    handleReverseGeocoding(startPoint).then((val) => {
+    reverseGeocoding(startPoint).then((val) => {
       val?.features[0] &&
         setTranslatedPoints((prev) => ({
           ...prev,
@@ -52,20 +52,18 @@ export const useRoute = () => {
   }, [startPoint]);
 
   useEffect(() => {
-    handleReverseGeocoding(crossingPoints[crossingPoints.length - 1]).then(
-      (val) => {
-        console.log(val?.features?.[0], "ft", crossingPoints.length);
-        val?.features &&
-          crossingPoints.length > 0 &&
-          setTranslatedPoints((prev) => ({
-            ...prev,
-            crossingPoints: [
-              ...prev?.crossingPoints,
-              val?.features[0]?.place_name,
-            ],
-          }));
-      }
-    );
+    reverseGeocoding(crossingPoints[crossingPoints.length - 1]).then((val) => {
+      console.log(val?.features?.[0], "ft", crossingPoints.length);
+      val?.features &&
+        crossingPoints.length > 0 &&
+        setTranslatedPoints((prev) => ({
+          ...prev,
+          crossingPoints: [
+            ...prev?.crossingPoints,
+            val?.features[0]?.place_name,
+          ],
+        }));
+    });
 
     // handleAddressFromCoordinates(
     //   crossingPoints[crossingPoints.length - 1]
@@ -84,7 +82,7 @@ export const useRoute = () => {
   }, [crossingPoints]);
 
   useEffect(() => {
-    handleReverseGeocoding(finishPoint).then((val) => {
+    reverseGeocoding(finishPoint).then((val) => {
       val?.features[0] &&
         setTranslatedPoints((prev) => ({
           ...prev,
