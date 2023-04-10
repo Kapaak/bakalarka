@@ -5,8 +5,8 @@ import { cva, type VariantProps } from "class-variance-authority";
 const buttonVariant = cva(["rounded-small"], {
   variants: {
     color: {
-      primary: ["bg-black", "text-white", "border-black"],
-      secondary: ["bg-main-orange", "text-black", " border-main-orange"],
+      primary: ["text-black"],
+      secondary: ["text-main-orange"],
     },
     size: {
       small: ["text-sm", "py-1", "px-2"],
@@ -16,6 +16,7 @@ const buttonVariant = cva(["rounded-small"], {
       contained: "border",
       outlined: "border  border-dashed ",
       tinted: "",
+      plain: "uppercase font-bold",
     },
   },
   compoundVariants: [
@@ -24,6 +25,17 @@ const buttonVariant = cva(["rounded-small"], {
       variant: "tinted",
       color: "secondary",
       class: "text-main-orange bg-light-orange",
+    },
+    {
+      variant: "contained",
+      color: "primary",
+      className: "border-black bg-black text-slate-50",
+    },
+    {
+      variant: "contained",
+      color: "secondary",
+      //nemuze byt text-black ,protoze to nepreppise predchozi color
+      className: "bg-main-orange text-slate-900 border-main-orange",
     },
   ],
   // compoundVariants: [{ size: "medium", class: "uppercase" }], //nechapu co to je uplne // asi kdyz bude size:"medium", tak automaticky pridam dalsi class .. to bych mohl dat u  variants:{kde bych mel dotted around a ne , u dotted bych mel bg white}
