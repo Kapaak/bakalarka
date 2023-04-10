@@ -25,10 +25,12 @@ export const LocationPageScreen = ({
         <Container height="min-full" className="lg:pt-20">
           <MainHeadline>Destinace v okolí</MainHeadline>
           <MainSubheadline> {locationName}</MainSubheadline>
-          <Table<RouteRow>
-            headerCells={table?.getHeaderGroups()}
-            bodyCells={table?.getRowModel()}
-          />
+          <div className="overflow-x-auto">
+            <Table<RouteRow>
+              headerCells={table?.getHeaderGroups()}
+              bodyCells={table?.getRowModel()}
+            />
+          </div>
           {/* <FavoriteLocations locationName={locationName} /> */}
         </Container>
       </MaxWidth>
