@@ -1,3 +1,5 @@
+import NextLink from "next/link";
+import { useRouter } from "next/router";
 import { useMemo } from "react";
 
 import { RouteRow } from "@/domains";
@@ -23,6 +25,7 @@ export const useLocationPageTable = () => {
       {
         id: "1",
         name: "Okolo potoka",
+        value: "okolo-potoka",
         distance: 32,
         elevation: 150,
         author: "Pavel Zapletal",
@@ -33,6 +36,7 @@ export const useLocationPageTable = () => {
       {
         id: "2",
         name: "Lukovská štreka",
+        value: "lukovska-streka",
         distance: 42,
         elevation: 340,
         author: "Barunka Nováková",
@@ -43,6 +47,8 @@ export const useLocationPageTable = () => {
     ],
     []
   );
+
+  const { query } = useRouter();
 
   const columns = useMemo(() => {
     const columnHelper = createColumnHelper<RouteRow>();
@@ -113,10 +119,16 @@ export const useLocationPageTable = () => {
       }),
       columnHelper.display({
         id: "actions",
-        cell: (info) => <Button>zobrazit trasu</Button>,
+        cell: (info) => (
+          <NextLink
+            href={`/locations/${query.locationId}/${info.row.original.value}`}
+          >
+            <Button>zobrazit trasu</Button>
+          </NextLink>
+        ),
       }),
     ];
-  }, []);
+  }, [query.locationId]);
 
   const table = useReactTable<RouteRow>({
     data: dummyData,

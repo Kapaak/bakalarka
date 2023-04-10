@@ -53,6 +53,7 @@ export type RouteEditFormModel = {
 export type RouteRow = {
   id: string;
   name: string;
+  value: string;
   distance: number;
   elevation: number;
   likes: number;
