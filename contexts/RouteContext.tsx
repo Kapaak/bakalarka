@@ -1,11 +1,13 @@
-import { LatLngLiteral } from "@/domains";
-import { useRoute } from "@/hooks";
 import { createContext, PropsWithChildren, useContext } from "react";
+
+import { LatLngLiteral, TranslatedPoints } from "@/domains";
+import { useRoute } from "@/hooks";
 
 type RouteContextType = {
   startPoint: LatLngLiteral;
   finishPoint: LatLngLiteral;
   crossingPoints: LatLngLiteral[];
+  translatedPoints: TranslatedPoints;
   updateStartPoint(coordinates: LatLngLiteral): void;
   updateFinishPoint(coordinates: LatLngLiteral): void;
   addCrossingPoint(coordinates: LatLngLiteral): void;
@@ -22,6 +24,7 @@ const defaultValues = {
     lat: 0,
   },
   crossingPoints: [],
+  translatedPoints: { startPoint: "", finishPoint: "", crossingPoints: [] },
   updateStartPoint: () => {},
   updateFinishPoint: () => {},
   addCrossingPoint: () => [],

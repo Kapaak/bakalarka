@@ -1,9 +1,12 @@
-import { Button, VerticalStack } from "@/ui";
-import { useState } from "react";
-import { nanoid } from "nanoid";
-import { RouteInput } from "./RouteInput";
+import { useEffect, useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+
 import { useRouteContext } from "@/contexts";
 import { useGoogleAutocomplete } from "@/hooks";
+import { Button, VerticalStack } from "@/ui";
+import { nanoid } from "nanoid";
+
+import { RouteInput } from "./RouteInput";
 
 type CrossingPoint = {
   id: string;
@@ -20,7 +23,17 @@ export const EditRoute = ({ onReturn }: EditRouteProps) => {
     updateFinishPoint,
     addCrossingPoint,
     removeCrossingPointByIndex,
+    translatedPoints,
   } = useRouteContext();
+
+  const form = useForm({
+    defaultValues: {
+      startPoint: translatedPoints?.startPoint ?? "",
+      crossingPoints: translatedPoints?.crossingPoints ?? "",
+      finishPoint: translatedPoints?.finishPoint ?? "",
+    },
+  });
+  const { getValues, handleSubmit, reset } = form;
 
   const { isLoaded } = useGoogleAutocomplete();
 
@@ -48,36 +61,78 @@ export const EditRoute = ({ onReturn }: EditRouteProps) => {
     setCrossingPoints(filteredPoints);
   };
 
-  return (
-    <VerticalStack className="h-full flex-1  gap-4 p-12">
-      {isLoaded && (
-        <>
-          <RouteInput
-            placeholder="Zadejte start"
-            onSelect={updateStartPoint}
-            onPointAdd={handleAddBeforeFirst}
-          />
-          {crossingPoints?.map((crossingPoint, index) => (
-            <RouteInput
-              key={crossingPoint.id}
-              placeholder="Zadejte průjezdový bod"
-              onPointRemove={() =>
-                handleRemoveCrossingPoint(crossingPoint.id, index)
-              }
-              onPointAdd={() => handleAddCrossingPointAfter(index)}
-              onSelect={(val) => {
-                console.log(val, "vvv");
-                addCrossingPoint(val);
-              }}
-            />
-          ))}
-          <RouteInput placeholder="Zadejte cíl" onSelect={updateFinishPoint} />
-        </>
-      )}
+  useEffect(() => {
+    reset({
+      startPoint: translatedPoints?.startPoint ?? "",
+      crossingPoints: translatedPoints?.crossingPoints ?? "",
+      finishPoint: translatedPoints?.finishPoint ?? "",
+    });
+  }, [
+    reset,
+    translatedPoints?.crossingPoints,
+    translatedPoints?.finishPoint,
+    translatedPoints?.startPoint,
+  ]);
 
-      <Button className="mt-auto mr-auto" onClick={onReturn}>
-        Zpět do editace popisu
-      </Button>
-    </VerticalStack>
+  return (
+    <FormProvider {...form}>
+      <VerticalStack className="h-full flex-1  gap-4 p-12">
+        {isLoaded && (
+          <form onSubmit={handleSubmit((val) => console.log(val))}>
+            <button
+              onClick={() => console.log(translatedPoints?.startPoint, "star")}
+            >
+              show strt
+            </button>
+            <button
+              onClick={() =>
+                console.log(translatedPoints?.crossingPoints, "star")
+              }
+            >
+              show cross
+            </button>
+            <button
+              type="button"
+              onClick={() => console.log(getValues(), "vals")}
+            >
+              show vals
+            </button>
+
+            <RouteInput
+              placeholder="Zadejte start"
+              onCoordinatesChange={updateStartPoint}
+              onPointAdd={handleAddBeforeFirst}
+              name="startPoint"
+            />
+
+            {translatedPoints?.crossingPoints?.map((crossingPoint, index) => (
+              <RouteInput
+                name={`crossingPoints.${index}`}
+                key={`${crossingPoint}_${index}`}
+                placeholder="Zadejte průjezdový bod"
+                // onPointRemove={() =>
+                //   handleRemoveCrossingPoint(crossingPoint.id, index)
+                // }
+                // onPointAdd={() => handleAddCrossingPointAfter(index)}
+                onCoordinatesChange={(val) => {
+                  console.log(val, "vvv");
+                  addCrossingPoint(val);
+                }}
+              />
+            ))}
+
+            <RouteInput
+              name="finishPoint"
+              placeholder="Zadejte cíl"
+              onCoordinatesChange={updateFinishPoint}
+            />
+          </form>
+        )}
+
+        <Button className="mt-auto mr-auto" onClick={onReturn}>
+          Zpět do editace popisu
+        </Button>
+      </VerticalStack>
+    </FormProvider>
   );
 };

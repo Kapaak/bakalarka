@@ -1,3 +1,5 @@
+import { Controller } from "react-hook-form";
+
 import { LatLngLiteral } from "@/domains";
 import { GoogleAutocomplete, HorizontalStack, IconButton } from "@/ui";
 import { MinusCircle, PlusCircle } from "@phosphor-icons/react";
@@ -6,20 +8,31 @@ interface RouteInputProps {
   placeholder: string;
   onPointAdd?(): void;
   onPointRemove?(): void;
-  onSelect?(coordinates: LatLngLiteral): void;
+  onCoordinatesChange?(coordinates: LatLngLiteral): void;
+  name: string;
 }
 
 export const RouteInput = ({
   placeholder,
   onPointAdd,
   onPointRemove,
-  onSelect,
+  onCoordinatesChange,
+  name,
 }: RouteInputProps) => {
   return (
     <HorizontalStack className="max-w-3xl rounded-md bg-white shadow-regular">
-      <GoogleAutocomplete
-        onSelect={(location) => onSelect && onSelect(location?.coordinates)}
-        placeholder={placeholder}
+      <Controller
+        name={name}
+        render={({ field, fieldState }) => (
+          <GoogleAutocomplete
+            name={field.name}
+            inputRef={field.ref}
+            value={field?.value ?? undefined}
+            onChange={field.onChange}
+            onCoordinatesChange={onCoordinatesChange}
+            placeholder={placeholder}
+          />
+        )}
       />
 
       {onPointRemove && (

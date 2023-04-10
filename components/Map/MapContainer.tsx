@@ -12,13 +12,15 @@ const LeafletMap = dynamic<LeafletMapProps>(
 );
 
 export const MapContainer = () => {
-  const { startPoint, finishPoint, crossingPoints } = useRouteContext();
+  const { startPoint, finishPoint, crossingPoints, addCrossingPoint } =
+    useRouteContext();
   return (
     <div className="h-[inherit] w-full lg:h-full">
       <LeafletMap
         startPoint={startPoint}
         finishPoint={finishPoint}
         crossingPoints={crossingPoints}
+        addCrossingPoint={addCrossingPoint}
       />
     </div>
   );

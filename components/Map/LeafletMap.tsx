@@ -1,25 +1,24 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import {
   MapContainer,
+  Marker,
+  Popup,
   TileLayer,
   ZoomControl,
   useMapEvents,
 } from "react-leaflet";
 
+import { LatLngLiteral } from "@/domains";
+import { useElevation } from "@/hooks";
+import { Button, Text, VerticalStack } from "@/ui";
 import { createControlComponent } from "@react-leaflet/core";
 import L from "leaflet";
 
-import { LatLngLiteral } from "@/domains";
-import { useElevation } from "@/hooks";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "leaflet/dist/leaflet.css";
-
-const greenIcon = new L.Icon({
-  iconUrl: "/icons/map_pin_start.svg",
-});
 
 const accessToken = process.env.NEXT_PUBLIC_MAPBOX || "";
 
@@ -27,20 +26,35 @@ export interface LeafletMapProps {
   startPoint: LatLngLiteral;
   crossingPoints?: LatLngLiteral[];
   finishPoint: LatLngLiteral;
+  addCrossingPoint(coordinates: LatLngLiteral): void;
 }
 
 export const LeafletMap = ({
   startPoint,
   finishPoint,
   crossingPoints,
+  addCrossingPoint,
 }: LeafletMapProps) => {
-  const [position, setPosition] = useState(null);
+  const [position, setPosition] = useState<LatLngLiteral>();
+
+  const [markers, setMarkers] = useState<LatLngLiteral[]>([
+    startPoint,
+    finishPoint,
+  ]);
+  const submitPopupRef = useRef<L.Popup>(null);
   //ta elevation se bude potitat z koordinatu co prijdou v props
   //tam bude start point atd
 
   const { data } = useElevation({
     coordinates: { lat: 49.0039069, lng: 16.1304978 },
   });
+
+  const handleAddCrossingPoint = () => {
+    if (position) {
+      setMarkers((prev) => [...prev, position]);
+      addCrossingPoint({ lat: position?.lat, lng: position?.lng });
+    }
+  };
 
   // const { distance } = useDistance({
   //   coordinatesFrom: { lat: 49.1839069, lng: 16.5304978 },
@@ -54,12 +68,12 @@ export const LeafletMap = ({
     );
   }, [crossingPoints]);
 
-  const createRoutingMachineLayer = () => {
+  const createRoutingMachineLayer = useCallback(() => {
     const instance = L.Routing.control({
       waypoints: [
-        L.latLng(startPoint?.lat, startPoint?.lng),
+        L?.latLng(startPoint?.lat, startPoint?.lng),
         ...waypointsFromCoordinates,
-        L.latLng(finishPoint?.lat, finishPoint?.lng),
+        L?.latLng(finishPoint?.lat, finishPoint?.lng),
       ],
       lineOptions: {
         styles: [{ color: "blue", weight: 2 }],
@@ -79,9 +93,18 @@ export const LeafletMap = ({
     });
 
     return instance;
-  };
+  }, [
+    finishPoint?.lat,
+    finishPoint?.lng,
+    startPoint?.lat,
+    startPoint?.lng,
+    waypointsFromCoordinates,
+  ]);
 
-  const RoutingMachine = createControlComponent(createRoutingMachineLayer);
+  const RoutingMachine = useMemo(
+    () => createControlComponent(createRoutingMachineLayer),
+    [createRoutingMachineLayer]
+  );
 
   const handleElevation = async () => {
     const fromLatLng = L.latLng({ lat: 49.1839069, lng: 16.5304978 });
@@ -110,6 +133,14 @@ export const LeafletMap = ({
     const map = useMapEvents({
       click(e) {
         console.log(e.latlng);
+        setPosition({ lat: e.latlng.lat, lng: e.latlng.lng });
+        submitPopupRef.current?.openOn(map);
+      },
+      dragend: (e) => {
+        console.log(e, "dragend");
+      },
+      locationfound: (e) => {
+        console.log(e, "found");
       },
     });
 
@@ -125,31 +156,28 @@ export const LeafletMap = ({
       zoomControl={false}
     >
       <ZoomControl position="topright" />
-      {/* <LocationFinderDummy /> */}
       <TileLayer
         attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
         url={`https://api.mapbox.com/styles/v1/kapaakinos/clevb09lv001n01lsal61f8ys/tiles/256/{z}/{x}/{y}@2x?access_token=${accessToken}`}
       />
+
       {startPoint && <RoutingMachine />}
-      {/* <Marker position={[50.0343092, 15.7811994]} icon={greenIcon}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
+      {position && (
+        <Popup position={[position?.lat, position?.lng]} ref={submitPopupRef}>
+          <VerticalStack>
+            <Text className="text-[1.4rem]">Vytvořit nový bod zde</Text>
+            <Button size="small" onClick={handleAddCrossingPoint}>
+              potvrdit
+            </Button>
+          </VerticalStack>
         </Popup>
-      </Marker> */}
-      <MyComponent />
+      )}
+
+      {markers?.map((marker, id) => (
+        <Marker key={`marker-${id}`} position={[marker.lat, marker.lng]} />
+      ))}
+
+      <LocationFinderDummy />
     </MapContainer>
   );
 };
-
-function MyComponent() {
-  const map = useMapEvents({
-    click: () => {
-      map.locate();
-      console.log("click");
-    },
-    locationfound: (location) => {
-      console.log("location found:", location);
-    },
-  });
-  return null;
-}

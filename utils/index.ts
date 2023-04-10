@@ -1,3 +1,5 @@
+import { LatLngLiteral } from "@/domains";
+
 export const locations = [
   { value: "olomoucky-kraj", label: "Olomoucký kraj" },
   { value: "jihomoravsky-kraj", label: "Jihomoravský kraj" },
@@ -13,3 +15,13 @@ export const locations = [
   { value: "jihocesky-kraj", label: "Jihočeský kraj" },
   { value: "stredocesky-kraj", label: "Středočeský kraj" },
 ];
+
+export const handleAddressFromCoordinates = async (location: LatLngLiteral) => {
+  if (window?.google) {
+    const geocoder = new google.maps.Geocoder();
+    const data = await geocoder.geocode({ location });
+
+    return data.results;
+  }
+  return [];
+};

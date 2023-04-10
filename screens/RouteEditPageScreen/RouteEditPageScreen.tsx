@@ -13,7 +13,8 @@ enum RouteEditSteps {
 
 export const RouteEditPageScreen = () => {
   const [page, setPage] = useState(RouteEditSteps.DETAIL);
-  const { finishPoint, startPoint, updateStartPoint } = useRouteContext();
+  const { finishPoint, startPoint, updateStartPoint, crossingPoints } =
+    useRouteContext();
 
   const isDetailPage = page === RouteEditSteps.DETAIL;
   const isRoutePage = page === RouteEditSteps.ROUTE;
@@ -21,6 +22,11 @@ export const RouteEditPageScreen = () => {
   return (
     <TransparentCard>
       {isDetailPage && <EditDetail />}
+      <button
+        onClick={() => console.log(finishPoint, crossingPoints, startPoint)}
+      >
+        show
+      </button>
       {isRoutePage && (
         <EditRoute onReturn={() => setPage(RouteEditSteps.DETAIL)} />
       )}

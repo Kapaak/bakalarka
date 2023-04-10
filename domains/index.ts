@@ -62,6 +62,12 @@ export type RouteRow = {
   placesOfInterest: any; //todo -> update type
 };
 
+export type TranslatedPoints = {
+  startPoint: string;
+  finishPoint: string;
+  crossingPoints: Array<string>;
+};
+
 export type LatLngLiteral = google.maps.LatLngLiteral;
 export type DirectionsResult = google.maps.DirectionsResult;
 export type MapOptions = google.maps.MapOptions;

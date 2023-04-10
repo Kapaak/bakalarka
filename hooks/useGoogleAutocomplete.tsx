@@ -1,5 +1,6 @@
-import { useLoadScript } from "@react-google-maps/api";
 import { useMemo } from "react";
+
+import { useLoadScript } from "@react-google-maps/api";
 
 type Libraries = (
   | "drawing"
@@ -10,7 +11,7 @@ type Libraries = (
 )[];
 
 export const useGoogleAutocomplete = () => {
-  const libraries = useMemo<Libraries>(() => ["places"], []);
+  const libraries = useMemo<Libraries>(() => ["places", "geometry"], []);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS || "",

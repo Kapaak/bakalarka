@@ -1,16 +1,22 @@
-import { AutocompletePrediction, Location } from "@/domains";
+import { Fragment, useState } from "react";
+
+import { AutocompletePrediction, LatLngLiteral } from "@/domains";
 import { Combobox, Transition } from "@headlessui/react";
 import { MagnifyingGlass } from "@phosphor-icons/react";
-import { Fragment, useState } from "react";
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from "use-places-autocomplete";
 
 interface GoogleAutocompleteProps {
-  onSelect?(location: Location): void;
+  onCoordinatesChange?(location: LatLngLiteral): void;
   placeholder?: string;
   className?: string;
+  defaultValue?: string;
+  name: string;
+  inputRef: any; //change type
+  value: string;
+  onChange: (...event: any[]) => void;
 }
 
 const defaultValue: AutocompletePrediction = {
@@ -31,15 +37,21 @@ const defaultValue: AutocompletePrediction = {
 };
 
 export const GoogleAutocomplete = ({
-  onSelect,
+  onCoordinatesChange,
   placeholder,
   className,
+  defaultValue,
+  name,
+  inputRef,
+  value,
+  onChange,
+  ...rest
 }: GoogleAutocompleteProps) => {
   const [selected, setSelected] = useState<AutocompletePrediction | null>(null);
 
   const {
     ready,
-    value,
+    // value,
     setValue,
     suggestions: { status, data },
     clearSuggestions,
@@ -76,8 +88,8 @@ export const GoogleAutocomplete = ({
       name: autocompletePrediction?.structured_formatting?.main_text,
     };
 
-    onSelect && onSelect(location);
-    console.log(selected);
+    onCoordinatesChange && onCoordinatesChange(location.coordinates);
+    onChange(location.name);
   };
 
   return (
@@ -93,11 +105,20 @@ export const GoogleAutocomplete = ({
             </Combobox.Button>
             <Combobox.Input
               className="w-full border-none py-[2.5rem] pl-13  pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
-              displayValue={(option: AutocompletePrediction) =>
-                option?.structured_formatting?.main_text
-              }
-              onChange={(event) => setValue(event.target.value)}
+              // displayValue={(option: AutocompletePrediction) =>
+              //   option?.structured_formatting?.main_text ?? defaultValue
+              // }
+              value={value}
+              // onChange={(event) => setValue(event.target.value)}
+              onChange={(e) => {
+                onChange(e);
+                setValue(e.target.value);
+              }}
               placeholder={placeholder}
+              defaultValue={defaultValue}
+              name={name}
+              ref={inputRef}
+              {...rest}
             />
           </div>
           <Transition
@@ -107,7 +128,7 @@ export const GoogleAutocomplete = ({
             leaveTo="opacity-0"
             afterLeave={clearSuggestions}
           >
-            <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <Combobox.Options className="absolute z-[1000] mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
               {data?.length === 0 && value !== "" ? (
                 <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
                   Nebyla nalezena žádná trasa.
