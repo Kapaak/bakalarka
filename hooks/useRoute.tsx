@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { LatLngLiteral, TranslatedPoints } from "@/domains";
-import { handleAddressFromCoordinates } from "@/utils";
+import { handleReverseGeocoding } from "@/utils";
 
 export const useRoute = () => {
   const [startPoint, setStartPoint] = useState({ lat: 0, lng: 0 });
@@ -32,42 +32,73 @@ export const useRoute = () => {
   };
 
   useEffect(() => {
-    handleAddressFromCoordinates(startPoint).then(
-      (val) =>
-        val[0] &&
+    handleReverseGeocoding(startPoint).then((val) => {
+      val?.features[0] &&
         setTranslatedPoints((prev) => ({
           ...prev,
-          startPoint: val?.[0]?.formatted_address,
-        }))
-    );
+          startPoint: val?.features[0]?.place_name,
+        }));
+    });
+
+    // handleAddressFromCoordinates(startPoint).then((val) => {
+    //   console.log(val[0], "prdelinka");
+
+    //   val[0] &&
+    //     setTranslatedPoints((prev) => ({
+    //       ...prev,
+    //       startPoint: val?.[0]?.formatted_address,
+    //     }));
+    // });
   }, [startPoint]);
 
   useEffect(() => {
-    handleAddressFromCoordinates(
-      crossingPoints[crossingPoints.length - 1]
-    ).then((val) => {
-      console.log(val?.[0], "xx");
+    handleReverseGeocoding(crossingPoints[crossingPoints.length - 1]).then(
+      (val) => {
+        console.log(val?.features?.[0], "ft", crossingPoints.length);
+        val?.features &&
+          crossingPoints.length > 0 &&
+          setTranslatedPoints((prev) => ({
+            ...prev,
+            crossingPoints: [
+              ...prev?.crossingPoints,
+              val?.features[0]?.place_name,
+            ],
+          }));
+      }
+    );
 
-      val?.[0] &&
-        setTranslatedPoints((prev) => ({
-          ...prev,
-          crossingPoints: [
-            ...prev?.crossingPoints,
-            val?.[0]?.formatted_address,
-          ],
-        }));
-    });
+    // handleAddressFromCoordinates(
+    //   crossingPoints[crossingPoints.length - 1]
+    // ).then((val) => {
+    //   console.log(val?.[0], "xx", crossingPoints.length);
+
+    //   val?.[0] &&
+    //     setTranslatedPoints((prev) => ({
+    //       ...prev,
+    //       crossingPoints: [
+    //         ...prev?.crossingPoints,
+    //         val?.[0]?.formatted_address,
+    //       ],
+    //     }));
+    // });
   }, [crossingPoints]);
 
   useEffect(() => {
-    handleAddressFromCoordinates(finishPoint).then(
-      (val) =>
-        val[0] &&
+    handleReverseGeocoding(finishPoint).then((val) => {
+      val?.features[0] &&
         setTranslatedPoints((prev) => ({
           ...prev,
-          finishPoint: val?.[0]?.formatted_address,
-        }))
-    );
+          finishPoint: val?.features[0]?.place_name,
+        }));
+    });
+    // handleAddressFromCoordinates(finishPoint).then(
+    //   (val) =>
+    //     val[0] &&
+    //     setTranslatedPoints((prev) => ({
+    //       ...prev,
+    //       finishPoint: val?.[0]?.formatted_address,
+    //     }))
+    // );
   }, [finishPoint]);
 
   return {

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { MapContainer } from "@/components";
 import { useRouteContext } from "@/contexts";
 import { Button, TransparentCard } from "@/ui";
+import { handleReverseGeocoding } from "@/utils";
 
 import { EditDetail, EditRoute } from "./components";
 
@@ -22,6 +23,15 @@ export const RouteEditPageScreen = () => {
   return (
     <TransparentCard>
       {isDetailPage && <EditDetail />}
+      <button
+        onClick={() =>
+          handleReverseGeocoding({ lat: 2, lng: 1 }).then((val) =>
+            console.log(val.data)
+          )
+        }
+      >
+        test
+      </button>
       <button
         onClick={() => console.log(finishPoint, crossingPoints, startPoint)}
       >

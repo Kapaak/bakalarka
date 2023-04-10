@@ -60,7 +60,6 @@ export const LeafletMap = ({
   //   coordinatesFrom: { lat: 49.1839069, lng: 16.5304978 },
   //   coordinatesTo: { lat: 49.1839069, lng: 16.7809511 },
   // });
-
   //turf.js na pocitani distance atd .. mozna i na pocitani elevation
   const waypointsFromCoordinates = useMemo(() => {
     return (crossingPoints ?? []).map((crossingPoint) =>
@@ -90,7 +89,25 @@ export const LeafletMap = ({
         profile: "mapbox/cycling",
       }),
       containerClassName: "map-box",
+    }).on("routeselected", function (e) {
+      //tohle mi vraci tyjo info o  total Distance
+      var route = e.route;
+
+      const waypoints = e.route.waypoints;
+      console.log(route, "rr");
+      console.log(waypoints, "waypoints");
     });
+
+    // .on("waypointschanged", function (e) {
+    //   var route = e;
+    //   console.log(route, "rr");
+    // });
+
+    // .on("routeselected", function (e) {
+    //   setChange(e);
+    //   var route = e.route;
+    //   console.log(route, "rr");
+    // });
 
     return instance;
   }, [
@@ -136,6 +153,9 @@ export const LeafletMap = ({
         setPosition({ lat: e.latlng.lat, lng: e.latlng.lng });
         submitPopupRef.current?.openOn(map);
       },
+      drag: (e) => {
+        console.log("dd");
+      },
       dragend: (e) => {
         console.log(e, "dragend");
       },
@@ -160,12 +180,15 @@ export const LeafletMap = ({
         attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
         url={`https://api.mapbox.com/styles/v1/kapaakinos/clevb09lv001n01lsal61f8ys/tiles/256/{z}/{x}/{y}@2x?access_token=${accessToken}`}
       />
+      <LocationFinderDummy />
 
       {startPoint && <RoutingMachine />}
       {position && (
         <Popup position={[position?.lat, position?.lng]} ref={submitPopupRef}>
           <VerticalStack>
-            <Text className="text-[1.4rem]">Vytvořit nový bod zde</Text>
+            <Text className="text-[1.4rem]" onClick={() => console.log("pp")}>
+              Vytvořit nový bod zde
+            </Text>
             <Button size="small" onClick={handleAddCrossingPoint}>
               potvrdit
             </Button>
@@ -176,8 +199,6 @@ export const LeafletMap = ({
       {markers?.map((marker, id) => (
         <Marker key={`marker-${id}`} position={[marker.lat, marker.lng]} />
       ))}
-
-      <LocationFinderDummy />
     </MapContainer>
   );
 };

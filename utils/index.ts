@@ -1,4 +1,5 @@
 import { LatLngLiteral } from "@/domains";
+import axios from "axios";
 
 export const locations = [
   { value: "olomoucky-kraj", label: "Olomoucký kraj" },
@@ -16,12 +17,20 @@ export const locations = [
   { value: "stredocesky-kraj", label: "Středočeský kraj" },
 ];
 
-export const handleAddressFromCoordinates = async (location: LatLngLiteral) => {
-  if (window?.google) {
-    const geocoder = new google.maps.Geocoder();
-    const data = await geocoder.geocode({ location });
+// export const handleAddressFromCoordinates = async (location: LatLngLiteral) => {
+//   if (window?.google) {
+//     const geocoder = new google.maps.Geocoder();
+//     const data = await geocoder.geocode({ location });
 
-    return data.results;
-  }
-  return [];
+//     return data.results;
+//   }
+//   return [];
+// };
+
+export const handleReverseGeocoding = async (location: LatLngLiteral) => {
+  const data = await axios.get(
+    `https://api.mapbox.com/geocoding/v5/mapbox.places/${location?.lng},${location?.lat}.json?access_token=${process.env.NEXT_PUBLIC_MAPBOX}`
+  );
+
+  return data.data;
 };
