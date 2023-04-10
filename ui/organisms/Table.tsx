@@ -29,7 +29,7 @@ export function Table<T>({
 }: TableProps<T>) {
   return (
     <>
-      <table {...props} className="border-separate border-spacing-y-4">
+      <table {...props}>
         <TableHeader rows={headerCells} />
         <TableBody rows={bodyCells} onRowClick={onRowClick} />
       </table>
