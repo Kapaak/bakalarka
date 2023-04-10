@@ -1,3 +1,5 @@
+import NextLink from "next/link";
+
 import {
   Button,
   Container,
@@ -7,7 +9,6 @@ import {
   VerticalStack,
 } from "@/ui";
 
-import NextLink from "next/link";
 
 const ErrorPage = () => {
   return (

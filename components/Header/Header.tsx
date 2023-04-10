@@ -1,4 +1,5 @@
 import { Logo, MaxWidth } from "@/ui";
+
 import { Navigation } from "./Navigation";
 
 export const Header = () => {

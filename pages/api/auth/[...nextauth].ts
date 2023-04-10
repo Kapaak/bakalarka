@@ -1,14 +1,15 @@
 //libraries
-import NextAuth from "next-auth/next";
 import { NextAuthOptions } from "next-auth";
+
+import NextAuth from "next-auth/next";
 //prisma
 // import { PrismaAdapter } from "@next-auth/prisma-adapter";
 // import { PrismaClient } from "@prisma/client";
 //providers
-import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import FacebookProvider from "next-auth/providers/facebook";
 import GitHubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 //others
 // import { getUserByEmail } from "prisma/user";
 // import { verifyPassword } from "../../../utils/index";

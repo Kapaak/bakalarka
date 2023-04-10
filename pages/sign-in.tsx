@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+
 import { SignInPageScreen } from "@/screens";
 
 const SignInPage: NextPage = () => {

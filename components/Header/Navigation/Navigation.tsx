@@ -1,8 +1,11 @@
-import { Button, IconButton, Link, User } from "@/ui";
-import { List } from "@phosphor-icons/react";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
+
+import { List } from "@phosphor-icons/react";
+import { useSession } from "next-auth/react";
+
+import { Button, IconButton, Link, User } from "@/ui";
+
 import { MobileBurgerMenu } from "./MobileBurgerMenu";
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
