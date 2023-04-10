@@ -76,10 +76,13 @@ export const EditRoute = ({ onReturn }: EditRouteProps) => {
 
   return (
     <FormProvider {...form}>
-      <VerticalStack className="h-full flex-1  gap-4 p-12">
+      <div className="flex-1">
         {isLoaded && (
-          <form onSubmit={handleSubmit((val) => console.log(val))}>
-            <button
+          <form
+            onSubmit={handleSubmit((val) => console.log(val))}
+            className="h-full"
+          >
+            {/* <button
               onClick={() => console.log(translatedPoints?.startPoint, "star")}
             >
               show strt
@@ -96,43 +99,45 @@ export const EditRoute = ({ onReturn }: EditRouteProps) => {
               onClick={() => console.log(getValues(), "vals")}
             >
               show vals
-            </button>
+            </button> */}
 
-            <RouteInput
-              placeholder="Zadejte start"
-              onCoordinatesChange={updateStartPoint}
-              onPointAdd={handleAddBeforeFirst}
-              name="startPoint"
-            />
-
-            {translatedPoints?.crossingPoints?.map((crossingPoint, index) => (
+            <VerticalStack className="h-full flex-1  gap-4 p-12">
               <RouteInput
-                name={`crossingPoints.${index}`}
-                key={`${crossingPoint}_${index}`}
-                placeholder="Zadejte průjezdový bod"
-                // onPointRemove={() =>
-                //   handleRemoveCrossingPoint(crossingPoint.id, index)
-                // }
-                // onPointAdd={() => handleAddCrossingPointAfter(index)}
-                onCoordinatesChange={(val) => {
-                  console.log(val, "vvv");
-                  addCrossingPoint(val);
-                }}
+                placeholder="Zadejte start"
+                onCoordinatesChange={updateStartPoint}
+                onPointAdd={handleAddBeforeFirst}
+                name="startPoint"
               />
-            ))}
 
-            <RouteInput
-              name="finishPoint"
-              placeholder="Zadejte cíl"
-              onCoordinatesChange={updateFinishPoint}
-            />
+              {translatedPoints?.crossingPoints?.map((crossingPoint, index) => (
+                <RouteInput
+                  name={`crossingPoints.${index}`}
+                  key={`${crossingPoint}_${index}`}
+                  placeholder="Zadejte průjezdový bod"
+                  // onPointRemove={() =>
+                  //   handleRemoveCrossingPoint(crossingPoint.id, index)
+                  // }
+                  // onPointAdd={() => handleAddCrossingPointAfter(index)}
+                  onCoordinatesChange={(val) => {
+                    console.log(val, "vvv");
+                    addCrossingPoint(val);
+                  }}
+                />
+              ))}
+
+              <RouteInput
+                name="finishPoint"
+                placeholder="Zadejte cíl"
+                onCoordinatesChange={updateFinishPoint}
+              />
+
+              <Button className="mt-auto mr-auto" onClick={onReturn}>
+                Zpět do editace popisu
+              </Button>
+            </VerticalStack>
           </form>
         )}
-
-        <Button className="mt-auto mr-auto" onClick={onReturn}>
-          Zpět do editace popisu
-        </Button>
-      </VerticalStack>
+      </div>
     </FormProvider>
   );
 };
