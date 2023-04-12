@@ -27,6 +27,13 @@ export const locations = [
 //   return [];
 // };
 
+export const isEqualCoords = (
+  a: { lat: number; lng: number },
+  b: { lat: number; lng: number }
+): boolean => {
+  return a.lat === b.lat && a.lng === b.lng;
+};
+
 export const reverseGeocoding = async (location: LatLngLiteral) => {
   const data = await axios.get(
     `https://api.mapbox.com/geocoding/v5/mapbox.places/${location?.lng},${location?.lat}.json?access_token=${process.env.NEXT_PUBLIC_MAPBOX}`

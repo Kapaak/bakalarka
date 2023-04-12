@@ -1,24 +1,18 @@
 import { useCallback, useMemo, useRef, useState } from "react";
-import {
-  MapContainer,
-  Marker,
-  Popup,
-  TileLayer,
-  ZoomControl,
-  useMapEvents,
-} from "react-leaflet";
+import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
 
+import { useRouteContext } from "@/contexts";
 import { LatLngLiteral } from "@/domains";
-import { useElevation } from "@/hooks";
-import { Button, Text, VerticalStack } from "@/ui";
+import { isEqualCoords } from "@/utils";
 import { createControlComponent } from "@react-leaflet/core";
-import L from "leaflet";
+import L, { Map } from "leaflet";
 
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "leaflet/dist/leaflet.css";
+import { MapEventListener, TapPopup } from "./components";
 
 const accessToken = process.env.NEXT_PUBLIC_MAPBOX || "";
 
@@ -35,137 +29,128 @@ export const LeafletMap = ({
   crossingPoints,
   addCrossingPoint,
 }: LeafletMapProps) => {
-  const [position, setPosition] = useState<LatLngLiteral>();
+  const [pointPosition, setPointPosition] = useState<LatLngLiteral>();
+  const {
+    updateStartAndFinishPoints,
+    updateFinishPoint,
+    removePointByCoordinates,
+    updateStartPoint,
+  } = useRouteContext();
+  const popupRef = useRef<L.Popup>(null);
+  const [routeControl, setRouteControl] = useState<L.Routing.Control>();
 
-  const [markers, setMarkers] = useState<LatLngLiteral[]>([
-    startPoint,
-    finishPoint,
-  ]);
-  const submitPopupRef = useRef<L.Popup>(null);
+  const waypoints = useMemo(() => {
+    const convertedCrossingPoints = (crossingPoints ?? []).map(
+      (crossingPoint) => L.latLng(crossingPoint?.lat, crossingPoint?.lng)
+    );
+    return [
+      L?.latLng(startPoint?.lat, startPoint?.lng),
+      ...convertedCrossingPoints,
+      L?.latLng(finishPoint?.lat, finishPoint?.lng),
+    ];
+  }, [crossingPoints, finishPoint, startPoint]);
+
   //ta elevation se bude potitat z koordinatu co prijdou v props
   //tam bude start point atd
-
-  const { data } = useElevation({
-    coordinates: { lat: 49.0039069, lng: 16.1304978 },
-  });
-
-  const handleAddCrossingPoint = () => {
-    if (position) {
-      setMarkers((prev) => [...prev, position]);
-      addCrossingPoint({ lat: position?.lat, lng: position?.lng });
-    }
-  };
 
   // const { distance } = useDistance({
   //   coordinatesFrom: { lat: 49.1839069, lng: 16.5304978 },
   //   coordinatesTo: { lat: 49.1839069, lng: 16.7809511 },
   // });
   //turf.js na pocitani distance atd .. mozna i na pocitani elevation
-  const waypointsFromCoordinates = useMemo(() => {
-    return (crossingPoints ?? []).map((crossingPoint) =>
-      L.latLng(crossingPoint?.lat, crossingPoint?.lng)
-    );
-  }, [crossingPoints]);
+
+  // const { data } = useElevation({
+  //   coordinates: { lat: 49.0039069, lng: 16.1304978 },
+  // });
+
+  const handleOpen = (map: Map) => {
+    popupRef?.current?.openOn(map);
+  };
+
+  const handleSavePointPosition = (coordinates: LatLngLiteral) => {
+    setPointPosition(coordinates);
+  };
+
+  const handleAddNewPoint = () => {
+    const currentWaypoints = routeControl?.getWaypoints() ?? [];
+
+    if (pointPosition) {
+      const newPoint = L.latLng(pointPosition);
+      const newWaypoint = L.routing.waypoint(newPoint);
+
+      console.log(newWaypoint, "way");
+      routeControl?.setWaypoints([...currentWaypoints, newWaypoint]);
+
+      addCrossingPoint(pointPosition);
+    }
+  };
 
   const createRoutingMachineLayer = useCallback(() => {
     const instance = L.Routing.control({
-      waypoints: [
-        L?.latLng(startPoint?.lat, startPoint?.lng),
-        ...waypointsFromCoordinates,
-        L?.latLng(finishPoint?.lat, finishPoint?.lng),
-      ],
+      waypoints: waypoints,
       lineOptions: {
         styles: [{ color: "blue", weight: 2 }],
         extendToWaypoints: true,
         missingRouteTolerance: 20,
       },
+      plan: L.Routing.plan(waypoints, {
+        //this makes markers undraggable
+        createMarker: function (i, wp) {
+          return L.marker(wp.latLng, {
+            draggable: i === 0 ? false : true,
+          }).addEventListener("click", (e) => {
+            removePointByCoordinates(e.latlng);
+            // instance?.spliceWaypoints(i, 1);
+          });
+        },
+      }),
       show: false,
       addWaypoints: false,
       routeWhileDragging: true,
-      // draggableWaypoints: true, //funguje i bez
       fitSelectedRoutes: true,
       showAlternatives: false,
       router: L.Routing.mapbox(accessToken, {
         profile: "mapbox/cycling",
       }),
-      containerClassName: "map-box",
-    }).on("routeselected", function (e) {
-      //tohle mi vraci tyjo info o  total Distance
-      var route = e.route;
+    })
+      .on("waypointschanged", function (e) {
+        setPointPosition(undefined);
+        console.log("waypoints add");
+      })
+      .on("routeselected", function (e) {
+        console.log("route selected");
+        //e.route vraci i distance
+        // setPointPosition(undefined);
+        const waypoints = e.route.waypoints;
 
-      const waypoints = e.route.waypoints;
-      console.log(route, "rr");
-      console.log(waypoints, "waypoints");
-    });
+        const start = waypoints.at(0).latLng;
+        const finish = waypoints.at(-1).latLng;
 
-    // .on("waypointschanged", function (e) {
-    //   var route = e;
-    //   console.log(route, "rr");
-    // });
+        const startCoords = isEqualCoords(startPoint, start);
+        const finishCoords = isEqualCoords(finishPoint, finish);
 
-    // .on("routeselected", function (e) {
-    //   setChange(e);
-    //   var route = e.route;
-    //   console.log(route, "rr");
-    // });
+        // if (!startCoords) {
+        //   updateStartPoint(start);
+        //   console.log("updated start point");
+        // }
+        // if (!finishCoords) {
+        //   updateFinishPoint(finish);
+        //   console.log("updated finish point");
+        // }
+      });
 
+    setRouteControl(instance);
     return instance;
-  }, [
-    finishPoint?.lat,
-    finishPoint?.lng,
-    startPoint?.lat,
-    startPoint?.lng,
-    waypointsFromCoordinates,
-  ]);
+
+    //nepotrebuju, aby se prerendrovavalo to memo pri zmene zacatecniho a koncovyho bodu, jen pri prujezdovym
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [startPoint, finishPoint]);
 
   const RoutingMachine = useMemo(
     () => createControlComponent(createRoutingMachineLayer),
     [createRoutingMachineLayer]
   );
 
-  const handleElevation = async () => {
-    const fromLatLng = L.latLng({ lat: 49.1839069, lng: 16.5304978 });
-    const toLatLng = L.latLng({ lat: 49.1839069, lng: 16.7809511 });
-
-    const dis = fromLatLng.distanceTo(toLatLng);
-
-    console.log(dis, "dis"); //distance in meters
-
-    const query = await fetch(
-      `https://api.mapbox.com/v4/mapbox.mapbox-terrain-v2/tilequery/${16.7809511},${49.1839069}.json?layers=contour&limit=50&access_token=${accessToken}`,
-      { method: "GET" }
-    );
-
-    const data = await query.json();
-
-    const allFeatures = data.features;
-
-    // const elevations = allFeatures.map((feature) => feature.properties.ele);
-
-    // const highestElevation = Math.max(...elevations);
-    // console.log(highestElevation);
-  };
-
-  const LocationFinderDummy = () => {
-    const map = useMapEvents({
-      click(e) {
-        console.log(e.latlng);
-        setPosition({ lat: e.latlng.lat, lng: e.latlng.lng });
-        submitPopupRef.current?.openOn(map);
-      },
-      drag: (e) => {
-        console.log("dd");
-      },
-      dragend: (e) => {
-        console.log(e, "dragend");
-      },
-      locationfound: (e) => {
-        console.log(e, "found");
-      },
-    });
-
-    return null;
-  };
   return (
     <MapContainer
       center={[50.0343092, 15.7811994]}
@@ -180,25 +165,43 @@ export const LeafletMap = ({
         attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
         url={`https://api.mapbox.com/styles/v1/kapaakinos/clevb09lv001n01lsal61f8ys/tiles/256/{z}/{x}/{y}@2x?access_token=${accessToken}`}
       />
-      <LocationFinderDummy />
+      <MapEventListener
+        onClick={handleSavePointPosition}
+        openPopup={handleOpen}
+      />
 
       {startPoint && <RoutingMachine />}
-      {position && (
-        <Popup position={[position?.lat, position?.lng]} ref={submitPopupRef}>
-          <VerticalStack>
-            <Text className="text-[1.4rem]" onClick={() => console.log("pp")}>
-              Vytvořit nový bod zde
-            </Text>
-            <Button size="small" onClick={handleAddCrossingPoint}>
-              potvrdit
-            </Button>
-          </VerticalStack>
-        </Popup>
-      )}
 
-      {markers?.map((marker, id) => (
-        <Marker key={`marker-${id}`} position={[marker.lat, marker.lng]} />
-      ))}
+      {pointPosition && (
+        <TapPopup
+          ref={popupRef}
+          position={pointPosition}
+          onTap={handleAddNewPoint}
+        />
+      )}
     </MapContainer>
   );
 };
+
+// const handleElevation = async () => {
+//   const fromLatLng = L.latLng({ lat: 49.1839069, lng: 16.5304978 });
+//   const toLatLng = L.latLng({ lat: 49.1839069, lng: 16.7809511 });
+
+//   const dis = fromLatLng.distanceTo(toLatLng);
+
+//   console.log(dis, "dis"); //distance in meters
+
+//   const query = await fetch(
+//     `https://api.mapbox.com/v4/mapbox.mapbox-terrain-v2/tilequery/${16.7809511},${49.1839069}.json?layers=contour&limit=50&access_token=${accessToken}`,
+//     { method: "GET" }
+//   );
+
+//   const data = await query.json();
+
+//   const allFeatures = data.features;
+
+//   // const elevations = allFeatures.map((feature) => feature.properties.ele);
+
+//   // const highestElevation = Math.max(...elevations);
+//   // console.log(highestElevation);
+// };

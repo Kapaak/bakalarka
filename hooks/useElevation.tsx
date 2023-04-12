@@ -1,6 +1,7 @@
-import { LatLngLiteral } from "@/domains";
 import { useMemo } from "react";
 import { useQuery } from "react-query";
+
+import { LatLngLiteral } from "@/domains";
 
 interface ElevationProps {
   coordinates: LatLngLiteral;
@@ -47,7 +48,7 @@ export const useElevation = ({ coordinates }: ElevationProps) => {
     return Math.max(...elevations);
   }, [data?.features]);
 
-  console.log(getHighestElevation, "ww");
+  // console.log(getHighestElevation, "ww");
 
   // const { isLoading, data } = useQuery("elevation", () =>
   //   fetch("https://api.github.com/repos/tannerlinsley/react-query").then(

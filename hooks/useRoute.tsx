@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { LatLngLiteral, TranslatedPoints } from "@/domains";
-import { reverseGeocoding } from "@/utils";
+import { isEqualCoords, reverseGeocoding } from "@/utils";
 
 export const useRoute = () => {
   const [startPoint, setStartPoint] = useState({ lat: 0, lng: 0 });
@@ -13,17 +13,61 @@ export const useRoute = () => {
     crossingPoints: [],
   });
 
-  const updateStartPoint = (coordinates: LatLngLiteral) => {
+  const updateStartAndFinishPoints = useCallback(
+    (start: LatLngLiteral, finish: LatLngLiteral) => {
+      console.log(start, "start");
+      console.log(finish, "finish");
+
+      if (start.lat !== startPoint.lat && start.lng !== startPoint.lng) {
+        setStartPoint(start);
+        console.log("start se zmenil");
+      }
+
+      //todo add ability to update crossing here too, it blinks too much at this time of writing
+
+      if (finish.lat !== finishPoint.lat && finish.lng !== finishPoint.lng) {
+        setFinishPoint(finish);
+        console.log("finish se zmenil");
+      }
+    },
+    [finishPoint.lat, finishPoint.lng, startPoint.lat, startPoint.lng]
+  );
+
+  const updateStartPoint = useCallback((coordinates: LatLngLiteral) => {
     setStartPoint(coordinates);
-  };
+  }, []);
 
-  const updateFinishPoint = (coordinates: LatLngLiteral) => {
+  const updateFinishPoint = useCallback((coordinates: LatLngLiteral) => {
     setFinishPoint(coordinates);
-  };
+  }, []);
 
-  const addCrossingPoint = (coordinates: LatLngLiteral) => {
+  const addCrossingPoint = useCallback((coordinates: LatLngLiteral) => {
     setCrossingPoints((prev) => [...prev, coordinates]);
-  };
+  }, []);
+
+  const removePointByCoordinates = useCallback(
+    (coordinates: LatLngLiteral) => {
+      const index = crossingPoints.findIndex((crossingPoint) =>
+        isEqualCoords(coordinates, crossingPoint)
+      );
+
+      console.log("remove");
+      if (index > -1) {
+        console.log("rsrly");
+        const newCrossingPoints = [...crossingPoints];
+        newCrossingPoints.splice(index, 1);
+        const newTranslatedPoints = [...translatedPoints.crossingPoints];
+        newTranslatedPoints.splice(index, 1);
+
+        setCrossingPoints(newCrossingPoints);
+        setTranslatedPoints((prev) => ({
+          ...prev,
+          crossingPoints: newTranslatedPoints,
+        }));
+      }
+    },
+    [crossingPoints, translatedPoints.crossingPoints]
+  );
 
   const removeCrossingPointByIndex = (index: number) => {
     const newCrossingPoints = crossingPoints?.filter((_, i) => i !== index);
@@ -39,21 +83,12 @@ export const useRoute = () => {
           startPoint: val?.features[0]?.place_name,
         }));
     });
-
-    // handleAddressFromCoordinates(startPoint).then((val) => {
-    //   console.log(val[0], "prdelinka");
-
-    //   val[0] &&
-    //     setTranslatedPoints((prev) => ({
-    //       ...prev,
-    //       startPoint: val?.[0]?.formatted_address,
-    //     }));
-    // });
   }, [startPoint]);
 
   useEffect(() => {
+    console.log("crossing", crossingPoints);
+
     reverseGeocoding(crossingPoints[crossingPoints.length - 1]).then((val) => {
-      console.log(val?.features?.[0], "ft", crossingPoints.length);
       val?.features &&
         crossingPoints.length > 0 &&
         setTranslatedPoints((prev) => ({
@@ -64,21 +99,6 @@ export const useRoute = () => {
           ],
         }));
     });
-
-    // handleAddressFromCoordinates(
-    //   crossingPoints[crossingPoints.length - 1]
-    // ).then((val) => {
-    //   console.log(val?.[0], "xx", crossingPoints.length);
-
-    //   val?.[0] &&
-    //     setTranslatedPoints((prev) => ({
-    //       ...prev,
-    //       crossingPoints: [
-    //         ...prev?.crossingPoints,
-    //         val?.[0]?.formatted_address,
-    //       ],
-    //     }));
-    // });
   }, [crossingPoints]);
 
   useEffect(() => {
@@ -89,14 +109,6 @@ export const useRoute = () => {
           finishPoint: val?.features[0]?.place_name,
         }));
     });
-    // handleAddressFromCoordinates(finishPoint).then(
-    //   (val) =>
-    //     val[0] &&
-    //     setTranslatedPoints((prev) => ({
-    //       ...prev,
-    //       finishPoint: val?.[0]?.formatted_address,
-    //     }))
-    // );
   }, [finishPoint]);
 
   return {
@@ -105,7 +117,9 @@ export const useRoute = () => {
     crossingPoints,
     updateStartPoint,
     updateFinishPoint,
+    updateStartAndFinishPoints,
     addCrossingPoint,
+    removePointByCoordinates,
     removeCrossingPointByIndex,
     translatedPoints,
   };
