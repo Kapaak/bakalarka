@@ -95,7 +95,9 @@ export const LeafletMap = () => {
         profile: "mapbox/cycling",
       }),
     })
-      .on("waypointschanged", function (e) {})
+      .on("waypointschanged", function (e) {
+        setPointPosition(undefined);
+      })
       .on("routeselected", function (e) {
         setPointPosition(undefined);
       });
