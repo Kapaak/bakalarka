@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { LatLngLiteral, TranslatedPoints } from "@/domains";
+import { LatLngLiteral, RoutePoint, TranslatedPoints } from "@/domains";
 import { isEqualCoords, reverseGeocoding } from "@/utils";
+import { nanoid } from "nanoid";
 
 export const useRoute = () => {
   const [startPoint, setStartPoint] = useState({ lat: 0, lng: 0 });
@@ -12,6 +13,66 @@ export const useRoute = () => {
     finishPoint: "",
     crossingPoints: [],
   });
+  const [routePoints, setRoutePoints] = useState([
+    {
+      id: "0",
+      coordinates: {
+        lat: 0,
+        lng: 0,
+      },
+      value: "",
+      //pointType:"start" //start | finish | crossingPoint
+    },
+    {
+      id: "1",
+      coordinates: {
+        lat: 0,
+        lng: 0,
+      },
+      value: "",
+    },
+  ]);
+
+  const updatePointById = async (id: string, coordinates: LatLngLiteral) => {
+    const targetPoint = structuredClone(
+      routePoints.find((point) => point.id === id)
+    );
+    console.log(targetPoint, "found");
+
+    if (targetPoint) {
+      targetPoint.coordinates = coordinates;
+
+      const geocoding = await reverseGeocoding(targetPoint.coordinates);
+      const data = geocoding.features[0];
+
+      targetPoint.value = data?.place_name ?? "";
+
+      console.log(targetPoint, "tarpo");
+
+      setRoutePoints((prev) => [
+        ...prev.map((pt) => (pt.id === id ? targetPoint : pt)),
+      ]);
+    }
+  };
+
+  const addPointBeforeLast = (coordinates?: LatLngLiteral) => {
+    if (routePoints.length > 0) {
+      //by default has coordinates of last element, so that it doesnt break routing
+      const newPoint: RoutePoint = {
+        coordinates:
+          coordinates ?? routePoints[routePoints.length - 1].coordinates,
+        id: nanoid(),
+        value: "",
+      };
+
+      const newRoutePoints = structuredClone(routePoints);
+
+      const index = routePoints.length - 1;
+      newRoutePoints.splice(index, 0, newPoint);
+
+      setRoutePoints(newRoutePoints);
+    }
+  };
 
   const updateStartAndFinishPoints = useCallback(
     (start: LatLngLiteral, finish: LatLngLiteral) => {
@@ -86,8 +147,6 @@ export const useRoute = () => {
   }, [startPoint]);
 
   useEffect(() => {
-    console.log("crossing", crossingPoints);
-
     reverseGeocoding(crossingPoints[crossingPoints.length - 1]).then((val) => {
       val?.features &&
         crossingPoints.length > 0 &&
@@ -115,12 +174,15 @@ export const useRoute = () => {
     startPoint,
     finishPoint,
     crossingPoints,
+    updatePointById,
     updateStartPoint,
     updateFinishPoint,
     updateStartAndFinishPoints,
     addCrossingPoint,
+    addPointBeforeLast,
     removePointByCoordinates,
     removeCrossingPointByIndex,
     translatedPoints,
+    routePoints,
   };
 };

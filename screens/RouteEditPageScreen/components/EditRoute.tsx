@@ -1,7 +1,8 @@
-import { useEffect } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { useEffect, useMemo } from "react";
+import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 
 import { useRouteContext } from "@/contexts";
+import { RouteModel } from "@/domains";
 import { useGoogleAutocomplete } from "@/hooks";
 import { Button, VerticalStack } from "@/ui";
 
@@ -21,19 +22,45 @@ export const EditRoute = ({ onReturn }: EditRouteProps) => {
     updateStartPoint,
     updateFinishPoint,
     addCrossingPoint,
+    routePoints,
     crossingPoints,
+    addPointBeforeLast,
     removeCrossingPointByIndex,
+    updatePointById,
     translatedPoints,
   } = useRouteContext();
 
-  const form = useForm({
+  const routePointsValues = useMemo(
+    () => routePoints.map((routePoint) => routePoint?.value ?? ""),
+    [routePoints]
+  );
+
+  const isNotLastRoute = (index: number) => ({
+    ...(index !== routePoints.length - 1
+      ? { onPointAdd: () => addPointBeforeLast() }
+      : {}),
+  });
+
+  const form = useForm<RouteModel>({
     defaultValues: {
-      startPoint: translatedPoints?.startPoint ?? "",
-      crossingPoints: translatedPoints?.crossingPoints ?? "",
-      finishPoint: translatedPoints?.finishPoint ?? "",
+      routePoints: routePoints,
     },
   });
-  const { getValues, handleSubmit, reset } = form;
+
+  const { getValues, handleSubmit, reset, control } = form;
+
+  const { fields } = useFieldArray<RouteModel>({
+    name: "routePoints",
+    control,
+  });
+
+  // const form = useForm({
+  //   defaultValues: {
+  //     startPoint: translatedPoints?.startPoint ?? "",
+  //     crossingPoints: translatedPoints?.crossingPoints ?? "",
+  //     finishPoint: translatedPoints?.finishPoint ?? "",
+  //   },
+  // });
 
   const { isLoaded } = useGoogleAutocomplete();
 
@@ -63,23 +90,18 @@ export const EditRoute = ({ onReturn }: EditRouteProps) => {
 
   useEffect(() => {
     reset({
-      startPoint: translatedPoints?.startPoint ?? "",
-      crossingPoints: translatedPoints?.crossingPoints ?? "",
-      finishPoint: translatedPoints?.finishPoint ?? "",
+      routePoints: routePoints,
     });
-  }, [
-    reset,
-    translatedPoints?.crossingPoints,
-    translatedPoints?.finishPoint,
-    translatedPoints?.startPoint,
-  ]);
+  }, [reset, routePoints]);
 
   return (
     <FormProvider {...form}>
       <div className="flex-1">
         <div>translated:{translatedPoints?.crossingPoints.length}</div>
         <div>crossingPoints:{crossingPoints.length}</div>
-        <button onClick={() => console.log(crossingPoints, "kros")}>cr</button>
+        <button onClick={() => console.log(getValues(), "kros")}>valus</button>
+        <br />
+        <button onClick={() => console.log(routePoints, "vals")}>getAll</button>
         {isLoaded && (
           <form
             onSubmit={handleSubmit((val) => console.log(val))}
@@ -105,34 +127,49 @@ export const EditRoute = ({ onReturn }: EditRouteProps) => {
             </button> */}
 
             <VerticalStack className="h-full flex-1  gap-4 p-12">
-              <RouteInput
+              {/* <RouteInput
                 placeholder="Zadejte start"
                 onCoordinatesChange={updateStartPoint}
                 // onPointAdd={handleAddBeforeFirst}
                 name="startPoint"
-              />
+              /> */}
 
-              {translatedPoints?.crossingPoints?.map((crossingPoint, index) => (
+              {fields.map((field, index) => (
                 <RouteInput
-                  name={`crossingPoints.${index}`}
-                  key={`${crossingPoint}_${index}`}
+                  key={field.id}
+                  name={`routePoints.${index}.value`}
+                  placeholder="Zadejte bod"
+                  {...isNotLastRoute(index)}
+                  onCoordinatesChange={(val) => {
+                    updatePointById(routePoints[index].id, val);
+                    // addCrossingPoint(val);
+                  }}
+                />
+              ))}
+              {/* {routePointsValues?.map((routePoint, index) => (
+                <RouteInput
+                  name={`routePoints.${routePoints[index].id}`}
+                  key={`${routePoint}_${routePoints[index].id}`}
                   placeholder="Zadejte průjezdový bod"
                   // onPointRemove={() =>
                   //   handleRemoveCrossingPoint(crossingPoint.id, index)
                   // }
                   // onPointAdd={() => handleAddCrossingPointAfter(index)}
+                  // onPointAdd={() => addPointBeforeLast()}
+
+                  {...isNotLastRoute(index)}
                   onCoordinatesChange={(val) => {
-                    console.log(val, "vvv");
-                    addCrossingPoint(val);
+                    updatePointById(routePoints[index].id, val);
+                    // addCrossingPoint(val);
                   }}
                 />
-              ))}
+              ))} */}
 
-              <RouteInput
+              {/* <RouteInput
                 name="finishPoint"
                 placeholder="Zadejte cíl"
                 onCoordinatesChange={updateFinishPoint}
-              />
+              /> */}
 
               <Button className="mt-auto mr-auto" onClick={onReturn}>
                 Zpět do editace popisu

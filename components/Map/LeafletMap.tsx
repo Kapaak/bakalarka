@@ -3,7 +3,6 @@ import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
 
 import { useRouteContext } from "@/contexts";
 import { LatLngLiteral } from "@/domains";
-import { isEqualCoords } from "@/utils";
 import { createControlComponent } from "@react-leaflet/core";
 import L, { Map } from "leaflet";
 
@@ -32,23 +31,22 @@ export const LeafletMap = ({
   const [pointPosition, setPointPosition] = useState<LatLngLiteral>();
   const {
     updateStartAndFinishPoints,
+    updatePointById,
     updateFinishPoint,
     removePointByCoordinates,
     updateStartPoint,
+    routePoints,
   } = useRouteContext();
   const popupRef = useRef<L.Popup>(null);
   const [routeControl, setRouteControl] = useState<L.Routing.Control>();
+  const mapRef = useRef<Map>(null);
 
   const waypoints = useMemo(() => {
-    const convertedCrossingPoints = (crossingPoints ?? []).map(
-      (crossingPoint) => L.latLng(crossingPoint?.lat, crossingPoint?.lng)
+    const convertedCrossingPoints = (routePoints ?? []).map((routePoint) =>
+      L.latLng(routePoint?.coordinates.lat, routePoint?.coordinates.lng)
     );
-    return [
-      L?.latLng(startPoint?.lat, startPoint?.lng),
-      ...convertedCrossingPoints,
-      L?.latLng(finishPoint?.lat, finishPoint?.lng),
-    ];
-  }, [crossingPoints, finishPoint, startPoint]);
+    return convertedCrossingPoints;
+  }, [routePoints]);
 
   //ta elevation se bude potitat z koordinatu co prijdou v props
   //tam bude start point atd
@@ -98,10 +96,17 @@ export const LeafletMap = ({
         createMarker: function (i, wp) {
           return L.marker(wp.latLng, {
             draggable: i === 0 ? false : true,
-          }).addEventListener("click", (e) => {
-            removePointByCoordinates(e.latlng);
-            // instance?.spliceWaypoints(i, 1);
-          });
+          })
+            .addEventListener("click", (e) => {
+              removePointByCoordinates(e.latlng);
+              // instance?.spliceWaypoints(i, 1);
+            })
+            .addEventListener("dragend", (e) => {
+              // instance.spliceWaypoints(i, 1);
+              updatePointById(routePoints[i].id, e.target._latlng);
+
+              //co kdybych tu menil ty hodnoty, ale nesledoval bych ty zmeny
+            });
         },
       }),
       show: false,
@@ -119,32 +124,17 @@ export const LeafletMap = ({
       })
       .on("routeselected", function (e) {
         console.log("route selected");
+
         //e.route vraci i distance
         // setPointPosition(undefined);
         const waypoints = e.route.waypoints;
-
-        const start = waypoints.at(0).latLng;
-        const finish = waypoints.at(-1).latLng;
-
-        const startCoords = isEqualCoords(startPoint, start);
-        const finishCoords = isEqualCoords(finishPoint, finish);
-
-        // if (!startCoords) {
-        //   updateStartPoint(start);
-        //   console.log("updated start point");
-        // }
-        // if (!finishCoords) {
-        //   updateFinishPoint(finish);
-        //   console.log("updated finish point");
-        // }
       });
-
     setRouteControl(instance);
     return instance;
 
     //nepotrebuju, aby se prerendrovavalo to memo pri zmene zacatecniho a koncovyho bodu, jen pri prujezdovym
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startPoint, finishPoint]);
+  }, [waypoints]);
 
   const RoutingMachine = useMemo(
     () => createControlComponent(createRoutingMachineLayer),
@@ -152,34 +142,39 @@ export const LeafletMap = ({
   );
 
   return (
-    <MapContainer
-      center={[50.0343092, 15.7811994]}
-      zoom={13}
-      id="map-box"
-      scrollWheelZoom={false}
-      className="z-0 h-full"
-      zoomControl={false}
-    >
-      <ZoomControl position="topright" />
-      <TileLayer
-        attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
-        url={`https://api.mapbox.com/styles/v1/kapaakinos/clevb09lv001n01lsal61f8ys/tiles/256/{z}/{x}/{y}@2x?access_token=${accessToken}`}
-      />
-      <MapEventListener
-        onClick={handleSavePointPosition}
-        openPopup={handleOpen}
-      />
+    <>
+      {waypoints && (
+        <MapContainer
+          center={[50.0343092, 15.7811994]}
+          zoom={13}
+          id="map-box"
+          scrollWheelZoom={false}
+          className="z-0 h-full"
+          zoomControl={false}
+          ref={mapRef}
+        >
+          <ZoomControl position="topright" />
+          <TileLayer
+            attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
+            url={`https://api.mapbox.com/styles/v1/kapaakinos/clevb09lv001n01lsal61f8ys/tiles/256/{z}/{x}/{y}@2x?access_token=${accessToken}`}
+          />
+          <MapEventListener
+            onClick={handleSavePointPosition}
+            openPopup={handleOpen}
+          />
 
-      {startPoint && <RoutingMachine />}
+          {startPoint && <RoutingMachine />}
 
-      {pointPosition && (
-        <TapPopup
-          ref={popupRef}
-          position={pointPosition}
-          onTap={handleAddNewPoint}
-        />
+          {pointPosition && (
+            <TapPopup
+              ref={popupRef}
+              position={pointPosition}
+              onTap={handleAddNewPoint}
+            />
+          )}
+        </MapContainer>
       )}
-    </MapContainer>
+    </>
   );
 };
 

@@ -1,6 +1,6 @@
 import { createContext, PropsWithChildren, useContext } from "react";
 
-import { LatLngLiteral, TranslatedPoints } from "@/domains";
+import { LatLngLiteral, RoutePoint, TranslatedPoints } from "@/domains";
 import { useRoute } from "@/hooks";
 
 type RouteContextType = {
@@ -8,6 +8,9 @@ type RouteContextType = {
   finishPoint: LatLngLiteral;
   crossingPoints: LatLngLiteral[];
   translatedPoints: TranslatedPoints;
+  routePoints: RoutePoint[];
+  addPointBeforeLast(coordinates?: LatLngLiteral): void;
+  updatePointById(id: string, coordinates: LatLngLiteral): void;
   updateStartPoint(coordinates: LatLngLiteral): void;
   updateFinishPoint(coordinates: LatLngLiteral): void;
   updateStartAndFinishPoints(
@@ -28,9 +31,12 @@ const defaultValues = {
     lng: 0,
     lat: 0,
   },
+  routePoints: [],
   crossingPoints: [],
   translatedPoints: { startPoint: "", finishPoint: "", crossingPoints: [] },
+  addPointBeforeLast: () => {},
   updateStartPoint: () => {},
+  updatePointById: () => {},
   updateFinishPoint: () => {},
   updateStartAndFinishPoints: () => {},
   addCrossingPoint: () => [],
