@@ -24,7 +24,7 @@ export const RemovePopup = forwardRef<L.Popup, RemovePopupProps>(
       <Popup position={[position?.lat, position?.lng]} ref={ref}>
         <VerticalStack>
           <Text className="text-[1.4rem]">Odstranit bod</Text>
-          <Button size="small" className="bg-red-500" onClick={handleTap}>
+          <Button size="small" color="error" onClick={handleTap}>
             potvrdit
           </Button>
         </VerticalStack>
