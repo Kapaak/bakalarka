@@ -22,9 +22,7 @@ export const TapPopup = forwardRef<L.Popup, TapPopupProps>(
     return (
       <Popup position={[position?.lat, position?.lng]} ref={ref}>
         <VerticalStack>
-          <Text className="text-[1.4rem]" onClick={() => console.log("pp")}>
-            Vytvořit nový bod zde
-          </Text>
+          <Text className="text-[1.4rem]">Vytvořit nový bod zde</Text>
           <Button size="small" onClick={handleTap}>
             potvrdit
           </Button>

@@ -11,7 +11,6 @@ interface MapEventListenerProps {
 
 export const MapEventListener = ({
   onClick,
-  openPopup,
   onDoubleClick,
 }: MapEventListenerProps) => {
   const map = useMapEvents({
@@ -20,15 +19,6 @@ export const MapEventListener = ({
     },
     dblclick(e) {
       onDoubleClick();
-    },
-    add: (e) => {
-      console.log("added");
-    },
-    // layeradd: (e) => {
-    //   console.log(e, "layer");
-    // },
-    layerremove: (e) => {
-      console.log(e, "removed layer");
     },
   });
 

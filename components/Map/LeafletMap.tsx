@@ -1,10 +1,11 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
 
-import { useRouteContext } from "@/contexts";
-import { LatLngLiteral } from "@/domains";
 import { createControlComponent } from "@react-leaflet/core";
 import L, { Map } from "leaflet";
+
+import { useRouteContext } from "@/contexts";
+import { LatLngLiteral } from "@/domains";
 
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
@@ -20,7 +21,6 @@ export const LeafletMap = () => {
   const { updatePointById, removePointById, routePoints, addPointBeforeLast } =
     useRouteContext();
   const popupRef = useRef<L.Popup>(null);
-  const [routeControl, setRouteControl] = useState<L.Routing.Control>();
 
   const waypoints = useMemo(
     () =>
@@ -58,14 +58,15 @@ export const LeafletMap = () => {
             draggable: true,
           })
             .addEventListener("click", (e) => {
-              if (i > 0 && i < routePoints.length - 1)
+              if (i > 0 && i < routePoints.length - 1) {
                 removePointById(routePoints[i].id);
+              }
               // instance?.spliceWaypoints(i, 1);
             })
             .addEventListener("dragend", (e) => {
-              //ten error je kvuli tomuto
-              //je ale zajmavy, ze remove point ten err nevyhodi -> tam bude zakopanej pes
-              updatePointById(routePoints[i].id, e.target._latlng);
+              setTimeout(() => {
+                updatePointById(routePoints[i].id, e.target.getLatLng());
+              }, 300); //pokud bude removeLayer err, pridej vetsi timeout (500 bylo vzdy OK)
             });
         },
       }),
@@ -78,15 +79,12 @@ export const LeafletMap = () => {
         profile: "mapbox/cycling",
       }),
     })
-      .on("waypointschanged", function (e) {
-        setPointPosition(undefined);
-        console.log("waypoints add");
-      })
+      .on("waypointschanged", function (e) {})
       .on("routeselected", function (e) {
+        setPointPosition(undefined);
         console.log("route selected");
       });
 
-    setRouteControl(instance);
     return instance;
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
