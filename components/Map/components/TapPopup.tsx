@@ -14,13 +14,17 @@ interface TapPopupProps {
 export const TapPopup = forwardRef<L.Popup, TapPopupProps>(
   ({ position, onTap }, ref) => {
     const handleTap = (e: BaseSyntheticEvent) => {
-      e.stopPropagation();
+      // e.stopPropagation();
 
       onTap();
     };
 
     return (
-      <Popup position={[position?.lat, position?.lng]} ref={ref}>
+      <Popup
+        eventHandlers={{ click: () => console.log("xx") }}
+        position={[position?.lat, position?.lng]}
+        ref={ref}
+      >
         <VerticalStack>
           <Text className="text-[1.4rem]">Vytvořit nový bod zde</Text>
           <Button size="small" onClick={handleTap}>

@@ -1,2 +1,3 @@
-export * from './MapEventListener';
-export * from './TapPopup';
+export * from "./MapEventListener";
+export * from "./RemovePopup";
+export * from "./TapPopup";

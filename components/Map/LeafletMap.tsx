@@ -1,23 +1,23 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
 
-import { createControlComponent } from "@react-leaflet/core";
-import L, { Map } from "leaflet";
-
 import { useRouteContext } from "@/contexts";
-import { LatLngLiteral } from "@/domains";
+import { LatLngLiteral, RoutePoint } from "@/domains";
+import { createControlComponent } from "@react-leaflet/core";
+import L from "leaflet";
 
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "leaflet/dist/leaflet.css";
-import { MapEventListener, TapPopup } from "./components";
+import { MapEventListener, RemovePopup, TapPopup } from "./components";
 
 const accessToken = process.env.NEXT_PUBLIC_MAPBOX || "";
 
 export const LeafletMap = () => {
-  const [pointPosition, setPointPosition] = useState<LatLngLiteral>();
+  const [pointPosition, setPointPosition] = useState<LatLngLiteral | null>();
+  const [removePopup, setRemovePopup] = useState<Partial<RoutePoint> | null>();
   const { updatePointById, removePointById, routePoints, addPointBeforeLast } =
     useRouteContext();
   const popupRef = useRef<L.Popup>(null);
@@ -30,10 +30,6 @@ export const LeafletMap = () => {
     [routePoints]
   );
 
-  const handleOpen = (map: Map) => {
-    popupRef?.current?.openOn(map);
-  };
-
   const handleSavePointPosition = (coordinates: LatLngLiteral) => {
     setPointPosition(coordinates);
   };
@@ -42,6 +38,23 @@ export const LeafletMap = () => {
     if (pointPosition) {
       addPointBeforeLast(pointPosition);
     }
+  };
+
+  const handleRemovePoint = () => {
+    if (
+      removePopup?.coordinates?.lat &&
+      removePopup?.coordinates?.lng &&
+      removePopup?.id
+    ) {
+      removePointById(removePopup.id);
+
+      setRemovePopup(null);
+    }
+  };
+
+  const resetSelectedPoint = () => {
+    setPointPosition(null);
+    setRemovePopup(null);
   };
 
   const createRoutingMachineLayer = useCallback(() => {
@@ -59,7 +72,10 @@ export const LeafletMap = () => {
           })
             .addEventListener("click", (e) => {
               if (i > 0 && i < routePoints.length - 1) {
-                removePointById(routePoints[i].id);
+                setRemovePopup({
+                  id: routePoints[i].id,
+                  coordinates: e.target.getLatLng(),
+                });
               }
               // instance?.spliceWaypoints(i, 1);
             })
@@ -82,7 +98,6 @@ export const LeafletMap = () => {
       .on("waypointschanged", function (e) {})
       .on("routeselected", function (e) {
         setPointPosition(undefined);
-        console.log("route selected");
       });
 
     return instance;
@@ -114,7 +129,7 @@ export const LeafletMap = () => {
           <MapEventListener
             onClick={handleSavePointPosition}
             onDoubleClick={() => popupRef.current?.closePopup()}
-            openPopup={handleOpen}
+            onReset={resetSelectedPoint}
           />
 
           {waypoints && <RoutingMachine />}
@@ -124,6 +139,14 @@ export const LeafletMap = () => {
               ref={popupRef}
               position={pointPosition}
               onTap={handleAddNewPoint}
+            />
+          )}
+
+          {removePopup?.coordinates && (
+            <RemovePopup
+              ref={popupRef}
+              position={removePopup.coordinates}
+              onSubmit={handleRemovePoint}
             />
           )}
         </MapContainer>

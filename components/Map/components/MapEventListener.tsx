@@ -1,20 +1,22 @@
 import { useMapEvents } from "react-leaflet";
 
 import { LatLngLiteral } from "@/domains";
-import { Map } from "leaflet";
 
 interface MapEventListenerProps {
   onClick(coordinates: LatLngLiteral): void;
   onDoubleClick(): void;
-  openPopup?(map: Map): void;
+  onReset(): void;
 }
 
 export const MapEventListener = ({
   onClick,
   onDoubleClick,
+  onReset,
 }: MapEventListenerProps) => {
   const map = useMapEvents({
     click(e) {
+      onReset();
+
       onClick({ lat: e.latlng.lat, lng: e.latlng.lng });
     },
     dblclick(e) {
