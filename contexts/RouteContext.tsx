@@ -10,6 +10,7 @@ type RouteContextType = {
   translatedPoints: TranslatedPoints;
   routePoints: RoutePoint[];
   addPointBeforeLast(coordinates?: LatLngLiteral): void;
+  removePointById(id: string): void;
   updatePointById(id: string, coordinates: LatLngLiteral): void;
   updateStartPoint(coordinates: LatLngLiteral): void;
   updateFinishPoint(coordinates: LatLngLiteral): void;
@@ -35,6 +36,7 @@ const defaultValues = {
   crossingPoints: [],
   translatedPoints: { startPoint: "", finishPoint: "", crossingPoints: [] },
   addPointBeforeLast: () => {},
+  removePointById: () => {},
   updateStartPoint: () => {},
   updatePointById: () => {},
   updateFinishPoint: () => {},

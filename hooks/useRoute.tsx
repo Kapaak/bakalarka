@@ -33,21 +33,22 @@ export const useRoute = () => {
     },
   ]);
 
+  const getAddressName = async (coordinates: LatLngLiteral) => {
+    const geocoding = await reverseGeocoding(coordinates);
+    const data = geocoding.features[0];
+
+    return data?.place_name ?? "";
+  };
+
   const updatePointById = async (id: string, coordinates: LatLngLiteral) => {
     const targetPoint = structuredClone(
       routePoints.find((point) => point.id === id)
     );
-    console.log(targetPoint, "found");
 
     if (targetPoint) {
       targetPoint.coordinates = coordinates;
 
-      const geocoding = await reverseGeocoding(targetPoint.coordinates);
-      const data = geocoding.features[0];
-
-      targetPoint.value = data?.place_name ?? "";
-
-      console.log(targetPoint, "tarpo");
+      targetPoint.value = await getAddressName(coordinates);
 
       setRoutePoints((prev) => [
         ...prev.map((pt) => (pt.id === id ? targetPoint : pt)),
@@ -55,7 +56,7 @@ export const useRoute = () => {
     }
   };
 
-  const addPointBeforeLast = (coordinates?: LatLngLiteral) => {
+  const addPointBeforeLast = async (coordinates?: LatLngLiteral) => {
     if (routePoints.length > 0) {
       //by default has coordinates of last element, so that it doesnt break routing
       const newPoint: RoutePoint = {
@@ -65,6 +66,10 @@ export const useRoute = () => {
         value: "",
       };
 
+      if (coordinates) {
+        newPoint.value = await getAddressName(coordinates);
+      }
+
       const newRoutePoints = structuredClone(routePoints);
 
       const index = routePoints.length - 1;
@@ -72,6 +77,14 @@ export const useRoute = () => {
 
       setRoutePoints(newRoutePoints);
     }
+  };
+
+  const removePointById = (id: string) => {
+    const newRoutePoints = structuredClone(routePoints)?.filter(
+      (routePoint) => routePoint.id !== id
+    );
+
+    setRoutePoints(newRoutePoints);
   };
 
   const updateStartAndFinishPoints = useCallback(
@@ -175,6 +188,7 @@ export const useRoute = () => {
     finishPoint,
     crossingPoints,
     updatePointById,
+    removePointById,
     updateStartPoint,
     updateFinishPoint,
     updateStartAndFinishPoints,

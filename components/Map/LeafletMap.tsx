@@ -15,51 +15,20 @@ import { MapEventListener, TapPopup } from "./components";
 
 const accessToken = process.env.NEXT_PUBLIC_MAPBOX || "";
 
-export interface LeafletMapProps {
-  startPoint: LatLngLiteral;
-  crossingPoints?: LatLngLiteral[];
-  finishPoint: LatLngLiteral;
-  addCrossingPoint(coordinates: LatLngLiteral): void;
-}
-
-export const LeafletMap = ({
-  startPoint,
-  finishPoint,
-  crossingPoints,
-  addCrossingPoint,
-}: LeafletMapProps) => {
+export const LeafletMap = () => {
   const [pointPosition, setPointPosition] = useState<LatLngLiteral>();
-  const {
-    updateStartAndFinishPoints,
-    updatePointById,
-    updateFinishPoint,
-    removePointByCoordinates,
-    updateStartPoint,
-    routePoints,
-  } = useRouteContext();
+  const { updatePointById, removePointById, routePoints, addPointBeforeLast } =
+    useRouteContext();
   const popupRef = useRef<L.Popup>(null);
   const [routeControl, setRouteControl] = useState<L.Routing.Control>();
-  const mapRef = useRef<Map>(null);
 
-  const waypoints = useMemo(() => {
-    const convertedCrossingPoints = (routePoints ?? []).map((routePoint) =>
-      L.latLng(routePoint?.coordinates.lat, routePoint?.coordinates.lng)
-    );
-    return convertedCrossingPoints;
-  }, [routePoints]);
-
-  //ta elevation se bude potitat z koordinatu co prijdou v props
-  //tam bude start point atd
-
-  // const { distance } = useDistance({
-  //   coordinatesFrom: { lat: 49.1839069, lng: 16.5304978 },
-  //   coordinatesTo: { lat: 49.1839069, lng: 16.7809511 },
-  // });
-  //turf.js na pocitani distance atd .. mozna i na pocitani elevation
-
-  // const { data } = useElevation({
-  //   coordinates: { lat: 49.0039069, lng: 16.1304978 },
-  // });
+  const waypoints = useMemo(
+    () =>
+      (routePoints ?? []).map((routePoint) =>
+        L.latLng(routePoint?.coordinates.lat, routePoint?.coordinates.lng)
+      ),
+    [routePoints]
+  );
 
   const handleOpen = (map: Map) => {
     popupRef?.current?.openOn(map);
@@ -70,16 +39,8 @@ export const LeafletMap = ({
   };
 
   const handleAddNewPoint = () => {
-    const currentWaypoints = routeControl?.getWaypoints() ?? [];
-
     if (pointPosition) {
-      const newPoint = L.latLng(pointPosition);
-      const newWaypoint = L.routing.waypoint(newPoint);
-
-      console.log(newWaypoint, "way");
-      routeControl?.setWaypoints([...currentWaypoints, newWaypoint]);
-
-      addCrossingPoint(pointPosition);
+      addPointBeforeLast(pointPosition);
     }
   };
 
@@ -92,20 +53,19 @@ export const LeafletMap = ({
         missingRouteTolerance: 20,
       },
       plan: L.Routing.plan(waypoints, {
-        //this makes markers undraggable
         createMarker: function (i, wp) {
           return L.marker(wp.latLng, {
-            draggable: i === 0 ? false : true,
+            draggable: true,
           })
             .addEventListener("click", (e) => {
-              removePointByCoordinates(e.latlng);
+              if (i > 0 && i < routePoints.length - 1)
+                removePointById(routePoints[i].id);
               // instance?.spliceWaypoints(i, 1);
             })
             .addEventListener("dragend", (e) => {
-              // instance.spliceWaypoints(i, 1);
+              //ten error je kvuli tomuto
+              //je ale zajmavy, ze remove point ten err nevyhodi -> tam bude zakopanej pes
               updatePointById(routePoints[i].id, e.target._latlng);
-
-              //co kdybych tu menil ty hodnoty, ale nesledoval bych ty zmeny
             });
         },
       }),
@@ -124,15 +84,11 @@ export const LeafletMap = ({
       })
       .on("routeselected", function (e) {
         console.log("route selected");
-
-        //e.route vraci i distance
-        // setPointPosition(undefined);
-        const waypoints = e.route.waypoints;
       });
+
     setRouteControl(instance);
     return instance;
 
-    //nepotrebuju, aby se prerendrovavalo to memo pri zmene zacatecniho a koncovyho bodu, jen pri prujezdovym
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [waypoints]);
 
@@ -151,7 +107,6 @@ export const LeafletMap = ({
           scrollWheelZoom={false}
           className="z-0 h-full"
           zoomControl={false}
-          ref={mapRef}
         >
           <ZoomControl position="topright" />
           <TileLayer
@@ -160,10 +115,11 @@ export const LeafletMap = ({
           />
           <MapEventListener
             onClick={handleSavePointPosition}
+            onDoubleClick={() => popupRef.current?.closePopup()}
             openPopup={handleOpen}
           />
 
-          {startPoint && <RoutingMachine />}
+          {waypoints && <RoutingMachine />}
 
           {pointPosition && (
             <TapPopup
@@ -177,6 +133,19 @@ export const LeafletMap = ({
     </>
   );
 };
+
+//ta elevation se bude potitat z koordinatu co prijdou v props
+//tam bude start point atd
+
+// const { distance } = useDistance({
+//   coordinatesFrom: { lat: 49.1839069, lng: 16.5304978 },
+//   coordinatesTo: { lat: 49.1839069, lng: 16.7809511 },
+// });
+//turf.js na pocitani distance atd .. mozna i na pocitani elevation
+
+// const { data } = useElevation({
+//   coordinates: { lat: 49.0039069, lng: 16.1304978 },
+// });
 
 // const handleElevation = async () => {
 //   const fromLatLng = L.latLng({ lat: 49.1839069, lng: 16.5304978 });
