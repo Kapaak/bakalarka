@@ -62,6 +62,25 @@ export type RouteRow = {
   placesOfInterest: any; //todo -> update type
 };
 
+export type Route = {
+  id: string;
+  createdAt: string;
+  name: string;
+  authorId: string;
+  description: string;
+  distance: number;
+  elevation?: number;
+  terrain: string[];
+  interestingPlaces: string[];
+};
+
+export type User = {
+  id: string;
+  email: string;
+  name?: string;
+  routes?: Route[];
+};
+
 export type TranslatedPoints = {
   startPoint: string;
   finishPoint: string;

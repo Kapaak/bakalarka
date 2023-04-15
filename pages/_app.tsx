@@ -2,10 +2,9 @@ import type { AppProps } from "next/app";
 import { QueryClient, QueryClientProvider } from "react-query";
 import "../styles/globals.css";
 
+import { MainLayout } from "@/ui";
 import { SessionProvider } from "next-auth/react";
 import { ReactQueryDevtools } from "react-query/devtools";
-
-import { MainLayout } from "@/ui";
 
 const queryClient = new QueryClient();
 

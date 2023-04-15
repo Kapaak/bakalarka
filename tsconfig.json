@@ -16,13 +16,15 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/components":["components/index.ts"],
-      "@/screens":["screens/index.ts"],
-      "@/domains":["domains/index.ts"],
-      "@/ui":["ui/index.ts"],
-      "@/hooks":["hooks/index.ts"],
-      "@/contexts":["contexts/index.ts"],
-      "@/utils":["utils/index.ts"],
+      "@/components": ["components/index.ts"],
+      "@/screens": ["screens/index.ts"],
+      "@/domains": ["domains/index.ts"],
+      "@/ui": ["ui/index.ts"],
+      "@/hooks": ["hooks/index.ts"],
+      "@/contexts": ["contexts/index.ts"],
+      "@/utils": ["utils/index.ts"],
+      "@/prisma": ["prisma/index.ts"],
+      "@/adapters": ["adapters/index.ts"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
