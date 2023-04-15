@@ -7,6 +7,7 @@ import {
   MaxWidth,
   Table,
 } from "@/ui";
+import { useGetAllRoutes } from "hooks/useRoutes";
 
 interface LocationpageScreenProps {
   locationName?: string;
@@ -18,8 +19,10 @@ export const LocationPageScreen = ({
   locationValue,
 }: LocationpageScreenProps) => {
   const { table } = useLocationPageTable();
+  const { routes } = useGetAllRoutes();
   return (
     <section className="relative">
+      <button onClick={() => console.log(routes)}>show all routes</button>
       {/* <section className="relative bg-gradient-to-r from-main-yellow to-main-orange"> */}
       <MaxWidth className="">
         <Container height="min-full" className="lg:pt-20">

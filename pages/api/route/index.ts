@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { getAllUsers, getUserById } from "@/prisma";
+import { getAllRoutes, getRouteById } from "@/prisma";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -10,11 +10,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           const id = req.query.id as string;
           console.log("req.query.id", req.query.id);
 
-          const user = await getUserById(id);
+          const user = await getRouteById(id);
 
           return res.send(user);
         } else {
-          const users = await getAllUsers();
+          const users = await getAllRoutes();
 
           return res.send(users);
         }
