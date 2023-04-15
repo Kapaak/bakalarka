@@ -17,6 +17,12 @@ export const locations = [
   { value: "stredocesky-kraj", label: "Středočeský kraj" },
 ];
 
+export const fetcher = async (path: string, params?: string) => {
+  return axios
+    .get(`${process.env.NEXT_PUBLIC_API_URL}/api/${path}${params ?? ""}`)
+    .then((values) => values.data);
+};
+
 // export const handleAddressFromCoordinates = async (location: LatLngLiteral) => {
 //   if (window?.google) {
 //     const geocoder = new google.maps.Geocoder();

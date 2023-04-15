@@ -107,3 +107,5 @@ export type Location = {
   coordinates: LatLngLiteral;
   name: string;
 };
+
+export type CreateRoute = Omit<Route, "createdAt" | "id">;

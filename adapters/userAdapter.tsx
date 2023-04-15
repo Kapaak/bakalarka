@@ -1,15 +1,12 @@
 import { useQuery } from "react-query";
 
 import { User } from "@/domains";
-import axios from "axios";
+import { fetcher } from "@/utils";
 
 export const useGetUsers = () => {
   const { data, isLoading, isError, error, isSuccess } = useQuery<User[]>(
     ["users"],
-    () =>
-      axios
-        .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user`)
-        .then((val) => val.data),
+    () => fetcher("user"),
     { initialData: [] }
   );
 
@@ -25,10 +22,7 @@ export const useGetUsers = () => {
 export const useGetUserByUserId = (userId: string) => {
   const { data, isLoading, isError, error, isSuccess } = useQuery<User>(
     ["user", userId],
-    () =>
-      axios
-        .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user?id=${userId}`)
-        .then((val) => val.data),
+    () => fetcher("user", `?id=${userId}`),
     { enabled: Boolean(userId) }
   );
 
