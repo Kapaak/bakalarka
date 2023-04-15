@@ -3,7 +3,11 @@ import { CreateRoute } from "@/domains";
 import { prisma } from "./prisma";
 
 export const getAllRoutes = async () => {
-  const routes = await prisma.route.findMany({});
+  const routes = await prisma.route.findMany({
+    include: {
+      author: true,
+    },
+  });
 
   return routes;
 };

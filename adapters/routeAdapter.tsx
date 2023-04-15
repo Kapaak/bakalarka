@@ -13,7 +13,7 @@ export const useGetRoutes = () => {
   );
 
   return {
-    routes: data,
+    routes: data as Route[],
     isLoading,
     isError,
     error,

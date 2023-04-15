@@ -19,34 +19,10 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
+import { useGetAllRoutes } from "./useRoutes";
+
 export const useLocationPageTable = () => {
-  const dummyData = useMemo(
-    () => [
-      {
-        id: "1",
-        name: "Okolo potoka",
-        value: "okolo-potoka",
-        distance: 32,
-        elevation: 150,
-        author: "Pavel Zapletal",
-        likes: 12,
-        createdAt: "10-10-2010",
-        placesOfInterest: "TODO",
-      },
-      {
-        id: "2",
-        name: "Lukovská štreka",
-        value: "lukovska-streka",
-        distance: 42,
-        elevation: 340,
-        author: "Barunka Nováková",
-        likes: 152,
-        createdAt: "21-02-2022",
-        placesOfInterest: "TODO",
-      },
-    ],
-    []
-  );
+  const { routes } = useGetAllRoutes();
 
   const { query } = useRouter();
 
@@ -108,7 +84,7 @@ export const useLocationPageTable = () => {
         ),
         cell: (info) => <div>{info.getValue()}</div>,
       }),
-      columnHelper.accessor("placesOfInterest", {
+      columnHelper.accessor("interestingPlaces", {
         header: () => (
           <TableHeaderCell
             title="Po cestě uvidím"
@@ -131,7 +107,7 @@ export const useLocationPageTable = () => {
   }, [query.locationId]);
 
   const table = useReactTable<RouteRow>({
-    data: dummyData,
+    data: routes,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });

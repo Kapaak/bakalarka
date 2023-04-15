@@ -55,11 +55,11 @@ export type RouteRow = {
   name: string;
   value: string;
   distance: number;
-  elevation: number;
+  elevation?: number;
   likes: number;
   author: string;
   createdAt: string;
-  placesOfInterest: any; //todo -> update type
+  interestingPlaces: string[]; //todo -> update type
 };
 
 export type Route = {
@@ -72,6 +72,7 @@ export type Route = {
   elevation?: number;
   terrain: string[];
   interestingPlaces: string[];
+  author: User;
 };
 
 export type User = {
