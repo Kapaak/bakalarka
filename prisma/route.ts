@@ -26,6 +26,7 @@ export const createRoute = async ({
   distance,
   elevation,
   terrain,
+  value,
   interestingPlaces,
 }: CreateRoute) => {
   const newRoute = await prisma.route.create({
@@ -37,6 +38,7 @@ export const createRoute = async ({
       elevation,
       terrain,
       interestingPlaces,
+      value,
     },
   });
   return newRoute;

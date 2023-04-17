@@ -1,8 +1,7 @@
 import { useMemo } from "react";
 
-import { RouteRow } from "@/domains";
-
 import { useGetRoutes } from "@/adapters";
+import { RouteRow } from "@/domains";
 
 export const useGetAllRoutes = () => {
   const { routes, isLoading, isError, error, isSuccess } = useGetRoutes();
@@ -12,7 +11,7 @@ export const useGetAllRoutes = () => {
       routes?.map((route) => ({
         id: route.id,
         name: route.name,
-        value: "todo", //generate url from string
+        value: route.value,
         distance: route.distance,
         likes: 0, //todo
         elevation: route?.elevation,

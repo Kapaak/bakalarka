@@ -73,6 +73,7 @@ export type Route = {
   terrain: string[];
   interestingPlaces: string[];
   author: User;
+  value: string;
 };
 
 export type User = {

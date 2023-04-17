@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 
-import { useRouteContext } from "@/contexts";
 import { Button, TransparentCard, VerticalStack } from "@/ui";
 import { MapContainer } from "components/Map";
 
@@ -11,7 +10,6 @@ import { RouteLabel } from "./components";
 
 export const RoutePageScreen = () => {
   const router = useRouter();
-  const { updateStartPoint, updateFinishPoint, startPoint } = useRouteContext();
 
   const dummyRoute = {
     name: "Okolo potoka",

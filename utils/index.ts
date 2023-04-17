@@ -17,6 +17,20 @@ export const locations = [
   { value: "stredocesky-kraj", label: "Středočeský kraj" },
 ];
 
+export const createUrl = (stringValue: string): string => {
+  // convert string value to lowercase
+  stringValue = stringValue.toLowerCase();
+
+  // replace spaces with dashes
+  stringValue = stringValue.replace(/ /g, "-");
+
+  // remove any non-alphanumeric characters
+  stringValue = stringValue.replace(/[^a-zA-Z0-9-]/g, "");
+
+  // construct the URL
+  return stringValue;
+};
+
 export const fetcher = async (path: string, params?: string) => {
   return axios
     .get(`${process.env.NEXT_PUBLIC_API_URL}/api/${path}${params ?? ""}`)

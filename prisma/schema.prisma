@@ -31,4 +31,5 @@ model Route {
   elevation Int?
   terrain String[]
   interestingPlaces String[]
+  value String
 }

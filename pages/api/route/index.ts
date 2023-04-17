@@ -8,15 +8,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       case "GET": {
         if (req.query.id) {
           const id = req.query.id as string;
-          console.log("req.query.id", req.query.id);
+          const route = await getRouteById(id);
 
-          const user = await getRouteById(id);
-
-          return res.send(user);
+          return res.send(route);
         } else {
-          const users = await getAllRoutes();
+          const routes = await getAllRoutes();
 
-          return res.send(users);
+          console.log(routes, "rot");
+
+          return res.send(routes);
         }
       }
     }
