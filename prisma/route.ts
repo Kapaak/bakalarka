@@ -19,6 +19,13 @@ export const getRouteById = async (id: string) => {
   return route;
 };
 
+export const getRouteByValue = async (value: string) => {
+  const route = await prisma.route.findUnique({
+    where: { value },
+  });
+  return route;
+};
+
 export const createRoute = async ({
   authorId,
   name,

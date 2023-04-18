@@ -14,8 +14,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         } else {
           const routes = await getAllRoutes();
 
-          console.log(routes, "rot");
-
           return res.send(routes);
         }
       }

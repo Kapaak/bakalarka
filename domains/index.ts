@@ -64,15 +64,15 @@ export type RouteRow = {
 
 export type Route = {
   id: string;
-  createdAt: string;
+  createdAt: any;
   name: string;
   authorId: string;
   description: string;
   distance: number;
-  elevation?: number;
+  elevation?: number | null;
   terrain: string[];
   interestingPlaces: string[];
-  author: User;
+  author?: User;
   value: string;
 };
 

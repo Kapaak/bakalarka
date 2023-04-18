@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { MapContainer } from "@/components";
+import { Route } from "@/domains";
 import { Button, TransparentCard } from "@/ui";
 
 import { EditDetail, EditRoute } from "./components";
@@ -10,7 +11,11 @@ enum RouteEditSteps {
   ROUTE = "route",
 }
 
-export const RouteEditPageScreen = () => {
+interface RouteEditPageScreenProps {
+  route: Route;
+}
+
+export const RouteEditPageScreen = ({ route }: RouteEditPageScreenProps) => {
   const [page, setPage] = useState(RouteEditSteps.DETAIL);
 
   const isDetailPage = page === RouteEditSteps.DETAIL;
