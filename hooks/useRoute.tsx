@@ -8,7 +8,7 @@ export const useUpdateRouteDetail = () => {
     isLoading,
   };
 };
-export const useGetRouteById = (id?: string) => {
+export const useGetRouteById = (id: string) => {
   const { route, isLoading } = useGetRouteByRouteId(id);
 
   return {

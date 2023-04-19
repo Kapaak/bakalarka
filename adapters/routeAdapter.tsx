@@ -22,14 +22,13 @@ export const useGetRoutes = () => {
 };
 
 export const useGetRouteByRouteId = (routeId: string) => {
-  const { data, isLoading, isError, error, isSuccess } = useQuery<
-    GeneratedRouteWithAuthor[]
-  >(["route"], () => fetcher("route", `?id=${routeId}`), {
-    initialData: [],
-  });
+  const { data, isLoading, isError, error, isSuccess } =
+    useQuery<GeneratedRouteWithAuthor>(["route"], () =>
+      fetcher("route", `?id=${routeId}`)
+    );
 
   return {
-    route: data as GeneratedRouteWithAuthor[],
+    route: data as GeneratedRouteWithAuthor,
     isLoading,
     isError,
     error,
