@@ -64,7 +64,7 @@ export type RouteRow = {
   likes: number;
   authorName: string;
   createdAt: string;
-  interestingPlaces: string[]; //todo -> update type
+  interestingPlaces: string[];
 };
 
 export type Route = {

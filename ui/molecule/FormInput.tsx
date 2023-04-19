@@ -1,4 +1,5 @@
 import { Controller } from "react-hook-form";
+
 import { Input, InputProps } from "..";
 
 interface FormInputProps extends InputProps {
@@ -17,13 +18,14 @@ export const FormInput = ({
   return (
     <Controller
       name={name}
-      render={({ field: { ref, onChange } }) => (
+      render={({ field: { ref, onChange, value } }) => (
         <div className="relative w-full">
           {/* <label className="absolute">{label}</label> */}
           {/* todo -> udelej to vyjizdeni stejny jak mas v routistu na PC */}
           <Input
             {...rest}
             placeholder={placeholder ?? label}
+            value={value}
             ref={ref}
             onChange={onChange}
             className={`w-full ${className}`}

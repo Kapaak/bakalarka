@@ -21,6 +21,22 @@ export const useGetRoutes = () => {
   };
 };
 
+export const useGetRouteByRouteId = (routeId: string) => {
+  const { data, isLoading, isError, error, isSuccess } = useQuery<
+    GeneratedRouteWithAuthor[]
+  >(["route"], () => fetcher("route", `?id=${routeId}`), {
+    initialData: [],
+  });
+
+  return {
+    route: data as GeneratedRouteWithAuthor[],
+    isLoading,
+    isError,
+    error,
+    isSuccess,
+  };
+};
+
 export const useCreateRoute = () => {
   const { mutateAsync } = useMutation<Route[]>(["routes"], () =>
     fetcherPost("route", {})

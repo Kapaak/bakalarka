@@ -1,8 +1,8 @@
-import { useCallback, useEffect } from "react";
-import { FormProvider, useFieldArray, useForm } from "react-hook-form";
+import { useCallback } from "react";
+import { useFieldArray } from "react-hook-form";
 
 import { useRouteContext } from "@/contexts";
-import { RouteModel } from "@/domains";
+import { GeneratedRoute } from "@/domains";
 import { useGoogleAutocomplete } from "@/hooks";
 import { Button, HorizontalStack, VerticalStack } from "@/ui";
 
@@ -31,42 +31,41 @@ export const EditRoute = ({ onReturn, onReset }: EditRouteProps) => {
     [addPointBeforeLast, removePointById, routePoints]
   );
 
-  const form = useForm<RouteModel>({
-    defaultValues: {
-      routePoints: routePoints,
-    },
-  });
+  // const form = useForm<RouteModel>({
+  //   defaultValues: {
+  //     routePoints: routePoints,
+  //   },
+  // });
 
-  const { getValues, handleSubmit, reset, control } = form;
+  // const { getValues, handleSubmit, reset, control } = form;
 
-  const { fields } = useFieldArray<RouteModel>({
+  // const { fields } = useFieldArray<RouteModel>({
+  //   name: "routePoints",
+  //   control,
+  // });
+
+  const { fields } = useFieldArray<GeneratedRoute>({
     name: "routePoints",
-    control,
   });
+  //handle submit presun nahoru do onSubmit fce
 
   const { isLoaded } = useGoogleAutocomplete();
 
-  useEffect(() => {
-    reset({
-      routePoints: routePoints,
-    });
-  }, [reset, routePoints]);
+  // useEffect(() => {
+  //   reset({
+  //     routePoints: routePoints,
+  //   });
+  // }, [reset, routePoints]);
 
   return (
-    <FormProvider {...form}>
-      <Button
-        variant="contained"
-        type="button"
-        onClick={() => console.log(getValues(), "vals")}
-      >
-        show values
-      </Button>
+    <div>
       <div className="flex-1 overflow-y-scroll">
         {isLoaded && (
-          <form
-            onSubmit={handleSubmit((val) => console.log(val))}
-            className="h-full"
-          >
+          // <form
+          //   onSubmit={handleSubmit((val) => console.log(val))}
+          //   className="h-full"
+          // >
+          <div className="h-full">
             <VerticalStack className="h-full flex-1  gap-4 p-12">
               {fields.map((field, index) => (
                 <RouteInput
@@ -87,9 +86,10 @@ export const EditRoute = ({ onReturn, onReset }: EditRouteProps) => {
                 </Button>
               </HorizontalStack>
             </VerticalStack>
-          </form>
+          </div>
+          // </form>
         )}
       </div>
-    </FormProvider>
+    </div>
   );
 };
