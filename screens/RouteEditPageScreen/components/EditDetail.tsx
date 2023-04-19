@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useFormContext } from "react-hook-form";
+import { useFieldArray, useFormContext } from "react-hook-form";
 
 import { BikeType, PlaceOfInterest } from "@/domains";
 import {
@@ -38,9 +38,44 @@ export const EditDetail = ({ prefix = "detail" }) => {
   // const { handleSubmit, getValues, watch, setValue } = form;
   const { handleSubmit, getValues, watch, setValue } = useFormContext();
 
+  const { append, remove, insert } = useFieldArray({
+    name: `${prefix}."terrain"`,
+  });
+
   //rename
-  const bikeTypes = watch(`${prefix}.terrain`);
-  const placesOfInterest = watch(`${prefix}.interestingPlaces`);
+  const terrains = watch(`${prefix}.terrain`);
+  const interestingPlaces = watch(`${prefix}.interestingPlaces`);
+
+  const isTerrainActive = (
+    terrain: BikeType
+  ): {
+    variant: "contained" | "outlined" | "tinted" | "plain" | null | undefined;
+  } => {
+    const included = terrains?.includes(terrain);
+
+    if (included)
+      return {
+        variant: "contained",
+      };
+
+    return {
+      variant: "outlined",
+    };
+  };
+
+  const handleTerrainChange = (terrain: BikeType) => {
+    const newTerrains: string[] = structuredClone(terrains);
+
+    const index = Array.from(terrains)?.findIndex((t) => t === terrain);
+
+    if (index > -1) {
+      newTerrains.splice(index, 1);
+
+      return setValue(`${prefix}.terrain`, newTerrains);
+    }
+
+    setValue(`${prefix}.terrain`, [...newTerrains, terrain]);
+  };
 
   // const onSubmit = (formData: any) => {
   //   console.log("submited", formData);
@@ -49,13 +84,13 @@ export const EditDetail = ({ prefix = "detail" }) => {
   const handleBikeType = (type: BikeType) => {
     const currentType = Boolean(getValues().bikeTypes[type]);
 
-    setValue(`bikeTypes.${type}`, !currentType);
+    // setValue(`bikeTypes.${type}`, !currentType);
   };
 
   const handleInterestType = (type: PlaceOfInterest) => {
     const currentType = Boolean(getValues().placesOfInterest[type]);
 
-    setValue(`placesOfInterest.${type}`, !currentType);
+    // setValue(`placesOfInterest.${type}`, !currentType);
   };
   return (
     <div className="flex-1 p-12">
@@ -91,22 +126,25 @@ export const EditDetail = ({ prefix = "detail" }) => {
             <HorizontalStack className="items-end gap-2">
               <Button
                 type="button"
-                variant={bikeTypes?.road ? "contained" : "outlined"}
-                onClick={() => handleBikeType(BikeType.ROAD)}
+                {...isTerrainActive(BikeType.ROAD)}
+                // variant={bikeTypes?.road ? "contained" : "outlined"}
+                onClick={() => handleTerrainChange(BikeType.ROAD)}
               >
                 Silnička
               </Button>
               <Button
                 type="button"
-                variant={bikeTypes?.mtb ? "contained" : "outlined"}
-                onClick={() => handleBikeType(BikeType.MTB)}
+                {...isTerrainActive(BikeType.MTB)}
+                // variant={bikeTypes?.mtb ? "contained" : "outlined"}
+                onClick={() => handleTerrainChange(BikeType.MTB)}
               >
                 Horské kolo
               </Button>
               <Button
                 type="button"
-                variant={bikeTypes?.gravel ? "contained" : "outlined"}
-                onClick={() => handleBikeType(BikeType.GRAVEL)}
+                {...isTerrainActive(BikeType.GRAVEL)}
+                // variant={bikeTypes?.gravel ? "contained" : "outlined"}
+                onClick={() => handleTerrainChange(BikeType.GRAVEL)}
               >
                 Gravel
               </Button>
@@ -115,7 +153,7 @@ export const EditDetail = ({ prefix = "detail" }) => {
         </HorizontalStack>
         <LabelContainer label="Po cestě potkám">
           <HorizontalStack className="items-end gap-2">
-            <Button
+            {/* <Button
               type="button"
               variant={placesOfInterest?.swimming ? "contained" : "outlined"}
               onClick={() => handleInterestType(PlaceOfInterest.SWIMMING)}
@@ -149,7 +187,7 @@ export const EditDetail = ({ prefix = "detail" }) => {
               onClick={() => handleInterestType(PlaceOfInterest.CULTURE)}
             >
               Památky
-            </Button>
+            </Button> */}
           </HorizontalStack>
         </LabelContainer>
         <Button

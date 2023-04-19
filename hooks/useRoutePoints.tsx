@@ -8,7 +8,6 @@ import { nanoid } from "nanoid";
 import { useGetRouteById } from "./useRoute";
 
 export const useRoutePoints = () => {
-  // const [routeData,setRouteData] = useState()
   const { query } = useRouter();
   const { route } = useGetRouteById(query.routeId as string);
 
