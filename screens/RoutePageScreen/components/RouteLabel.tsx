@@ -2,7 +2,7 @@ import { Text } from "@/ui";
 
 interface RouteLabelProps {
   title: string;
-  description: string;
+  description: string | number;
 }
 
 export const RouteLabel = ({ description, title }: RouteLabelProps) => {

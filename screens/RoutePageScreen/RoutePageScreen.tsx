@@ -1,13 +1,13 @@
 import { useRouter } from "next/router";
 
-import { Route } from "@/domains";
+import { GeneratedRoute } from "@/domains";
 import { Button, TransparentCard, VerticalStack } from "@/ui";
 import { MapContainer } from "components/Map";
 
 import { RouteLabel } from "./components";
 
 interface RoutePageScreenProps {
-  route: Route;
+  route: GeneratedRoute;
 }
 
 export const RoutePageScreen = ({ route }: RoutePageScreenProps) => {
@@ -16,9 +16,15 @@ export const RoutePageScreen = ({ route }: RoutePageScreenProps) => {
   return (
     <TransparentCard>
       <VerticalStack className="flex-1 gap-4 p-12 lg:flex">
-        <RouteLabel title="Název trasy" description={route?.name} />
-        <RouteLabel title="Popis trasy" description={route?.description} />
-        {/* <RouteLabel title="Počet kilometrů" description={route?.distance} /> */}
+        <RouteLabel title="Název trasy" description={route?.detail?.name} />
+        <RouteLabel
+          title="Popis trasy"
+          description={route?.detail?.description}
+        />
+        <RouteLabel
+          title="Počet kilometrů"
+          description={route?.detail?.distance}
+        />
 
         <Button
           onClick={() => {

@@ -2,6 +2,7 @@ import { useMemo } from "react";
 
 import { useGetRoutes } from "@/adapters";
 import { RouteRow } from "@/domains";
+import { convertDateToString } from "@/utils";
 
 export const useGetAllRoutes = () => {
   const { routes, isLoading, isError, error, isSuccess } = useGetRoutes();
@@ -10,14 +11,13 @@ export const useGetAllRoutes = () => {
     (): RouteRow[] =>
       routes?.map((route) => ({
         id: route.id,
-        name: route.name,
-        value: route.value,
-        distance: route.distance,
+        name: route?.detail?.name,
+        distance: route?.detail?.distance,
         likes: 0, //todo
-        elevation: route?.elevation,
-        author: route.author.name ?? "", //todo oprav, aby vracelo jen authorName
-        createdAt: route.createdAt,
-        interestingPlaces: route.interestingPlaces,
+        elevation: route?.detail?.elevation,
+        authorName: route?.author?.name ?? "",
+        createdAt: convertDateToString(route?.createdAt) ?? "",
+        interestingPlaces: route?.detail?.interestingPlaces,
       })),
     [routes]
   );

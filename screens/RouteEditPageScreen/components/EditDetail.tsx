@@ -9,6 +9,7 @@ import {
   LabelContainer,
   VerticalStack,
 } from "@/ui";
+import { useCreateRoute } from "adapters/routeAdapter";
 
 const defaultValues = {
   name: "",
@@ -32,6 +33,8 @@ export const EditDetail = () => {
   });
   const router = useRouter();
 
+  const { createTodo } = useCreateRoute();
+
   const { handleSubmit, getValues, watch, setValue } = form;
 
   const bikeTypes = watch("bikeTypes");
@@ -54,7 +57,17 @@ export const EditDetail = () => {
   };
   return (
     <FormProvider {...form}>
+      <button type="button" onClick={() => createTodo()}>
+        create
+      </button>
       <form onSubmit={handleSubmit(onSubmit)} className="flex-1 p-12">
+        <Button
+          variant="contained"
+          type="button"
+          onClick={() => console.log(getValues(), "vv")}
+        >
+          show vals
+        </Button>
         <VerticalStack className="h-full gap-4">
           <LabelContainer label="Název trasy">
             <FormInput name="name" variant="singleBorder" />

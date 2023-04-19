@@ -1,6 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { getAllRoutes, getRouteById } from "@/prisma";
+import {
+  createRoute,
+  getAllRoutes,
+  getRouteById,
+  updateRouteById,
+} from "@/prisma";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -16,6 +21,23 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
           return res.send(routes);
         }
+      }
+      case "PATCH": {
+        if (req.query.id && req.body) {
+          const id = req.query.id as string;
+          const data = req.body;
+
+          const updatedRoute = await updateRouteById(id, data);
+
+          return res.send(updatedRoute);
+        }
+      }
+      case "POST": {
+        console.log("created");
+
+        const newRoute = await createRoute();
+
+        return res.send(newRoute);
       }
     }
   } catch (e) {

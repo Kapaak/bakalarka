@@ -1,5 +1,12 @@
 import { LatLngLiteral } from "@/domains";
 import axios from "axios";
+import dayjs from "dayjs";
+import "dayjs/locale/cs";
+
+export const convertDateToString = (date?: Date) => {
+  dayjs.locale("cs");
+  return date && dayjs(date).format("DD. MMMM YYYY");
+};
 
 export const locations = [
   { value: "olomoucky-kraj", label: "Olomoucký kraj" },
@@ -34,6 +41,12 @@ export const createUrl = (stringValue: string): string => {
 export const fetcher = async (path: string, params?: string) => {
   return axios
     .get(`${process.env.NEXT_PUBLIC_API_URL}/api/${path}${params ?? ""}`)
+    .then((values) => values.data);
+};
+
+export const fetcherPost = async (path: string, data: any, params?: string) => {
+  return axios
+    .post(`${process.env.NEXT_PUBLIC_API_URL}/api/${path}${params ?? ""}`, data)
     .then((values) => values.data);
 };
 

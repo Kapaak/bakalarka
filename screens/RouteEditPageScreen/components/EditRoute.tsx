@@ -4,23 +4,18 @@ import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { useRouteContext } from "@/contexts";
 import { RouteModel } from "@/domains";
 import { useGoogleAutocomplete } from "@/hooks";
-import { Button, VerticalStack } from "@/ui";
+import { Button, HorizontalStack, VerticalStack } from "@/ui";
 
 import { RouteInput } from "./RouteInput";
 
 interface EditRouteProps {
   onReturn?(): void;
+  onReset(): void;
 }
 
-export const EditRoute = ({ onReturn }: EditRouteProps) => {
-  const {
-    routePoints,
-    crossingPoints,
-    addPointBeforeLast,
-    updatePointById,
-    removePointById,
-    translatedPoints,
-  } = useRouteContext();
+export const EditRoute = ({ onReturn, onReset }: EditRouteProps) => {
+  const { routePoints, addPointBeforeLast, updatePointById, removePointById } =
+    useRouteContext();
 
   const events = useCallback(
     (index: number) => ({
@@ -59,6 +54,13 @@ export const EditRoute = ({ onReturn }: EditRouteProps) => {
 
   return (
     <FormProvider {...form}>
+      <Button
+        variant="contained"
+        type="button"
+        onClick={() => console.log(getValues(), "vals")}
+      >
+        show values
+      </Button>
       <div className="flex-1 overflow-y-scroll">
         {isLoaded && (
           <form
@@ -78,9 +80,12 @@ export const EditRoute = ({ onReturn }: EditRouteProps) => {
                 />
               ))}
 
-              <Button className="mt-auto mr-auto" onClick={onReturn}>
-                Zpět do editace popisu
-              </Button>
+              <HorizontalStack className="mt-auto mr-auto gap-2">
+                <Button onClick={onReturn}>Zpět do editace popisu</Button>
+                <Button onClick={onReset} variant="outlined">
+                  Zpět do editace popisu bez uložení
+                </Button>
+              </HorizontalStack>
             </VerticalStack>
           </form>
         )}

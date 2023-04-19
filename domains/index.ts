@@ -1,5 +1,11 @@
 import { HTMLAttributes } from "react";
 
+import {
+  Prisma,
+  Route as PrismaRoute,
+  User as PrismaUser,
+} from "@prisma/client";
+
 export type ClassName = HTMLAttributes<HTMLDivElement>["className"];
 
 export type AutocompleteOption = {
@@ -53,11 +59,10 @@ export type RouteEditFormModel = {
 export type RouteRow = {
   id: string;
   name: string;
-  value: string;
   distance: number;
   elevation?: number;
   likes: number;
-  author: string;
+  authorName: string;
   createdAt: string;
   interestingPlaces: string[]; //todo -> update type
 };
@@ -75,6 +80,37 @@ export type Route = {
   author?: User;
   value: string;
 };
+
+export type GeneratedUser = PrismaUser;
+export type GeneratedRoute = PrismaRoute;
+
+export type GeneratedRouteWithAuthor = Prisma.RouteGetPayload<{
+  include: { author: true };
+}> &
+  GeneratedRoute;
+
+export type RefactorRoute = {
+  id: string;
+  createdAt: any;
+  authorId: string;
+  author: User;
+  detail: {
+    name: string;
+    description: string;
+    distance: number;
+    elevation?: number;
+    terrain: string[];
+    interestingPlaces: string[];
+    regions: string[];
+  };
+  routePoints: {
+    id: string;
+    coordinates: { lat: string; lng: string };
+    value: string;
+  }[];
+};
+
+export type RouteData = Omit<Route, "author" | "authorId" | "id" | "value">;
 
 export type User = {
   id: string;

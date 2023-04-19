@@ -66,7 +66,7 @@ export const useLocationPageTable = () => {
         ),
         cell: (info) => <div>{info.getValue()}</div>,
       }),
-      columnHelper.accessor("author", {
+      columnHelper.accessor("authorName", {
         header: () => (
           <TableHeaderCell
             title="Trasu vytvořil"
@@ -97,7 +97,7 @@ export const useLocationPageTable = () => {
         id: "actions",
         cell: (info) => (
           <NextLink
-            href={`/locations/${query.locationId}/${info.row.original.value}`}
+            href={`/locations/${query.locationId}/${info.row.original.id}`}
           >
             <Button variant="plain">zobrazit trasu</Button>
           </NextLink>

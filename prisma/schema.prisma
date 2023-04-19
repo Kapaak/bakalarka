@@ -20,16 +20,32 @@ model User{
   routes Route[]
 }
 
+type Detail {
+  name String
+  description String
+  distance Int
+  elevation Int
+  terrain String[]
+  interestingPlaces String[]
+  regions String[]
+}
+
+type Coordinates{
+  lat Float
+  lng Float
+}
+
+type RoutePoint {
+  id String
+  coordinates Coordinates
+  value String
+}
+
 model Route {
   id String  @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
-  name String
-  author User @relation(fields:[authorId],references: [id])
-  description String
-  distance Int
   authorId String @db.ObjectId
-  elevation Int?
-  terrain String[]
-  interestingPlaces String[]
-  value String @unique
+  author User @relation(fields:[authorId],references: [id])
+  detail Detail
+  routePoints RoutePoint[]
 }

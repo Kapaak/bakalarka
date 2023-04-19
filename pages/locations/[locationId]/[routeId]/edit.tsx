@@ -2,7 +2,6 @@ import { GetServerSideProps, NextPage } from "next";
 
 import { RouteContextProvider } from "@/contexts";
 import { Route } from "@/domains";
-import { getRouteByValue } from "prisma/route";
 
 import { RouteEditPageScreen } from "../../../../screens";
 
@@ -21,19 +20,20 @@ const RouteEditPage: NextPage<RouteEditPageProps> = ({ route }) => {
 export const getServerSideProps: GetServerSideProps<{ route: Route }> = async (
   ctx
 ) => {
-  const { routeId } = ctx.query;
+  // const { routeId } = ctx.query;
 
-  const routeValue = routeId as string;
+  // const routeValue = routeId as string;
 
-  const route = (await getRouteByValue(routeValue)) as Route;
+  // const route = (await getRouteByValue(routeValue)) as Route;
 
-  if (!route) return { notFound: true };
+  // if (!route) return { notFound: true };
 
-  route.createdAt = JSON.stringify(route.createdAt);
+  // route.createdAt = JSON.stringify(route.createdAt);
 
   return {
     props: {
-      route,
+      // route,
+      route: [],
     },
   };
 };
