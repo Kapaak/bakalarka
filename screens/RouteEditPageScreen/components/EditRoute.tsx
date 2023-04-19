@@ -1,8 +1,7 @@
-import { useCallback } from "react";
-import { useFieldArray } from "react-hook-form";
+import { useCallback, useEffect } from "react";
+import { useFormContext } from "react-hook-form";
 
 import { useRouteContext } from "@/contexts";
-import { GeneratedRoute } from "@/domains";
 import { useGoogleAutocomplete } from "@/hooks";
 import { Button, HorizontalStack, VerticalStack } from "@/ui";
 
@@ -17,6 +16,8 @@ export const EditRoute = ({ onReturn, onReset }: EditRouteProps) => {
   const { routePoints, addPointBeforeLast, updatePointById, removePointById } =
     useRouteContext();
 
+  const { isLoaded } = useGoogleAutocomplete();
+
   const events = useCallback(
     (index: number) => ({
       ...(index < routePoints.length - 1 && index > 0
@@ -30,44 +31,19 @@ export const EditRoute = ({ onReturn, onReset }: EditRouteProps) => {
     }),
     [addPointBeforeLast, removePointById, routePoints]
   );
+  const { setValue } = useFormContext();
 
-  // const form = useForm<RouteModel>({
-  //   defaultValues: {
-  //     routePoints: routePoints,
-  //   },
-  // });
-
-  // const { getValues, handleSubmit, reset, control } = form;
-
-  // const { fields } = useFieldArray<RouteModel>({
-  //   name: "routePoints",
-  //   control,
-  // });
-
-  const { fields } = useFieldArray<GeneratedRoute>({
-    name: "routePoints",
-  });
-  //handle submit presun nahoru do onSubmit fce
-
-  const { isLoaded } = useGoogleAutocomplete();
-
-  // useEffect(() => {
-  //   reset({
-  //     routePoints: routePoints,
-  //   });
-  // }, [reset, routePoints]);
+  useEffect(() => {
+    setValue("routePoints", routePoints);
+  }, [routePoints, setValue]);
 
   return (
     <div>
       <div className="flex-1 overflow-y-scroll">
         {isLoaded && (
-          // <form
-          //   onSubmit={handleSubmit((val) => console.log(val))}
-          //   className="h-full"
-          // >
           <div className="h-full">
             <VerticalStack className="h-full flex-1  gap-4 p-12">
-              {fields.map((field, index) => (
+              {routePoints?.map((field, index) => (
                 <RouteInput
                   key={field.id}
                   name={`routePoints.${index}.value`}
@@ -87,7 +63,6 @@ export const EditRoute = ({ onReturn, onReset }: EditRouteProps) => {
               </HorizontalStack>
             </VerticalStack>
           </div>
-          // </form>
         )}
       </div>
     </div>

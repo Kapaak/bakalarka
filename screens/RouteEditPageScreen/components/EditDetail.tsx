@@ -16,7 +16,7 @@ export const EditDetail = ({ prefix = "detail" }) => {
 
   const { createTodo } = useCreateRoute();
 
-  const { handleSubmit, getValues, watch, setValue } = useFormContext();
+  const { watch, setValue } = useFormContext();
 
   //rename
   const terrains = watch(`${prefix}.terrain`);
@@ -92,13 +92,7 @@ export const EditDetail = ({ prefix = "detail" }) => {
   return (
     <div className="flex-1 p-12">
       {/* todo add region select -> chckbox asi */}
-      <Button
-        variant="contained"
-        type="button"
-        onClick={() => console.log(getValues(), "vv")}
-      >
-        show vals
-      </Button>
+
       <VerticalStack className="h-full gap-4">
         <LabelContainer label="Název trasy">
           <FormInput name={`${prefix}.name`} variant="singleBorder" />

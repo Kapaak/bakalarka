@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import { MapContainer } from "@/components";
-import { GeneratedRoute, Route } from "@/domains";
+import { GeneratedRoute } from "@/domains";
 import { useUpdateRouteDetail } from "@/hooks";
 import { Button, TransparentCard } from "@/ui";
 
@@ -15,7 +15,7 @@ enum RouteEditSteps {
 }
 
 interface RouteEditPageScreenProps {
-  route: Route;
+  route: GeneratedRoute;
 }
 
 export const RouteEditPageScreen = ({ route }: RouteEditPageScreenProps) => {

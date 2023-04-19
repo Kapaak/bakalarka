@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { LatLngLiteral, RoutePoint } from "@/domains";
 import { reverseGeocoding } from "@/utils";
@@ -11,31 +11,7 @@ export const useRoutePoints = () => {
   const { query } = useRouter();
   const { route } = useGetRouteById(query.routeId as string);
 
-  const defaultPoints = [
-    {
-      id: "0",
-      coordinates: {
-        lat: 0,
-        lng: 0,
-      },
-      value: "",
-      //pointType:"start" //start | finish | crossingPoint
-    },
-    {
-      id: "1",
-      coordinates: {
-        lat: 0,
-        lng: 0,
-      },
-      value: "",
-    },
-  ];
-
-  const [routePoints, setRoutePoints] = useState(
-    route?.routePoints ?? defaultPoints
-  );
-
-  // const [routePoints, setRoutePoints] = useState([
+  // const defaultPoints = [
   //   {
   //     id: "0",
   //     coordinates: {
@@ -43,7 +19,6 @@ export const useRoutePoints = () => {
   //       lng: 0,
   //     },
   //     value: "",
-  //     //pointType:"start" //start | finish | crossingPoint
   //   },
   //   {
   //     id: "1",
@@ -53,7 +28,13 @@ export const useRoutePoints = () => {
   //     },
   //     value: "",
   //   },
-  // ]);
+  // ];
+
+  const [routePoints, setRoutePoints] = useState(route?.routePoints);
+
+  useEffect(() => {
+    setRoutePoints(route?.routePoints);
+  }, [route]);
 
   const getAddressName = async (coordinates: LatLngLiteral) => {
     const geocoding = await reverseGeocoding(coordinates);
