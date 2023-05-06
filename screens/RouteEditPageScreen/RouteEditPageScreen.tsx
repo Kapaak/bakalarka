@@ -40,6 +40,8 @@ export const RouteEditPageScreen = ({ route }: RouteEditPageScreenProps) => {
 
   const onSubmit = (routeData: GeneratedRoute) => {
     console.log(routeData, "arouteDatas");
+    console.log("submited");
+
     updateRouteDetail(query.routeId as string, routeData);
     setTimeout(() => {
       router.push(`/locations/${query.locationId}/${query.routeId}`);

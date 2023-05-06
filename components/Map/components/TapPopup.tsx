@@ -27,7 +27,7 @@ export const TapPopup = forwardRef<L.Popup, TapPopupProps>(
       >
         <VerticalStack>
           <Text className="text-[1.4rem]">Vytvořit nový bod zde</Text>
-          <Button size="small" onClick={handleTap}>
+          <Button size="small" onClick={handleTap} type="button">
             potvrdit
           </Button>
         </VerticalStack>
