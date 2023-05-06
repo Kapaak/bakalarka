@@ -7,33 +7,35 @@ import { nanoid } from "nanoid";
 
 import { useGetRouteById } from "./useRoute";
 
+const defaultPoints = [
+  {
+    id: "0",
+    coordinates: {
+      lat: 0,
+      lng: 0,
+    },
+    value: "",
+  },
+  {
+    id: "1",
+    coordinates: {
+      lat: 0,
+      lng: 0,
+    },
+    value: "",
+  },
+];
+
 export const useRoutePoints = () => {
   const { query } = useRouter();
   const { route } = useGetRouteById(query.routeId as string);
 
-  // const defaultPoints = [
-  //   {
-  //     id: "0",
-  //     coordinates: {
-  //       lat: 0,
-  //       lng: 0,
-  //     },
-  //     value: "",
-  //   },
-  //   {
-  //     id: "1",
-  //     coordinates: {
-  //       lat: 0,
-  //       lng: 0,
-  //     },
-  //     value: "",
-  //   },
-  // ];
-
   const [routePoints, setRoutePoints] = useState(route?.routePoints);
 
   useEffect(() => {
-    setRoutePoints(route?.routePoints);
+    //when creating new rote I get undefined from useGetRouteById
+    if (route) setRoutePoints(route?.routePoints);
+    else setRoutePoints(defaultPoints);
   }, [route]);
 
   const getAddressName = async (coordinates: LatLngLiteral) => {

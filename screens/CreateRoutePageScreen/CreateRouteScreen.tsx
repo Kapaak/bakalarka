@@ -14,17 +14,19 @@ enum RouteEditSteps {
   ROUTE = "route",
 }
 
-interface RouteEditPageScreenProps {
+interface CreateRoutePageScreenProps {
   route: GeneratedRoute;
 }
 
-export const RouteEditPageScreen = ({ route }: RouteEditPageScreenProps) => {
+export const CreateRoutePageScreen = ({
+  route,
+}: CreateRoutePageScreenProps) => {
   const [page, setPage] = useState(RouteEditSteps.DETAIL);
 
   const isDetailPage = page === RouteEditSteps.DETAIL;
   const isRoutePage = page === RouteEditSteps.ROUTE;
 
-  const { query, ...router } = useRouter();
+  const router = useRouter();
 
   const form = useForm<GeneratedRoute>({
     defaultValues: route,
@@ -38,9 +40,11 @@ export const RouteEditPageScreen = ({ route }: RouteEditPageScreenProps) => {
     console.log(routeData, "arouteDatas");
     console.log("submited");
 
-    updateRouteDetail(query.routeId as string, routeData);
+    //create
+    // updateRouteDetail(query.routeId as string, routeData);
+
     setTimeout(() => {
-      router.push(`/locations/${query.locationId}/${query.routeId}`);
+      router.push("/locations");
     }, 300);
   };
 

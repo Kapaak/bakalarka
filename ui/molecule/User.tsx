@@ -1,6 +1,7 @@
+import { Fragment } from "react";
+
 import { Menu, Transition } from "@headlessui/react";
 import { signOut } from "next-auth/react";
-import { Fragment } from "react";
 import { Button } from "ui/atoms";
 
 interface UserProps {
@@ -16,7 +17,7 @@ const links = [
 
 export const User = ({ userName }: UserProps) => {
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu as="div" className="relative z-50 inline-block text-left">
       <div>
         <Menu.Button as={Button} color="secondary" variant="tinted">
           {userName}

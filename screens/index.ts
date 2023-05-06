@@ -1,3 +1,4 @@
+export * from './CreateRoutePageScreen';
 export * from './HomePageScreen';
 export * from './LocationPageScreen';
 export * from './LocationsPageScreen';

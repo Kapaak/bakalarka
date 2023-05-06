@@ -59,6 +59,26 @@ export const authOptions = {
     strategy: "jwt",
     jwt: true,
   },
+  callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      console.log(
+        "🚀 ~ file: [...nextauth].ts:64 ~ signIn ~ credentials:",
+        credentials
+      );
+      console.log("🚀 ~ file: [...nextauth].ts:64 ~ signIn ~ email:", email);
+      console.log(
+        "🚀 ~ file: [...nextauth].ts:64 ~ signIn ~ profile:",
+        profile
+      );
+      console.log(
+        "🚀 ~ file: [...nextauth].ts:64 ~ signIn ~ account:",
+        account
+      );
+      console.log("🚀 ~ file: [...nextauth].ts:64 ~ signIn ~ user:", user);
+
+      return true;
+    },
+  },
   secret: process.env.NEXT_AUTH_SECRET,
   pages: {
     signIn: "/sign-in",
