@@ -32,7 +32,7 @@ export const CreateRoutePageScreen = ({
     defaultValues: route,
   });
 
-  const { reset, handleSubmit, getValues } = form;
+  const { reset, handleSubmit } = form;
 
   const { createTodo } = useCreateNewRoute();
 
@@ -85,9 +85,6 @@ export const CreateRoutePageScreen = ({
             )}
           </div>
         </form>
-        <button type="button" onClick={() => console.log(getValues())}>
-          show
-        </button>
       </FormProvider>
     </TransparentCard>
   );

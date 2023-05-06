@@ -7,7 +7,6 @@ import {
   MaxWidth,
   Table,
 } from "@/ui";
-import { useGetAllRoutes } from "hooks/useRoutes";
 
 interface LocationpageScreenProps {
   locationName?: string;
@@ -19,10 +18,9 @@ export const LocationPageScreen = ({
   locationValue,
 }: LocationpageScreenProps) => {
   const { table } = useLocationPageTable();
-  const { routes } = useGetAllRoutes();
   return (
     <section className="relative">
-      <MaxWidth className="">
+      <MaxWidth>
         <Container height="min-full" className="lg:pt-20">
           <MainHeadline>Destinace v okolí</MainHeadline>
           <MainSubheadline> {locationName}</MainSubheadline>

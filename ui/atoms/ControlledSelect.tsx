@@ -1,12 +1,15 @@
 import { Controller } from "react-hook-form";
 import Select from "react-select";
 
-interface ControlledSelectProps {
+interface ControlledSelectProps<T> {
   name: string;
-  options: any;
+  options: T[];
 }
 
-export const ControlledSelect = ({ name, options }: ControlledSelectProps) => {
+export const ControlledSelect = <T,>({
+  name,
+  options,
+}: ControlledSelectProps<T>) => {
   return (
     <Controller
       name={name}
