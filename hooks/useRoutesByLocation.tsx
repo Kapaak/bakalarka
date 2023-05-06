@@ -4,7 +4,7 @@ import { useGetRoutesByRouteLocation } from "@/adapters";
 import { RouteRow } from "@/domains";
 import { convertDateToString } from "@/utils";
 
-export const useGetAllRoutesByLocation = (location: string) => {
+export const useGetAllRoutes = (location: string) => {
   const { routes, isLoading, isError, error, isSuccess } =
     useGetRoutesByRouteLocation(location);
 

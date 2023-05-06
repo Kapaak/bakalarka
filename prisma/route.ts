@@ -12,6 +12,21 @@ export const getAllRoutes = async () => {
   return routes;
 };
 
+export const getAllRoutesByLocation = async (location: string) => {
+  const routes = await prisma.route.findMany({
+    include: {
+      author: true,
+    },
+  });
+
+  //unfortunately I dont know how to filter it directly in prisma.findMany
+  const filtered = routes.filter((route) =>
+    route.detail.regions.includes(location)
+  );
+
+  return filtered;
+};
+
 export const getRouteById = async (id: string) => {
   const route = await prisma.route.findUnique({
     where: { id },

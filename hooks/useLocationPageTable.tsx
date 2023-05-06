@@ -19,12 +19,12 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { useGetAllRoutes } from "./useRoutes";
+import { useGetAllRoutesByLocation } from "./useRoutes";
 
 export const useLocationPageTable = () => {
-  const { routes } = useGetAllRoutes();
-
   const { query } = useRouter();
+
+  const { routes } = useGetAllRoutesByLocation(query.locationId as string);
 
   const columns = useMemo(() => {
     const columnHelper = createColumnHelper<RouteRow>();

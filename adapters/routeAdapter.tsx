@@ -5,10 +5,10 @@ import { GeneratedRoute, GeneratedRouteWithAuthor, RouteData } from "@/domains";
 import { fetcher, fetcherPost } from "@/utils";
 import axios from "axios";
 
-export const useGetRoutes = () => {
+export const useGetRoutesByRouteLocation = (location: string) => {
   const { data, isLoading, isError, error, isSuccess } = useQuery<
     GeneratedRouteWithAuthor[]
-  >(["routes"], () => fetcher("route"), {
+  >(["routes"], () => fetcher(`route?location=${location}`), {
     initialData: [],
   });
 

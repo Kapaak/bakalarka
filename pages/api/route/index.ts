@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import {
   createRoute,
   getAllRoutes,
+  getAllRoutesByLocation,
   getRouteById,
   updateRouteById,
 } from "@/prisma";
@@ -16,6 +17,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           const route = await getRouteById(id);
 
           return res.send(route);
+        } else if (req.query.location) {
+          const location = req.query.location as string;
+          const routes = await getAllRoutesByLocation(location);
+
+          console.log(routes, "rts");
+
+          return res.send(routes);
         } else {
           const routes = await getAllRoutes();
 
