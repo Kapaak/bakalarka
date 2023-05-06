@@ -84,11 +84,12 @@ export const authOptions = {
     },
     async session({ session, token, user }) {
       const email = token.email as string;
+      const name = token.name as string;
 
       const userInDB = await getUserByEmail(email);
 
       if (!userInDB) {
-        const newUser = await createUser(email, "nový uživatel");
+        const newUser = await createUser(email, name);
         session.user.id = newUser.id;
 
         return session;
