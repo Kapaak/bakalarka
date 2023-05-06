@@ -1,9 +1,15 @@
 import { useCallback } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
-import { GeneratedRouteWithAuthor, Route, RouteData } from "@/domains";
-import { fetcher, fetcherPost } from "@/utils";
 import axios from "axios";
+
+import {
+  GeneratedRoute,
+  GeneratedRouteWithAuthor,
+  Route,
+  RouteData,
+} from "@/domains";
+import { fetcher, fetcherPost } from "@/utils";
 
 export const useGetRoutes = () => {
   const { data, isLoading, isError, error, isSuccess } = useQuery<
@@ -23,7 +29,7 @@ export const useGetRoutes = () => {
 
 export const useGetRouteByRouteId = (routeId: string) => {
   const { data, isLoading, isError, error, isSuccess } =
-    useQuery<GeneratedRouteWithAuthor>(["route"], () =>
+    useQuery<GeneratedRouteWithAuthor>(["route", routeId], () =>
       fetcher("route", `?id=${routeId}`)
     );
 
@@ -50,15 +56,34 @@ export const useCreateRoute = () => {
   };
 };
 
+// export const useUpdateRouteById = () => {
+//   const { mutateAsync, isLoading } = useMutation<GeneratedRoute[]>(
+//     ["routes"],
+//     () => fetcherPost("route",{},``)
+//   );
+
+//   const handleUpdateRouteDetail = useCallback(
+//     async (id: string, routeData: Partial<RouteData>) => {
+//       await mutateAsync({ id, routeData });
+//     },
+//     [mutateAsync]
+//   );
+
+//   return {
+//     updateRouteDetail: handleUpdateRouteDetail,
+//     isLoading,
+//   };
+// };
+
 export const useUpdateRouteById = () => {
   const queryClient = useQueryClient();
 
-  const { isLoading, mutate } = useMutation<
-    Route,
+  const { isLoading, mutateAsync } = useMutation<
+    GeneratedRoute,
     Error,
     {
       id: string;
-      routeData: Partial<Route>;
+      routeData: Partial<GeneratedRoute>;
     },
     any
   >(
@@ -69,8 +94,6 @@ export const useUpdateRouteById = () => {
       ),
     {
       onMutate: async ({ routeData, id }) => {
-        console.log(routeData, "old routeData");
-
         await queryClient.cancelQueries(["route", id]);
 
         const previousTodo = queryClient.getQueryData(["route", id]);
@@ -98,9 +121,9 @@ export const useUpdateRouteById = () => {
 
   const handleUpdateRouteDetail = useCallback(
     (id: string, routeData: Partial<RouteData>) => {
-      mutate({ id, routeData });
+      mutateAsync({ id, routeData });
     },
-    [mutate]
+    [mutateAsync]
   );
 
   return {

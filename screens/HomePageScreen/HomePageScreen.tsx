@@ -16,6 +16,7 @@ import CyclistHeroImage from "../../public/images/hero-img.jpg";
 
 export const HomePageScreen = () => {
   const { users } = useGetAllUsers();
+
   const { user } = useGetUserById("6438f8baa0c55e85281ab54d");
   return (
     <section className="relative bg-gradient-to-r from-main-yellow to-main-orange ">

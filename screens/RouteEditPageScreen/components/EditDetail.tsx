@@ -185,7 +185,8 @@ export const EditDetail = ({ prefix = "detail" }) => {
         <Button
           onClick={() => {
             const { locationId, routeId } = router.query;
-            router.push(`/locations/${locationId}/${routeId}/edit`);
+            // router.push(`/locations/${locationId}/${routeId}/edit`);
+            console.log("submited");
           }}
           className="mt-auto mr-auto"
         >

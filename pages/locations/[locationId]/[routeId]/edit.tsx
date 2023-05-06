@@ -27,8 +27,9 @@ export const getServerSideProps: GetServerSideProps<{
 
   if (!route) return { notFound: true };
 
-  //@ts-ignore
-  route.createdAt = JSON.stringify(route.createdAt);
+  //nevim jestli to funguje
+  route.createdAt = route.createdAt.toISOString() as unknown as Date;
+  // route.createdAt = JSON.stringify(route.createdAt);
 
   return {
     props: {

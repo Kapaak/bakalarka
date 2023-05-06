@@ -24,7 +24,7 @@ export const RouteEditPageScreen = ({ route }: RouteEditPageScreenProps) => {
   const isDetailPage = page === RouteEditSteps.DETAIL;
   const isRoutePage = page === RouteEditSteps.ROUTE;
 
-  const { query } = useRouter();
+  const { query, ...router } = useRouter();
 
   const handleRouteReset = () => {
     setPage(RouteEditSteps.ROUTE);
@@ -38,6 +38,14 @@ export const RouteEditPageScreen = ({ route }: RouteEditPageScreenProps) => {
 
   const { updateRouteDetail } = useUpdateRouteDetail();
 
+  const onSubmit = (routeData: GeneratedRoute) => {
+    console.log(routeData, "arouteDatas");
+    updateRouteDetail(query.routeId as string, routeData);
+    setTimeout(() => {
+      router.push(`/locations/${query.locationId}/${query.routeId}`);
+    }, 300);
+  };
+
   useEffect(() => {
     reset(route);
   }, [route, reset]);
@@ -45,10 +53,7 @@ export const RouteEditPageScreen = ({ route }: RouteEditPageScreenProps) => {
   return (
     <TransparentCard>
       <FormProvider {...form}>
-        <form
-          onSubmit={handleSubmit((val) => console.log("submited"))}
-          className="flex h-full w-full"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="flex h-full w-full">
           <button type="button" onClick={() => console.log(getValues())}>
             show form vals
           </button>
