@@ -32,13 +32,18 @@ export const CreateRoutePageScreen = ({
     defaultValues: route,
   });
 
-  const { reset, handleSubmit } = form;
+  const { reset, handleSubmit, getValues } = form;
 
   const { createTodo } = useCreateNewRoute();
 
   const onSubmit = (routeData: GeneratedRoute) => {
     const newData = structuredClone(routeData);
+
+    //@ts-ignore
+    const newRouteData = routeData.detail.regions.map((data) => data.value);
+
     newData.authorId = route.authorId;
+    newData.detail.regions = newRouteData;
 
     createTodo(newData);
 
@@ -80,6 +85,9 @@ export const CreateRoutePageScreen = ({
             )}
           </div>
         </form>
+        <button type="button" onClick={() => console.log(getValues())}>
+          show
+        </button>
       </FormProvider>
     </TransparentCard>
   );

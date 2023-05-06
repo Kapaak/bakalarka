@@ -75,6 +75,7 @@ export const RouteEditPageScreen = ({ route }: RouteEditPageScreenProps) => {
             )}
           </div>
         </form>
+        <button onClick={() => console.log(getValues())}>show</button>
       </FormProvider>
     </TransparentCard>
   );

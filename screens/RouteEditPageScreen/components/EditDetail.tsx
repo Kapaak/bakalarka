@@ -4,17 +4,16 @@ import { useFormContext } from "react-hook-form";
 import { BikeType, PlaceOfInterest } from "@/domains";
 import {
   Button,
+  ControlledSelect,
   FormInput,
   HorizontalStack,
   LabelContainer,
   VerticalStack,
 } from "@/ui";
-import { useCreateRoute } from "adapters/routeAdapter";
+import { locations } from "@/utils";
 
 export const EditDetail = ({ prefix = "detail" }) => {
   const router = useRouter();
-
-  const { createTodo } = useCreateRoute();
 
   const { watch, setValue } = useFormContext();
 
@@ -182,6 +181,9 @@ export const EditDetail = ({ prefix = "detail" }) => {
             </Button>
           </HorizontalStack>
         </LabelContainer>
+
+        <ControlledSelect name={`${prefix}.regions`} options={locations} />
+
         <Button
           onClick={() => {
             const { locationId, routeId } = router.query;

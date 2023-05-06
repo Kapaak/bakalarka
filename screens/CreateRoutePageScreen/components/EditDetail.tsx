@@ -5,11 +5,13 @@ import { BikeType, PlaceOfInterest } from "@/domains";
 import {
   Button,
   ButtonProps,
+  ControlledSelect,
   FormInput,
   HorizontalStack,
   LabelContainer,
   VerticalStack,
 } from "@/ui";
+import { locations } from "@/utils";
 
 export const EditDetail = ({ prefix = "detail" }) => {
   const { query, ...router } = useRouter();
@@ -83,8 +85,6 @@ export const EditDetail = ({ prefix = "detail" }) => {
 
   return (
     <div className="flex-1 p-12">
-      {/* todo add region select -> chckbox asi */}
-
       <VerticalStack className="h-full gap-4">
         <LabelContainer label="Název trasy">
           <FormInput name={`${prefix}.name`} variant="singleBorder" />
@@ -174,6 +174,8 @@ export const EditDetail = ({ prefix = "detail" }) => {
             </Button>
           </HorizontalStack>
         </LabelContainer>
+
+        <ControlledSelect name={`${prefix}.regions`} options={locations} />
 
         <Button
           onClick={() =>

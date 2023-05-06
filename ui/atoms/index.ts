@@ -1,5 +1,6 @@
 export * from './Button';
 export * from './Container';
+export * from './ControlledSelect';
 export * from './HorizontalStack';
 export * from './IconButton';
 export * from './Input';
