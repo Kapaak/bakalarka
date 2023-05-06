@@ -6,6 +6,7 @@ import { MapContainer } from "@/components";
 import { GeneratedRoute } from "@/domains";
 import { useUpdateRouteDetail } from "@/hooks";
 import { Button, TransparentCard } from "@/ui";
+import { locations } from "@/utils";
 
 import { EditDetail, EditRoute } from "./components";
 
@@ -30,7 +31,7 @@ export const RouteEditPageScreen = ({ route }: RouteEditPageScreenProps) => {
     defaultValues: route,
   });
 
-  const { getValues, reset, handleSubmit } = form;
+  const { reset, handleSubmit } = form;
 
   const { updateRouteDetail } = useUpdateRouteDetail();
 
@@ -48,7 +49,17 @@ export const RouteEditPageScreen = ({ route }: RouteEditPageScreenProps) => {
   };
 
   useEffect(() => {
-    reset(route);
+    //   //by default regions contain only value, but I need to have also label
+    const updatedRoute = structuredClone(route);
+
+    const regions = locations.filter((location) =>
+      route.detail.regions.includes(location.value)
+    );
+
+    //@ts-ignore -> need to update type detail.regions from string to {label:string,value:string}
+    updatedRoute.detail.regions = regions;
+
+    reset(updatedRoute);
   }, [route, reset]);
 
   return (
@@ -75,7 +86,6 @@ export const RouteEditPageScreen = ({ route }: RouteEditPageScreenProps) => {
             )}
           </div>
         </form>
-        <button onClick={() => console.log(getValues())}>show</button>
       </FormProvider>
     </TransparentCard>
   );
