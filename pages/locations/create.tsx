@@ -35,14 +35,16 @@ const defaultRoute: GeneratedRoute = {
 };
 
 const RouteEditPage = () => {
-  const session = useSession();
+  const { data: session } = useSession();
 
-  console.log(session, "sess");
+  const userId = session?.user?.id;
+
+  console.log(userId, "id");
 
   const defaultRoute: GeneratedRoute = useMemo(() => {
     return {
       id: nanoid(),
-      authorId: "todo-from-session",
+      authorId: userId,
       createdAt: new Date(),
       detail: {
         name: "",
@@ -53,20 +55,9 @@ const RouteEditPage = () => {
         elevation: 0,
         interestingPlaces: [],
       },
-      routePoints: [
-        {
-          id: "0",
-          coordinates: { lat: 0, lng: 0 },
-          value: "",
-        },
-        {
-          id: "1",
-          coordinates: { lat: 0, lng: 0 },
-          value: "",
-        },
-      ],
+      routePoints: [],
     };
-  }, []);
+  }, [userId]);
 
   return (
     <RouteContextProvider>

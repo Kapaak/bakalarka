@@ -1,4 +1,8 @@
-import { useGetRouteByRouteId, useUpdateRouteById } from "@/adapters";
+import {
+  useCreateRoute,
+  useGetRouteByRouteId,
+  useUpdateRouteById,
+} from "@/adapters";
 
 export const useUpdateRouteDetail = () => {
   const { updateRouteDetail, isLoading } = useUpdateRouteById();
@@ -8,11 +12,20 @@ export const useUpdateRouteDetail = () => {
     isLoading,
   };
 };
+
 export const useGetRouteById = (id: string) => {
   const { route, isLoading } = useGetRouteByRouteId(id);
 
   return {
     route,
     isLoading,
+  };
+};
+
+export const useCreateNewRoute = () => {
+  const { createTodo } = useCreateRoute();
+
+  return {
+    createTodo,
   };
 };

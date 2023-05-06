@@ -1,15 +1,9 @@
 import { useCallback } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
-import axios from "axios";
-
-import {
-  GeneratedRoute,
-  GeneratedRouteWithAuthor,
-  Route,
-  RouteData,
-} from "@/domains";
+import { GeneratedRoute, GeneratedRouteWithAuthor, RouteData } from "@/domains";
 import { fetcher, fetcherPost } from "@/utils";
+import axios from "axios";
 
 export const useGetRoutes = () => {
   const { data, isLoading, isError, error, isSuccess } = useQuery<
@@ -43,13 +37,18 @@ export const useGetRouteByRouteId = (routeId: string) => {
 };
 
 export const useCreateRoute = () => {
-  const { mutateAsync } = useMutation<Route[]>(["routes"], () =>
-    fetcherPost("route", {})
+  const { mutateAsync } = useMutation<GeneratedRoute>(["routes"], (data) =>
+    fetcherPost("route", data)
   );
 
-  const handleCreate = useCallback(async () => {
-    await mutateAsync();
-  }, [mutateAsync]);
+  const handleCreate = useCallback(
+    async (data: GeneratedRoute) => {
+      console.log(data, "dd");
+
+      await mutateAsync(data);
+    },
+    [mutateAsync]
+  );
 
   return {
     createTodo: handleCreate,

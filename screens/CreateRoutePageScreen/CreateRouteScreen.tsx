@@ -4,7 +4,7 @@ import { FormProvider, useForm } from "react-hook-form";
 
 import { MapContainer } from "@/components";
 import { GeneratedRoute } from "@/domains";
-import { useUpdateRouteDetail } from "@/hooks";
+import { useCreateNewRoute } from "@/hooks";
 import { Button, TransparentCard } from "@/ui";
 
 import { EditDetail, EditRoute } from "./components";
@@ -34,18 +34,21 @@ export const CreateRoutePageScreen = ({
 
   const { getValues, reset, handleSubmit } = form;
 
-  const { updateRouteDetail } = useUpdateRouteDetail();
+  const { createTodo } = useCreateNewRoute();
 
   const onSubmit = (routeData: GeneratedRoute) => {
     console.log(routeData, "arouteDatas");
-    console.log("submited");
+    const newData = structuredClone(routeData);
+    newData.authorId = route.authorId;
+    console.log("submited", newData);
 
+    createTodo(newData);
     //create
     // updateRouteDetail(query.routeId as string, routeData);
 
-    setTimeout(() => {
-      router.push("/locations");
-    }, 300);
+    // setTimeout(() => {
+    //   router.push("/locations");
+    // }, 300);
   };
 
   const handleRouteReset = () => {

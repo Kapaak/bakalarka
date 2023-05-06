@@ -33,9 +33,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
       }
       case "POST": {
-        console.log("created");
-
-        const newRoute = await createRoute();
+        const newRoute = await createRoute(req.body);
 
         return res.send(newRoute);
       }

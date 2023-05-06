@@ -10,6 +10,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import FacebookProvider from "next-auth/providers/facebook";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+
+import { createUser, getUserByEmail } from "prisma/user";
+
 //others
 // import { getUserByEmail } from "prisma/user";
 // import { verifyPassword } from "../../../utils/index";
@@ -59,24 +62,41 @@ export const authOptions = {
     strategy: "jwt",
     jwt: true,
   },
+  // https://daily-dev-tips.com/posts/adding-email-authentication-to-nextauth/
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      console.log(
-        "🚀 ~ file: [...nextauth].ts:64 ~ signIn ~ credentials:",
-        credentials
-      );
-      console.log("🚀 ~ file: [...nextauth].ts:64 ~ signIn ~ email:", email);
-      console.log(
-        "🚀 ~ file: [...nextauth].ts:64 ~ signIn ~ profile:",
-        profile
-      );
-      console.log(
-        "🚀 ~ file: [...nextauth].ts:64 ~ signIn ~ account:",
-        account
-      );
-      console.log("🚀 ~ file: [...nextauth].ts:64 ~ signIn ~ user:", user);
+      // console.log(
+      //   "🚀 ~ file: [...nextauth].ts:64 ~ signIn ~ credentials:",
+      //   credentials
+      // );
+      // console.log("🚀 ~ file: [...nextauth].ts:64 ~ signIn ~ email:", email);
+      // console.log(
+      //   "🚀 ~ file: [...nextauth].ts:64 ~ signIn ~ profile:",
+      //   profile
+      // );
+      // console.log(
+      //   "🚀 ~ file: [...nextauth].ts:64 ~ signIn ~ account:",
+      //   account
+      // );
+      // console.log("🚀 ~ file: [...nextauth].ts:64 ~ signIn ~ user:", user);
 
       return true;
+    },
+    async session({ session, token, user }) {
+      const email = token.email as string;
+
+      const userInDB = await getUserByEmail(email);
+
+      if (!userInDB) {
+        const newUser = await createUser(email, "nový uživatel");
+        session.user.id = newUser.id;
+
+        return session;
+      }
+
+      session.user.id = userInDB.id;
+
+      return session;
     },
   },
   secret: process.env.NEXT_AUTH_SECRET,

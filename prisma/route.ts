@@ -41,37 +41,13 @@ export const updateRouteById = async (id: string, data: GeneratedRoute) => {
   return updatedRoute;
 };
 
-export const createRoute = async () => {
+export const createRoute = async (data: GeneratedRoute) => {
   const newRoute = await prisma.route.create({
     data: {
-      detail: {
-        name: "Generated",
-        description: "Vygenerovana trasa z kodu",
-        distance: 133,
-        elevation: 250,
-        interestingPlaces: ["gravel"],
-        terrain: [],
-      },
-      authorId: "6438f8baa0c55e85281ab54d",
-      createdAt: "2022-04-14T06:56:53.037Z",
-      routePoints: [
-        {
-          id: "0",
-          coordinates: {
-            lat: 49.1839069,
-            lng: 16.5304978,
-          },
-          value: "odkud",
-        },
-        {
-          id: "0",
-          coordinates: {
-            lat: 49.1839069,
-            lng: 16.7809511,
-          },
-          value: "odkud",
-        },
-      ],
+      detail: data.detail,
+      authorId: data.authorId,
+      createdAt: data.createdAt,
+      routePoints: data.routePoints,
     },
     include: {
       author: true,
@@ -79,3 +55,34 @@ export const createRoute = async () => {
   });
   return newRoute;
 };
+
+// data: {
+//   detail: {
+//     name: "Generated",
+//     description: "Vygenerovana trasa z kodu",
+//     distance: 133,
+//     elevation: 250,
+//     interestingPlaces: ["gravel"],
+//     terrain: [],
+//   },
+//   authorId: "6438f8baa0c55e85281ab54d",
+//   createdAt: "2022-04-14T06:56:53.037Z",
+//   routePoints: [
+//     {
+//       id: "0",
+//       coordinates: {
+//         lat: 49.1839069,
+//         lng: 16.5304978,
+//       },
+//       value: "odkud",
+//     },
+//     {
+//       id: "0",
+//       coordinates: {
+//         lat: 49.1839069,
+//         lng: 16.7809511,
+//       },
+//       value: "odkud",
+//     },
+//   ],
+// },
