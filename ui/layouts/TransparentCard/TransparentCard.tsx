@@ -1,19 +1,23 @@
 import NextLink from "next/link";
-import { useRouter } from "next/router";
 import { PropsWithChildren } from "react";
 
 import { Container, MaxWidth, VerticalStack } from "@/ui";
 import { ArrowLeft } from "@phosphor-icons/react";
 
-export const TransparentCard = ({ children }: PropsWithChildren) => {
-  const { query } = useRouter();
+interface TransparentCardProps extends PropsWithChildren {
+  returnPath: string;
+}
 
+export const TransparentCard = ({
+  children,
+  returnPath,
+}: TransparentCardProps) => {
   return (
     <section className="relative bg-gradient-to-r from-main-yellow to-main-orange">
       <MaxWidth className="px-0 md:px-0 lg:px-14">
         <Container height="min-full" className="flex flex-col lg:block">
           <NextLink
-            href={`/locations/${query.locationId}`}
+            href={returnPath}
             className="mb-4 flex items-center gap-2 py-2 px-4 lg:px-0"
           >
             <ArrowLeft weight="bold" /> Zpět na seznam všech tras

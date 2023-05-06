@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { Fragment } from "react";
 
 import { Menu, Transition } from "@headlessui/react";
@@ -16,6 +17,8 @@ const links = [
 //todo potrebuje to tu trosku lasky
 
 export const User = ({ userName }: UserProps) => {
+  const router = useRouter();
+
   return (
     <Menu as="div" className="relative z-50 inline-block text-left">
       <div>
@@ -53,6 +56,18 @@ export const User = ({ userName }: UserProps) => {
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                 >
                   Moje trasy
+                </button>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  className={`${
+                    active ? "bg-light-orange text-main-orange" : "text-black"
+                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                  onClick={() => router.push("/locations/create")}
+                >
+                  Vytvořit trasu
                 </button>
               )}
             </Menu.Item>

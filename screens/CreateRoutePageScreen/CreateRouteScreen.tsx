@@ -32,23 +32,19 @@ export const CreateRoutePageScreen = ({
     defaultValues: route,
   });
 
-  const { getValues, reset, handleSubmit } = form;
+  const { reset, handleSubmit } = form;
 
   const { createTodo } = useCreateNewRoute();
 
   const onSubmit = (routeData: GeneratedRoute) => {
-    console.log(routeData, "arouteDatas");
     const newData = structuredClone(routeData);
     newData.authorId = route.authorId;
-    console.log("submited", newData);
 
     createTodo(newData);
-    //create
-    // updateRouteDetail(query.routeId as string, routeData);
 
-    // setTimeout(() => {
-    //   router.push("/locations");
-    // }, 300);
+    setTimeout(() => {
+      router.push("/locations");
+    }, 300);
   };
 
   const handleRouteReset = () => {
@@ -61,12 +57,9 @@ export const CreateRoutePageScreen = ({
   }, [route, reset]);
 
   return (
-    <TransparentCard>
+    <TransparentCard returnPath="/locations">
       <FormProvider {...form}>
         <form onSubmit={handleSubmit(onSubmit)} className="flex h-full w-full">
-          <button type="button" onClick={() => console.log(getValues())}>
-            show form vals
-          </button>
           {isDetailPage && <EditDetail />}
           {isRoutePage && (
             <EditRoute

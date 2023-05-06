@@ -22,8 +22,6 @@ export const LocationPageScreen = ({
   const { routes } = useGetAllRoutes();
   return (
     <section className="relative">
-      <button onClick={() => console.log(routes)}>show all routes</button>
-      {/* <section className="relative bg-gradient-to-r from-main-yellow to-main-orange"> */}
       <MaxWidth className="">
         <Container height="min-full" className="lg:pt-20">
           <MainHeadline>Destinace v okolí</MainHeadline>
@@ -34,7 +32,6 @@ export const LocationPageScreen = ({
               bodyCells={table?.getRowModel()}
             />
           </div>
-          {/* <FavoriteLocations locationName={locationName} /> */}
         </Container>
       </MaxWidth>
     </section>

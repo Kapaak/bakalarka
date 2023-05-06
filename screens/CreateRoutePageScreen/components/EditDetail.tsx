@@ -4,17 +4,15 @@ import { useFormContext } from "react-hook-form";
 import { BikeType, PlaceOfInterest } from "@/domains";
 import {
   Button,
+  ButtonProps,
   FormInput,
   HorizontalStack,
   LabelContainer,
   VerticalStack,
 } from "@/ui";
-import { useCreateRoute } from "adapters/routeAdapter";
 
 export const EditDetail = ({ prefix = "detail" }) => {
-  const router = useRouter();
-
-  const { createTodo } = useCreateRoute();
+  const { query, ...router } = useRouter();
 
   const { watch, setValue } = useFormContext();
 
@@ -22,11 +20,7 @@ export const EditDetail = ({ prefix = "detail" }) => {
   const terrains = watch(`${prefix}.terrain`);
   const interestingPlaces = watch(`${prefix}.interestingPlaces`);
 
-  const isTerrainActive = (
-    terrain: BikeType
-  ): {
-    variant: "contained" | "outlined" | "tinted" | "plain" | null | undefined;
-  } => {
+  const isTerrainActive = (terrain: BikeType): ButtonProps => {
     const included = terrains?.includes(terrain);
 
     if (included)
@@ -41,9 +35,7 @@ export const EditDetail = ({ prefix = "detail" }) => {
 
   const isInterestingPlaceActive = (
     interestingPlace: PlaceOfInterest
-  ): {
-    variant: "contained" | "outlined" | "tinted" | "plain" | null | undefined;
-  } => {
+  ): ButtonProps => {
     const included = interestingPlaces?.includes(interestingPlace);
 
     if (included)
@@ -182,12 +174,11 @@ export const EditDetail = ({ prefix = "detail" }) => {
             </Button>
           </HorizontalStack>
         </LabelContainer>
+
         <Button
-          onClick={() => {
-            const { locationId, routeId } = router.query;
-            // router.push(`/locations/${locationId}/${routeId}/edit`);
-            console.log("submited");
-          }}
+          onClick={() =>
+            router.push(`/locations/${query.locationId}/${query.routeId}/edit`)
+          }
           className="mt-auto mr-auto"
         >
           Uložit

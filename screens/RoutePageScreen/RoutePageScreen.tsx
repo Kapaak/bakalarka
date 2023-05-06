@@ -11,10 +11,10 @@ interface RoutePageScreenProps {
 }
 
 export const RoutePageScreen = ({ route }: RoutePageScreenProps) => {
-  const router = useRouter();
+  const { query, ...router } = useRouter();
 
   return (
-    <TransparentCard>
+    <TransparentCard returnPath={`/locations/${query.locationId}`}>
       <VerticalStack className="flex-1 gap-4 p-12 lg:flex">
         <RouteLabel title="Název trasy" description={route?.detail?.name} />
         <RouteLabel
@@ -27,10 +27,9 @@ export const RoutePageScreen = ({ route }: RoutePageScreenProps) => {
         />
 
         <Button
-          onClick={() => {
-            const { locationId, routeId } = router.query;
-            router.push(`/locations/${locationId}/${routeId}/edit`);
-          }}
+          onClick={() =>
+            router.push(`/locations/${query.locationId}/${query.routeId}/edit`)
+          }
           className="mt-auto mr-auto hidden lg:block"
         >
           Upravit
