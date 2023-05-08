@@ -1,10 +1,8 @@
 import { useRouter } from "next/router";
 
+import { Button, IconButton, Link, UserComponent } from "@/ui";
 import { X } from "@phosphor-icons/react";
 import { useSession } from "next-auth/react";
-
-import { Button, IconButton, Link, User } from "@/ui";
-
 
 interface MobileBurgerMenuProps {
   isOpen: boolean;
@@ -29,7 +27,7 @@ export const MobileBurgerMenu = ({
         <Button onClick={() => router.push("/sign-in")}>Přihlásit se</Button>
       )}
       {session && session?.user?.name && (
-        <User userName={session?.user?.name} />
+        <UserComponent userName={session?.user?.name} />
       )}
       <ul className="flex flex-col gap-6 text-right">
         <Link variant="underlined" href="/">

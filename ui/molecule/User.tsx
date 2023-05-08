@@ -16,7 +16,7 @@ const links = [
 
 //todo potrebuje to tu trosku lasky
 
-export const User = ({ userName }: UserProps) => {
+export const UserComponent = ({ userName }: UserProps) => {
   const router = useRouter();
 
   return (

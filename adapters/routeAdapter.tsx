@@ -43,9 +43,8 @@ export const useCreateRoute = () => {
 
   const handleCreate = useCallback(
     async (data: GeneratedRoute) => {
-      console.log(data, "dd");
-
-      await mutateAsync(data);
+      //@ts-ignore
+      return await mutateAsync(data);
     },
     [mutateAsync]
   );

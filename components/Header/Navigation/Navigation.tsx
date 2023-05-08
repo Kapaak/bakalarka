@@ -1,10 +1,9 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 
+import { Button, IconButton, Link, UserComponent } from "@/ui";
 import { List } from "@phosphor-icons/react";
 import { useSession } from "next-auth/react";
-
-import { Button, IconButton, Link, User } from "@/ui";
 
 import { MobileBurgerMenu } from "./MobileBurgerMenu";
 export const Navigation = () => {
@@ -32,7 +31,7 @@ export const Navigation = () => {
           <Button onClick={() => router.push("/sign-in")}>Přihlásit se</Button>
         )}
         {session && session?.user?.name && (
-          <User userName={session?.user?.name} />
+          <UserComponent userName={session?.user?.name} />
         )}
       </ul>
 

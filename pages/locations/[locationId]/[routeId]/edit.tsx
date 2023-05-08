@@ -13,6 +13,7 @@ interface RouteEditPageProps {
 const RouteEditPage: NextPage<RouteEditPageProps> = ({ route }) => {
   return (
     <RouteContextProvider>
+      {/* @ts-ignore */}
       <RouteEditPageScreen route={route} />
     </RouteContextProvider>
   );
