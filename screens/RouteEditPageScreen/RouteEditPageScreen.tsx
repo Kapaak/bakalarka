@@ -31,7 +31,7 @@ export const RouteEditPageScreen = ({ route }: RouteEditPageScreenProps) => {
     defaultValues: route,
   });
 
-  const { reset, handleSubmit } = form;
+  const { reset, handleSubmit, getValues } = form;
 
   const { updateRouteDetail } = useUpdateRouteDetail();
 

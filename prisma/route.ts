@@ -47,7 +47,7 @@ export const updateRouteById = async (id: string, data: GeneratedRoute) => {
         name: data?.detail?.name,
         interestingPlaces: data?.detail?.interestingPlaces,
         terrain: data?.detail?.terrain,
-        regions: data?.detail?.terrain,
+        regions: data?.detail?.regions,
       },
       routePoints: data.routePoints,
     },
