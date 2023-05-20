@@ -128,6 +128,10 @@ export const LeafletMap = () => {
             attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
             url={`https://api.mapbox.com/styles/v1/kapaakinos/clevb09lv001n01lsal61f8ys/tiles/256/{z}/{x}/{y}@2x?access_token=${accessToken}`}
           />
+          {/* <TileLayer
+            attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
+            url={`https://dev.a.tile.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png`}
+          /> */}
           <MapEventListener
             onClick={handleSavePointPosition}
             onDoubleClick={() => popupRef.current?.closePopup()}

@@ -1,13 +1,43 @@
-import { ClassName } from "@/domains";
-import { PropsWithChildren } from "react";
+import { HTMLAttributes, PropsWithChildren } from "react";
 
-interface HorizontalStackProps {
-  className?: ClassName;
-}
+import { VariantProps, cva } from "class-variance-authority";
+
+const horizontalStackVariant = cva("flex", {
+  variants: {
+    justify: {
+      normal: ["justify-normal"],
+      start: ["justify-start"],
+      center: ["justify-center"],
+      between: ["justify-center"],
+      around: ["justify-center"],
+      evenly: ["justify-evenly"],
+    },
+    align: {
+      stretch: ["items-stretch"],
+      start: ["items-start"],
+      end: ["items-end"],
+      baseline: ["items-baseline"],
+      center: ["items-center"],
+    },
+  },
+  defaultVariants: {
+    justify: "normal",
+    align: "stretch",
+  },
+});
+
+export type HorizontalStackProps = HTMLAttributes<HTMLDivElement> &
+  VariantProps<typeof horizontalStackVariant>;
 
 export const HorizontalStack = ({
+  justify,
+  align,
   children,
   className,
 }: PropsWithChildren<HorizontalStackProps>) => {
-  return <div className={`flex ${className}`}>{children}</div>;
+  return (
+    <div className={horizontalStackVariant({ justify, align, className })}>
+      {children}
+    </div>
+  );
 };

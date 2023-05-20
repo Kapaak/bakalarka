@@ -15,7 +15,7 @@ const buttonVariant = cva(["rounded-small"], {
     },
     variant: {
       contained: "border",
-      outlined: "border  border-dashed ",
+      outlined: "border",
       tinted: "",
       plain: "uppercase font-bold",
     },
