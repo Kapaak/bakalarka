@@ -1,4 +1,9 @@
-import { ButtonHTMLAttributes, PropsWithChildren } from "react";
+import {
+  ButtonHTMLAttributes,
+  PropsWithChildren,
+  ReactElement,
+  useMemo,
+} from "react";
 
 import { CircleNotch } from "@phosphor-icons/react";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -63,6 +68,8 @@ const buttonVariant = cva(
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof buttonVariant> & {
     isLoading?: boolean;
+    leftIcon?: ReactElement;
+    rightIcon?: ReactElement;
   };
 
 export const Button = ({
@@ -73,15 +80,33 @@ export const Button = ({
   variant,
   isLoading,
   disabled,
+  leftIcon,
+  rightIcon,
   ...rest
 }: PropsWithChildren<ButtonProps>) => {
+  const { icon, iconPlacement } = useMemo(() => {
+    let icon = rightIcon ? rightIcon : leftIcon;
+
+    if (isLoading) {
+      icon = <CircleNotch className="animate-spin" />;
+    }
+
+    return {
+      icon,
+      iconPlacement: rightIcon ? ("right" as const) : ("left" as const),
+    };
+  }, [isLoading, leftIcon, rightIcon]);
+
   return (
     <button
+      data-state={isLoading ? "loading" : undefined}
       disabled={isLoading || disabled}
       className={buttonVariant({ color, size, variant, className })}
       {...rest}
     >
-      {isLoading && <CircleNotch className="animate-spin" />} {children}
+      {icon && iconPlacement === "left" ? <span>{icon}</span> : null}
+      {children}
+      {icon && iconPlacement === "right" ? <span>{icon}</span> : null}
     </button>
   );
 };

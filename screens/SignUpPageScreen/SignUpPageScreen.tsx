@@ -57,7 +57,7 @@ export const SignUpPageScreen = () => {
                     href="/sign-in"
                   />
 
-                  <Button color="secondary" className="ml-auto">
+                  <Button color="secondary" className="ml-auto" isLoading>
                     Vytvořit účet
                   </Button>
                 </VerticalStack>
