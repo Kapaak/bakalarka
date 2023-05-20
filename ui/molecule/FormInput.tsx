@@ -19,7 +19,7 @@ export const FormInput = ({
     <Controller
       name={name}
       render={({ field: { ref, onChange, value } }) => (
-        <div className="relative w-full">
+        <div className="relative w-full border">
           {/* <label className="absolute">{label}</label> */}
           {/* todo -> udelej to vyjizdeni stejny jak mas v routistu na PC */}
           <Input
