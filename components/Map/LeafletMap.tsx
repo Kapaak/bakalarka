@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
 
 import { useRouteContext } from "@/contexts";
@@ -15,11 +15,20 @@ import { MapEventListener, RemovePopup, TapPopup } from "./components";
 
 const accessToken = process.env.NEXT_PUBLIC_MAPBOX || "";
 
-export const LeafletMap = () => {
+interface LeafletMapProps {
+  staticView?: boolean;
+}
+
+export const LeafletMap = ({ staticView }: LeafletMapProps) => {
   const [pointPosition, setPointPosition] = useState<LatLngLiteral | null>();
   const [removePopup, setRemovePopup] = useState<Partial<RoutePoint> | null>();
-  const { updatePointById, removePointById, routePoints, addPointBeforeLast } =
-    useRouteContext();
+  const {
+    updatePointById,
+    removePointById,
+    routePoints,
+    addPointBeforeLast,
+    allowAddCrossingPts,
+  } = useRouteContext();
   const popupRef = useRef<L.Popup>(null);
 
   const waypoints = useMemo(
@@ -57,6 +66,10 @@ export const LeafletMap = () => {
     setRemovePopup(null);
   };
 
+  useEffect(() => {
+    setPointPosition(null);
+  }, [allowAddCrossingPts]);
+
   const createRoutingMachineLayer = useCallback(() => {
     const instance = L.Routing.control({
       waypoints: waypoints,
@@ -68,7 +81,7 @@ export const LeafletMap = () => {
       plan: L.Routing.plan(waypoints, {
         createMarker: function (i, wp) {
           return L.marker(wp.latLng, {
-            draggable: true,
+            draggable: !staticView,
           })
             .addEventListener("click", (e) => {
               if (i > 0 && i < routePoints.length - 1) {
@@ -140,7 +153,7 @@ export const LeafletMap = () => {
 
           {waypoints && <RoutingMachine />}
 
-          {pointPosition && (
+          {pointPosition && !staticView && allowAddCrossingPts && (
             <TapPopup
               ref={popupRef}
               position={pointPosition}

@@ -7,10 +7,14 @@ const LeafletMap = dynamic(
   }
 );
 
-export const MapContainer = () => {
+interface MapContainerProps {
+  staticView?: boolean;
+}
+
+export const MapContainer = ({ staticView }: MapContainerProps) => {
   return (
     <div className="h-[inherit] w-full lg:h-full">
-      <LeafletMap />
+      <LeafletMap staticView={staticView} />
     </div>
   );
 };

@@ -13,8 +13,14 @@ interface EditRouteProps {
 }
 
 export const EditRoute = ({ onReturn, onReset }: EditRouteProps) => {
-  const { routePoints, addPointBeforeLast, updatePointById, removePointById } =
-    useRouteContext();
+  const {
+    routePoints,
+    addPointBeforeLast,
+    updatePointById,
+    removePointById,
+    allowAddCrossingPts,
+    toggleAddCrossingPts,
+  } = useRouteContext();
 
   const { isLoaded } = useGoogleAutocomplete();
 
@@ -54,6 +60,15 @@ export const EditRoute = ({ onReturn, onReset }: EditRouteProps) => {
                   }
                 />
               ))}
+
+              <Button
+                className="mr-auto"
+                variant={allowAddCrossingPts ? "contained" : "outlined"}
+                onClick={toggleAddCrossingPts}
+                type="button"
+              >
+                Přidat průnikový bod
+              </Button>
 
               <HorizontalStack className="mt-auto mr-auto gap-2">
                 <Button onClick={onReturn}>Zpět do editace popisu</Button>

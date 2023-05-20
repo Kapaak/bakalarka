@@ -36,7 +36,7 @@ export const RoutePageScreen = ({ route }: RoutePageScreenProps) => {
         </Button>
       </VerticalStack>
       <div className="relative h-[35rem] border border-red-500 lg:h-full lg:flex-1 lg:p-4">
-        <MapContainer />
+        <MapContainer staticView />
       </div>
     </TransparentCard>
   );

@@ -74,6 +74,7 @@ export const RouteEditPageScreen = ({ route }: RouteEditPageScreenProps) => {
             />
           )}
           <div className="relative flex-1 p-4">
+            {/* //tady staticView uplne nejde .. hod to na jinou page casem  */}
             <MapContainer />
             {isDetailPage && (
               <Button

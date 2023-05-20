@@ -4,6 +4,8 @@ import { LatLngLiteral, RoutePoint } from "@/domains";
 import { useRoutePoints } from "@/hooks";
 
 type RouteContextType = {
+  allowAddCrossingPts: boolean;
+  toggleAddCrossingPts(): void;
   routePoints: RoutePoint[];
   addPointBeforeLast(coordinates?: LatLngLiteral): void;
   removePointById(id: string): void;
@@ -12,6 +14,8 @@ type RouteContextType = {
 
 const defaultValues = {
   routePoints: [],
+  toggleAddCrossingPts: () => void 0,
+  allowAddCrossingPts: false,
   addPointBeforeLast: () => {},
   removePointById: () => {},
   updatePointById: () => {},
