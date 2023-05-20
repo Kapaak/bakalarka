@@ -1,4 +1,5 @@
 import { FormProvider, useForm } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
 
 import { useRegisterUser } from "@/adapters";
 import { SignUpFormModel } from "@/domains";
@@ -20,17 +21,38 @@ export const SignUpPageScreen = () => {
 
   const { handleSubmit } = form;
 
+  const notifySuccess = () =>
+    toast.success("Účet byl registrován", {
+      position: "bottom-right",
+    });
+
+  const notifyError = (message: string) =>
+    toast.error(message, {
+      position: "bottom-right",
+    });
+
   const onSubmit = async (formVals: SignUpFormModel) => {
     if (formVals.password === formVals.verifyPassword) {
       registerUser({
         name: formVals.name,
         email: formVals.email,
         password: formVals.password,
-      });
+      })
+        .then(() => {
+          notifySuccess();
+        })
+        .catch((error) => {
+          if (error.response.status === 409) {
+            return notifyError(error.response.data.message);
+          }
+
+          return notifyError("Nepodařilo se registrovat účet");
+        });
     }
   };
   return (
     <section>
+      <Toaster />
       <ImageDividerLayout
         image="/images/girls-on-ride.jpg"
         alt="Two girls riding a bike."

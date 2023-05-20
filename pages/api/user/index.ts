@@ -29,7 +29,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         if (userExists)
           return res
             .status(409)
-            .send({ message: "User with this email already exists!" });
+            .send({ message: "Tento uživatel je už registrován!" });
 
         const user = await createUser(email, name, hashedPassword);
 
