@@ -30,6 +30,9 @@ export const getAllRoutesByLocation = async (location: string) => {
 export const getRouteById = async (id: string) => {
   const route = await prisma.route.findUnique({
     where: { id },
+    include: {
+      author: true,
+    },
   });
   return route;
 };

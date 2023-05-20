@@ -25,7 +25,11 @@ export const RoutePageScreen = ({ route }: RoutePageScreenProps) => {
           title="Počet kilometrů"
           description={route?.detail?.distance}
         />
-
+        <RouteLabel
+          title="Autor"
+          //@ts-ignore uprav ten typ
+          description={route?.author?.name}
+        />
         <Button
           onClick={() =>
             router.push(`/locations/${query.locationId}/${query.routeId}/edit`)
