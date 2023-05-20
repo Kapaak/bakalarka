@@ -22,6 +22,7 @@ export const SignInOptions = () => {
         className="flex items-center gap-2 border-main-orange"
         variant="outlined"
         onClick={() => signIn("facebook")}
+        disabled
       >
         <FacebookLogo size={20} weight="bold" />
       </Button>
@@ -29,6 +30,7 @@ export const SignInOptions = () => {
         className="flex items-center gap-2 border-main-orange"
         variant="outlined"
         onClick={() => signIn("github")}
+        disabled
       >
         <GithubLogo size={20} weight="bold" />
       </Button>
