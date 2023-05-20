@@ -1,7 +1,6 @@
+import { Button, HorizontalStack } from "@/ui";
 import { FacebookLogo, GithubLogo, GoogleLogo } from "@phosphor-icons/react";
 import { signIn } from "next-auth/react";
-
-import { Button, HorizontalStack } from "@/ui";
 
 export const SignInOptions = () => {
   return (
