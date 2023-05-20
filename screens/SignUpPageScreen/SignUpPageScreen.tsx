@@ -63,6 +63,7 @@ export const SignUpPageScreen = () => {
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="w-full max-w-[40rem]"
+                autoComplete="off"
               >
                 <MainHeadline className="mb-20 text-center font-bold">
                   Vítejte!
@@ -70,12 +71,24 @@ export const SignUpPageScreen = () => {
                 <VerticalStack className="gap-4">
                   <VerticalStack className="w-full gap-6">
                     <FormInput name="name" label="Jméno" />
-                    <FormInput name="email" label="E-mail" />
+                    <FormInput
+                      name="email"
+                      label="E-mail"
+                      //to remove autocomplete in chrome
+                      readOnly
+                      onFocus={(e) =>
+                        e.currentTarget.removeAttribute("readonly")
+                      }
+                    />
                     <FormInput name="password" label="Heslo" type="password" />
                     <FormInput
                       name="verifyPassword"
                       label="Potvrzení hesla"
                       type="password"
+                      readOnly
+                      onFocus={(e) =>
+                        e.currentTarget.removeAttribute("readonly")
+                      }
                     />
                   </VerticalStack>
                   <TextAction
