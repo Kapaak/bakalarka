@@ -11,7 +11,6 @@ import {
   TextAction,
   VerticalStack,
 } from "@/ui";
-import axios from "axios";
 
 export const SignUpPageScreen = () => {
   const form = useForm<SignUpFormModel>();
@@ -20,11 +19,13 @@ export const SignUpPageScreen = () => {
 
   const onSubmit = async (formVals: SignUpFormModel) => {
     if (formVals.password === formVals.verifyPassword) {
-      const register = await axios.post("/api/user", {
-        name: formVals.name,
-        email: formVals.email,
-        password: formVals.password,
-      });
+      console.log("reg");
+
+      // const register = await axios.post("/api/user", {
+      //   name: formVals.name,
+      //   email: formVals.email,
+      //   password: formVals.password,
+      // });
     }
   };
   return (
