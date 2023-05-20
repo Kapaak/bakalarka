@@ -1,17 +1,16 @@
-import Image from "next/image";
+import { FormProvider, useForm } from "react-hook-form";
+
+import { SignUpFormModel } from "@/domains";
 import {
+  Button,
   Container,
-  HorizontalStack,
+  FormInput,
+  ImageDividerLayout,
   MainHeadline,
   MaxWidth,
-  FormInput,
-  Button,
+  TextAction,
   VerticalStack,
-  Link,
-  ImageDividerLayout,
 } from "@/ui";
-import { FormProvider, useForm } from "react-hook-form";
-import { SignUpFormModel } from "@/domains";
 
 export const SignUpPageScreen = () => {
   const form = useForm<SignUpFormModel>();
@@ -30,27 +29,30 @@ export const SignUpPageScreen = () => {
         <MaxWidth className="flex-1">
           <Container height="full" place="center">
             <FormProvider {...form}>
-              <form onSubmit={handleSubmit(onSubmit)} className="w-[26rem]">
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="w-full max-w-[40rem]"
+              >
                 <MainHeadline className="mb-20 text-center font-bold">
                   Vítejte!
                 </MainHeadline>
-                <VerticalStack className="mx-auto w-full gap-6">
-                  <FormInput name="name" label="Jméno" />
-                  <FormInput name="email" label="E-mail" />
-                  <FormInput name="password" label="Heslo" />
-                  <FormInput name="verifyPassword" label="Potvrzení hesla" />
-                </VerticalStack>
-                <HorizontalStack className="mt-20 items-center">
-                  <HorizontalStack className="gap-2">
-                    <p>Už máte účet?</p>
-                    <Link color="secondary" href="/sign-in">
-                      Přihlásit se
-                    </Link>
-                  </HorizontalStack>
+                <VerticalStack className="gap-4">
+                  <VerticalStack className="w-full gap-6">
+                    <FormInput name="name" label="Jméno" />
+                    <FormInput name="email" label="E-mail" />
+                    <FormInput name="password" label="Heslo" />
+                    <FormInput name="verifyPassword" label="Potvrzení hesla" />
+                  </VerticalStack>
+                  <TextAction
+                    text="Už máte účet?"
+                    action="Přihlásit se"
+                    href="/sign-in"
+                  />
+
                   <Button color="secondary" className="ml-auto">
                     Vytvořit účet
                   </Button>
-                </HorizontalStack>
+                </VerticalStack>
               </form>
             </FormProvider>
           </Container>

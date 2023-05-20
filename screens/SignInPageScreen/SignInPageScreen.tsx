@@ -33,7 +33,10 @@ export const SignInPageScreen = () => {
         <MaxWidth className="flex-1">
           <Container height="full" place="center">
             <FormProvider {...form}>
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="w-full max-w-[40rem]"
+              >
                 <MainHeadline className="mb-20 text-center font-bold">
                   Rádi tě opět vidíme!
                 </MainHeadline>
@@ -43,10 +46,11 @@ export const SignInPageScreen = () => {
                     <FormInput name="password" label="Heslo" />
                   </VerticalStack>
 
+                  <SignInPanel />
+
                   <Button color="secondary" className="self-end">
                     Přihlásit se
                   </Button>
-                  <SignInPanel />
 
                   <HorizontalStack align="center" className="my-2 gap-8">
                     <Divider borderColor="secondary" />
