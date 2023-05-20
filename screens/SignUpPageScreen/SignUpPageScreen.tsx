@@ -49,8 +49,12 @@ export const SignUpPageScreen = () => {
                   <VerticalStack className="w-full gap-6">
                     <FormInput name="name" label="Jméno" />
                     <FormInput name="email" label="E-mail" />
-                    <FormInput name="password" label="Heslo" />
-                    <FormInput name="verifyPassword" label="Potvrzení hesla" />
+                    <FormInput name="password" label="Heslo" type="password" />
+                    <FormInput
+                      name="verifyPassword"
+                      label="Potvrzení hesla"
+                      type="password"
+                    />
                   </VerticalStack>
                   <TextAction
                     text="Už máte účet?"
