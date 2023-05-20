@@ -8,6 +8,7 @@ const textVariant = cva("", {
       primary: ["text-black"],
       secondary: ["text-main-orange"],
       gray: ["text-black", "opacity-50"],
+      danger: "text-red-500",
     },
     size: {
       small: "text-sm",

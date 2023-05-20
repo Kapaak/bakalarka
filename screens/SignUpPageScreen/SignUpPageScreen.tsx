@@ -10,16 +10,33 @@ import {
   ImageDividerLayout,
   MainHeadline,
   MaxWidth,
+  Text,
   TextAction,
   VerticalStack,
 } from "@/ui";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 
 export const SignUpPageScreen = () => {
   const { registerUser, isLoading } = useRegisterUser();
 
-  const form = useForm<SignUpFormModel>();
+  const formSchema = Yup.object().shape({
+    password: Yup.string()
+      .required("Password is required")
+      .min(6, "Heslo by mělo mít alespoň 6 znaků."),
+    verifyPassword: Yup.string()
+      .required("Confirm Password is required")
+      .oneOf([Yup.ref("password")], "Hesla se neshodují."),
+  });
 
-  const { handleSubmit } = form;
+  const form = useForm<SignUpFormModel>({
+    resolver: yupResolver(formSchema),
+  });
+
+  const {
+    handleSubmit,
+    formState: { errors },
+  } = form;
 
   const notifySuccess = () =>
     toast.success("Účet byl registrován", {
@@ -70,17 +87,24 @@ export const SignUpPageScreen = () => {
                 </MainHeadline>
                 <VerticalStack className="gap-4">
                   <VerticalStack className="w-full gap-6">
-                    <FormInput name="name" label="Jméno" />
+                    <FormInput name="name" label="Jméno" required />
                     <FormInput
                       name="email"
                       label="E-mail"
+                      type="email"
                       //to remove autocomplete in chrome
                       readOnly
                       onFocus={(e) =>
                         e.currentTarget.removeAttribute("readonly")
                       }
+                      required
                     />
-                    <FormInput name="password" label="Heslo" type="password" />
+                    <FormInput
+                      name="password"
+                      label="Heslo"
+                      type="password"
+                      required
+                    />
                     <FormInput
                       name="verifyPassword"
                       label="Potvrzení hesla"
@@ -89,7 +113,11 @@ export const SignUpPageScreen = () => {
                       onFocus={(e) =>
                         e.currentTarget.removeAttribute("readonly")
                       }
+                      required
                     />
+                    <Text size="small" color="danger">
+                      {errors.verifyPassword?.message}
+                    </Text>
                   </VerticalStack>
                   <TextAction
                     text="Už máte účet?"
