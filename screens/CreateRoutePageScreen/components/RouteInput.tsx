@@ -42,6 +42,7 @@ export const RouteInput = ({
           }
           className=" p-2"
           onClick={onPointRemove}
+          type="button"
         />
       )}
 
@@ -51,6 +52,7 @@ export const RouteInput = ({
             <PlusCircle size={30} weight="fill" className="text-main-orange" />
           }
           className="pl-2 pr-4"
+          type="button"
           onClick={onPointAdd}
         />
       )}
