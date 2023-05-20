@@ -134,7 +134,7 @@ export const useLocationPageTable = () => {
           <NextLink
             href={`/locations/${query.locationId}/${info.row.original.id}`}
           >
-            <Button variant="plain">zobrazit trasu</Button>
+            <Button variant="plain">zobrazit</Button>
           </NextLink>
         ),
       }),

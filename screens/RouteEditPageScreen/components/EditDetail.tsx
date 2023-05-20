@@ -10,10 +10,13 @@ import {
   LabelContainer,
   VerticalStack,
 } from "@/ui";
-import { locations } from "@/utils";
+import { convertMetersToKilometers, locations } from "@/utils";
+import { useRouteContext } from "contexts/RouteContext";
 
 export const EditDetail = ({ prefix = "detail" }) => {
   const router = useRouter();
+
+  const { distance } = useRouteContext();
 
   const { watch, setValue } = useFormContext();
 
@@ -101,11 +104,11 @@ export const EditDetail = ({ prefix = "detail" }) => {
         </LabelContainer>
         <HorizontalStack className="justify-between">
           <LabelContainer label="Počet km" className="items-center">
-            <p>20</p>
+            <p>{convertMetersToKilometers(distance)}</p>
             {/* tohle dostanu z mapy ty hodnoty */}
           </LabelContainer>
           <LabelContainer label="Převýšení (m)" className="items-center">
-            <p>250</p>
+            <p>-</p>
             {/* tohle dostanu z mapy ty hodnoty */}
           </LabelContainer>
           <LabelContainer label="Vhodné pro">

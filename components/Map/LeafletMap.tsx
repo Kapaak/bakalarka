@@ -23,6 +23,7 @@ export const LeafletMap = ({ staticView }: LeafletMapProps) => {
   const [pointPosition, setPointPosition] = useState<LatLngLiteral | null>();
   const [removePopup, setRemovePopup] = useState<Partial<RoutePoint> | null>();
   const {
+    changeDistance,
     updatePointById,
     removePointById,
     routePoints,
@@ -113,6 +114,9 @@ export const LeafletMap = ({ staticView }: LeafletMapProps) => {
       })
       .on("routeselected", function (e) {
         setPointPosition(undefined);
+
+        const distance = e.route.summary.totalDistance;
+        changeDistance(distance);
       });
 
     return instance;

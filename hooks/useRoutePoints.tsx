@@ -28,6 +28,8 @@ const defaultPoints = [
 
 export const useRoutePoints = () => {
   const [allowAddCrossingPts, setAllowAddCrossingPts] = useState(false);
+  const [distance, setDistance] = useState(0);
+
   const { query } = useRouter();
   const { route } = useGetRouteById(query.routeId as string);
 
@@ -97,7 +99,13 @@ export const useRoutePoints = () => {
     setAllowAddCrossingPts((prev) => !prev);
   };
 
+  const changeDistance = (newDistance: number) => {
+    setDistance(newDistance);
+  };
+
   return {
+    distance,
+    changeDistance,
     allowAddCrossingPts,
     toggleAddCrossingPts,
     updatePointById,

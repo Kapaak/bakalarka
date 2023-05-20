@@ -80,3 +80,8 @@ export const hashPassword = async (password: string) => {
 
   return hashedPassword;
 };
+
+export const convertMetersToKilometers = (meters: number) => {
+  var km = meters / 1000;
+  return km.toFixed(1);
+};

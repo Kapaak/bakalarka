@@ -4,6 +4,8 @@ import { LatLngLiteral, RoutePoint } from "@/domains";
 import { useRoutePoints } from "@/hooks";
 
 type RouteContextType = {
+  distance: number;
+  changeDistance(newDistance: number): void;
   allowAddCrossingPts: boolean;
   toggleAddCrossingPts(): void;
   routePoints: RoutePoint[];
@@ -13,6 +15,8 @@ type RouteContextType = {
 };
 
 const defaultValues = {
+  distance: 0,
+  changeDistance: () => void 0,
   routePoints: [],
   toggleAddCrossingPts: () => void 0,
   allowAddCrossingPts: false,

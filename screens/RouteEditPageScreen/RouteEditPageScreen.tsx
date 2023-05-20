@@ -6,7 +6,8 @@ import { MapContainer } from "@/components";
 import { GeneratedRoute } from "@/domains";
 import { useUpdateRouteDetail } from "@/hooks";
 import { Button, TransparentCard } from "@/ui";
-import { locations } from "@/utils";
+import { convertMetersToKilometers, locations } from "@/utils";
+import { useRouteContext } from "contexts/RouteContext";
 
 import { EditDetail, EditRoute } from "./components";
 
@@ -31,12 +32,21 @@ export const RouteEditPageScreen = ({ route }: RouteEditPageScreenProps) => {
     defaultValues: route,
   });
 
-  const { reset, handleSubmit, getValues } = form;
+  const { reset, handleSubmit } = form;
+
+  const { distance } = useRouteContext();
 
   const { updateRouteDetail } = useUpdateRouteDetail();
 
   const onSubmit = (routeData: GeneratedRoute) => {
-    updateRouteDetail(query.routeId as string, routeData);
+    const newRouteData = { ...routeData };
+
+    newRouteData.detail.distance = +convertMetersToKilometers(distance);
+    newRouteData.detail.regions = newRouteData.detail.regions.map(
+      (region) => region.value
+    );
+
+    updateRouteDetail(query.routeId as string, newRouteData);
 
     setTimeout(() => {
       router.push(`/locations/${query.locationId}/${query.routeId}`);

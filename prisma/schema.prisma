@@ -21,10 +21,11 @@ model User{
   routes Route[]
 }
 
+
 type Detail {
   name String
   description String
-  distance Int
+  distance Float
   elevation Int
   terrain String[]
   interestingPlaces String[]
