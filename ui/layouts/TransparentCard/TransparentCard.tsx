@@ -13,7 +13,7 @@ export const TransparentCard = ({
   returnPath,
 }: TransparentCardProps) => {
   return (
-    <section className="relative bg-gradient-to-r from-main-yellow to-main-orange">
+    <section className="relative">
       <MaxWidth className="px-0 md:px-0 lg:px-14">
         <Container height="min-full" className="flex flex-col lg:block">
           <NextLink

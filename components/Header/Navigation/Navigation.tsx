@@ -15,16 +15,17 @@ export const Navigation = () => {
   const handleClose = () => {
     setIsOpen(false);
   };
+
   return (
     <nav className="">
       <ul className="hidden items-center gap-8 lg:flex">
-        <Link variant="underlined" href="/">
+        <Link variant="underlined" href="/" onClick={handleClose}>
           domů
         </Link>
-        <Link variant="underlined" href="/locations">
+        <Link variant="underlined" href="/locations" onClick={handleClose}>
           trasy
         </Link>
-        <Link variant="underlined" href="/contact">
+        <Link variant="underlined" href="/contact" onClick={handleClose}>
           kontakt
         </Link>
         {!session && (

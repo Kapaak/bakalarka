@@ -19,7 +19,7 @@ export const HomePageScreen = () => {
       <MaxWidth>
         <Container height="full">
           <HorizontalStack className="h-full justify-end gap-4 lg:justify-between">
-            <VerticalStack className="mb-5 flex-1 justify-end gap-4 lg:justify-center">
+            <VerticalStack className="mb-30 flex-1 justify-end gap-4 lg:mb-0 lg:justify-center">
               <div>
                 <MainHeadline className="max-w-lg font-bold">
                   Cestujte a objevujte nové kouty

@@ -5,7 +5,7 @@ import { LocationCard } from "./components";
 
 export const LocationsPageScreen = () => {
   return (
-    <section className="bg-gradient-to-r from-main-yellow to-main-orange ">
+    <section>
       <MaxWidth>
         <Container height="min-full">
           <MainHeadline>Vyber kraj, který chceš objevovat</MainHeadline>
