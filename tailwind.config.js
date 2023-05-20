@@ -26,7 +26,7 @@ module.exports = {
         small: ".4rem",
       },
       boxShadow: {
-        regular: "0px 0px 10px 2px rgba(0, 0, 0, 0.06)",
+        regular: "0px 0px 30px rgba(0, 0, 0, 0.03)",
         border: "0 0 1px 1px rgba(0,0,0,.2)",
       },
       zIndex: {
