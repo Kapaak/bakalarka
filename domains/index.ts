@@ -112,10 +112,17 @@ export type RefactorRoute = {
 
 export type RouteData = Omit<Route, "author" | "authorId" | "id" | "value">;
 
+export type RegisterUser = {
+  email?: string;
+  name?: string;
+  password?: string;
+};
+
 export type User = {
   id: string;
   email: string;
   name?: string;
+  password?: string;
   routes?: Route[];
 };
 

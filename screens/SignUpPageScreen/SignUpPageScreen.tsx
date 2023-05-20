@@ -1,5 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form";
 
+import { useRegisterUser } from "@/adapters";
 import { SignUpFormModel } from "@/domains";
 import {
   Button,
@@ -13,19 +14,19 @@ import {
 } from "@/ui";
 
 export const SignUpPageScreen = () => {
+  const { registerUser, isLoading } = useRegisterUser();
+
   const form = useForm<SignUpFormModel>();
 
   const { handleSubmit } = form;
 
   const onSubmit = async (formVals: SignUpFormModel) => {
     if (formVals.password === formVals.verifyPassword) {
-      console.log("reg");
-
-      // const register = await axios.post("/api/user", {
-      //   name: formVals.name,
-      //   email: formVals.email,
-      //   password: formVals.password,
-      // });
+      registerUser({
+        name: formVals.name,
+        email: formVals.email,
+        password: formVals.password,
+      });
     }
   };
   return (
@@ -57,7 +58,11 @@ export const SignUpPageScreen = () => {
                     href="/sign-in"
                   />
 
-                  <Button color="secondary" className="ml-auto" isLoading>
+                  <Button
+                    color="secondary"
+                    className="ml-auto"
+                    isLoading={isLoading}
+                  >
                     Vytvořit účet
                   </Button>
                 </VerticalStack>
