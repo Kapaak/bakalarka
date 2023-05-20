@@ -14,11 +14,11 @@ const iconButtonVariant = cva(
         error: ["text-red-500"],
       },
       size: {
-        small: ["text-sm", "py-1", "px-2"],
-        medium: ["text-base", "py-2", "px-6"],
+        small: "",
+        medium: ["text-sm", "py-1", "px-2"],
       },
       variant: {
-        contained: "border",
+        contained: "",
         outlined: "border",
         tinted: "",
         plain: "uppercase font-bold",
@@ -50,8 +50,8 @@ const iconButtonVariant = cva(
       },
     ],
     defaultVariants: {
-      size: "medium",
       color: "primary",
+      size: "small",
       variant: "contained",
     },
   }
@@ -65,9 +65,14 @@ type IconButtonProps = DetailedHTMLProps<
     icon: ReactElement;
   };
 
-export const IconButton = ({ className, icon, ...rest }: IconButtonProps) => {
+export const IconButton = ({
+  color,
+  className,
+  icon,
+  ...rest
+}: IconButtonProps) => {
   return (
-    <button className={iconButtonVariant({ className })} {...rest}>
+    <button className={iconButtonVariant({ color, className })} {...rest}>
       {icon}
     </button>
   );

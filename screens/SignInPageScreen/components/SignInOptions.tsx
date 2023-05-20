@@ -1,5 +1,5 @@
-import { Button, HorizontalStack, IconButton } from "@/ui";
-import { FacebookLogo, GithubLogo, GoogleLogo } from "@phosphor-icons/react";
+import { Button, HorizontalStack } from "@/ui";
+import { GoogleLogo } from "@phosphor-icons/react";
 import { signIn } from "next-auth/react";
 
 export const SignInOptions = () => {
@@ -19,18 +19,20 @@ export const SignInOptions = () => {
         <span>Google</span>
       </Button>
 
-      <IconButton
+      {/* <IconButton
         icon={<FacebookLogo />}
         onClick={() => signIn("facebook")}
         disabled
+        size="medium"
         className="flex items-center gap-2 border-main-orange"
       />
       <IconButton
         icon={<GithubLogo />}
         onClick={() => signIn("github")}
         disabled
+        size="medium"
         className="flex items-center gap-2 border-main-orange"
-      />
+      /> */}
     </HorizontalStack>
   );
 };
