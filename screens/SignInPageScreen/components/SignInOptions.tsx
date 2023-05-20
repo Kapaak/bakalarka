@@ -8,7 +8,12 @@ export const SignInOptions = () => {
       <Button
         className="flex flex-1 items-center justify-center gap-2 border-main-orange"
         variant="outlined"
-        onClick={() => signIn("google")}
+        onClick={() =>
+          signIn("google", {
+            redirect: true,
+            callbackUrl: `/`,
+          })
+        }
       >
         <GoogleLogo size={20} weight="bold" />
         <span>Google</span>
