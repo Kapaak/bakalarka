@@ -6,6 +6,8 @@ import { MapContainer } from "@/components";
 import { GeneratedRoute } from "@/domains";
 import { useCreateNewRoute } from "@/hooks";
 import { Button, TransparentCard } from "@/ui";
+import { convertMetersToKilometers } from "@/utils";
+import { useRouteContext } from "contexts/RouteContext";
 
 import { EditDetail, EditRoute } from "./components";
 
@@ -28,6 +30,8 @@ export const CreateRoutePageScreen = ({
 
   const router = useRouter();
 
+  const { distance } = useRouteContext();
+
   const form = useForm<GeneratedRoute>({
     defaultValues: route,
   });
@@ -39,8 +43,9 @@ export const CreateRoutePageScreen = ({
   const onSubmit = (routeData: GeneratedRoute) => {
     const newData = structuredClone(routeData);
 
+    newData.detail.distance = +convertMetersToKilometers(distance);
     //@ts-ignore
-    const newRouteData = routeData.detail.regions.map((data) => data.value);
+    const newRouteData = routeData.detail.regions.map((region) => region.value);
 
     newData.authorId = route.authorId;
     newData.detail.regions = newRouteData;
