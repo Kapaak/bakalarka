@@ -1,5 +1,7 @@
 import { FormProvider, useForm } from "react-hook-form";
 
+import { signIn } from "next-auth/react";
+
 import { SignUpFormModel } from "@/domains";
 import {
   Button,
@@ -23,6 +25,12 @@ export const SignInPageScreen = () => {
 
   const onSubmit = (formVals: SignUpFormModel) => {
     console.log(formVals, "form vals");
+    signIn("credentials", {
+      redirect: true,
+      email: formVals.email,
+      password: formVals.password,
+      callbackUrl: `/`,
+    });
   };
   return (
     <section>
@@ -43,7 +51,7 @@ export const SignInPageScreen = () => {
                 <VerticalStack className="gap-4">
                   <VerticalStack className="mx-auto w-full gap-6">
                     <FormInput name="email" label="E-mail" />
-                    <FormInput name="password" label="Heslo" />
+                    <FormInput name="password" label="Heslo" type="password" />
                   </VerticalStack>
 
                   <SignInPanel />

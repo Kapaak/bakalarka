@@ -11,6 +11,7 @@ import FacebookProvider from "next-auth/providers/facebook";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 
+import { verifyPassword } from "@/utils";
 import { createUser, getUserByEmail } from "prisma/user";
 
 //others
@@ -32,15 +33,19 @@ export const authOptions = {
       credentials: {},
       async authorize(credentials) {
         const { email, password } = credentials as Input;
+        console.log(email, password, "what");
 
-        // const user = await getUserByEmail(email);
-        const user = false; //todo remove this
+        const user = await getUserByEmail(email);
 
         if (!user) return null;
 
-        // const isPWValid = await verifyPassword(password, user.password!);
+        //todo verify it using 0AUTH
+        const isPasswordValid = await verifyPassword(
+          password,
+          user?.password ?? ""
+        );
 
-        // if (!isPWValid) return null;
+        if (!isPasswordValid) return null;
 
         return user;
       },

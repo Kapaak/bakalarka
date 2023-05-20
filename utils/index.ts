@@ -1,5 +1,6 @@
 import { LatLngLiteral } from "@/domains";
 import axios from "axios";
+import bcrypt from "bcryptjs";
 import dayjs from "dayjs";
 import "dayjs/locale/cs";
 
@@ -50,16 +51,6 @@ export const fetcherPost = async (path: string, data: any, params?: string) => {
     .then((values) => values.data);
 };
 
-// export const handleAddressFromCoordinates = async (location: LatLngLiteral) => {
-//   if (window?.google) {
-//     const geocoder = new google.maps.Geocoder();
-//     const data = await geocoder.geocode({ location });
-
-//     return data.results;
-//   }
-//   return [];
-// };
-
 export const isEqualCoords = (
   a: { lat: number; lng: number },
   b: { lat: number; lng: number }
@@ -73,4 +64,19 @@ export const reverseGeocoding = async (location: LatLngLiteral) => {
   );
 
   return data.data;
+};
+
+export const verifyPassword = async (
+  password: string,
+  hashedPassword: string
+) => {
+  const isValid = await bcrypt.compare(password, hashedPassword);
+
+  return isValid;
+};
+
+export const hashedPassword = async (password: string) => {
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  return hashedPassword;
 };
