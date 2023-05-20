@@ -13,7 +13,11 @@ import {
 } from "@/ui";
 import { locations } from "@/utils";
 
-export const EditDetail = ({ prefix = "detail" }) => {
+interface EditDetailProps {
+  prefix?: string;
+}
+
+export const EditDetail = ({ prefix = "detail" }: EditDetailProps) => {
   const { query, ...router } = useRouter();
 
   const { watch, setValue } = useFormContext();
@@ -178,9 +182,10 @@ export const EditDetail = ({ prefix = "detail" }) => {
         <ControlledSelect name={`${prefix}.regions`} options={locations} />
 
         <Button
-          onClick={() =>
-            router.push(`/locations/${query.locationId}/${query.routeId}/edit`)
-          }
+          // onClick={() =>
+
+          //   // router.push(`/locations/${query.locationId}/${query.routeId}/edit`)
+          // }
           className="mt-auto mr-auto"
         >
           Uložit

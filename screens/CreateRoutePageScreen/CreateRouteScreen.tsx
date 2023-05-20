@@ -28,7 +28,7 @@ export const CreateRoutePageScreen = ({
   const isDetailPage = page === RouteEditSteps.DETAIL;
   const isRoutePage = page === RouteEditSteps.ROUTE;
 
-  const router = useRouter();
+  const { query, ...router } = useRouter();
 
   const { distance } = useRouteContext();
 
@@ -38,7 +38,7 @@ export const CreateRoutePageScreen = ({
 
   const { reset, handleSubmit } = form;
 
-  const { createTodo } = useCreateNewRoute();
+  const { createRoute } = useCreateNewRoute();
 
   const onSubmit = (routeData: GeneratedRoute) => {
     const newData = structuredClone(routeData);
@@ -50,11 +50,15 @@ export const CreateRoutePageScreen = ({
     newData.authorId = route.authorId;
     newData.detail.regions = newRouteData;
 
-    createTodo(newData);
+    createRoute(newData).finally(() => {
+      router.push(`/locations`);
+    });
 
-    setTimeout(() => {
-      router.push("/locations");
-    }, 300);
+    console.log(router, "rtr");
+
+    // setTimeout(() => {
+    //   router.push(`/locations`);
+    // }, 300);
   };
 
   const handleRouteReset = () => {

@@ -23,9 +23,9 @@ export const useGetRouteById = (id: string) => {
 };
 
 export const useCreateNewRoute = () => {
-  const { createTodo } = useCreateRoute();
+  const { createRoute } = useCreateRoute();
 
   return {
-    createTodo,
+    createRoute,
   };
 };
