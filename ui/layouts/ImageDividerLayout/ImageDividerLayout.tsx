@@ -15,7 +15,7 @@ export const ImageDividerLayout = ({
 }: ImageDividerLayoutProps) => {
   return (
     <HorizontalStack className="h-full">
-      <div className="relative hidden flex-1 before:absolute before:h-full before:w-full  before:opacity-50 before:content-[''] lg:block">
+      <div className="relative hidden flex-1 before:absolute before:h-full before:w-full before:bg-gradient-to-r before:from-main-yellow before:to-main-orange before:opacity-50 before:content-[''] lg:block">
         <Image
           className="z-negative object-cover object-left"
           src={image}
