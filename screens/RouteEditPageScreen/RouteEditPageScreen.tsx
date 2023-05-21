@@ -43,6 +43,7 @@ export const RouteEditPageScreen = ({ route }: RouteEditPageScreenProps) => {
 
     newRouteData.detail.distance = +convertMetersToKilometers(distance);
     newRouteData.detail.regions = newRouteData.detail.regions.map(
+      //@ts-ignore
       (region) => region.value
     );
 
