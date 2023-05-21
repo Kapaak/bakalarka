@@ -8,9 +8,10 @@ import { RouteLabel } from "./components";
 
 interface RoutePageScreenProps {
   route: GeneratedRoute;
+  isAuthor: boolean;
 }
 
-export const RoutePageScreen = ({ route }: RoutePageScreenProps) => {
+export const RoutePageScreen = ({ route, isAuthor }: RoutePageScreenProps) => {
   const { query, ...router } = useRouter();
 
   return (
@@ -30,14 +31,18 @@ export const RoutePageScreen = ({ route }: RoutePageScreenProps) => {
           //@ts-ignore uprav ten typ
           description={route?.author?.name}
         />
-        <Button
-          onClick={() =>
-            router.push(`/locations/${query.locationId}/${query.routeId}/edit`)
-          }
-          className="mt-auto mr-auto hidden lg:block"
-        >
-          Upravit
-        </Button>
+        {isAuthor && (
+          <Button
+            onClick={() =>
+              router.push(
+                `/locations/${query.locationId}/${query.routeId}/edit`
+              )
+            }
+            className="mt-auto mr-auto hidden lg:block"
+          >
+            Upravit
+          </Button>
+        )}
       </VerticalStack>
       <div className="relative h-[35rem] border border-red-500 lg:h-full lg:flex-1 lg:p-4">
         <MapContainer staticView />

@@ -1,9 +1,11 @@
 import { GetServerSideProps, NextPage } from "next";
+import { getServerSession } from "next-auth";
 
 import { RouteContextProvider } from "@/contexts";
 import { GeneratedRoute, Route } from "@/domains";
 import { getRouteById } from "@/prisma";
 
+import { authOptions } from "../../../../pages/api/auth/[...nextauth]";
 import { RouteEditPageScreen } from "../../../../screens";
 
 interface RouteEditPageProps {
@@ -28,6 +30,13 @@ export const getServerSideProps: GetServerSideProps<{
 
   if (!route) return { notFound: true };
 
+  const session = await getServerSession(ctx.req, ctx.res, authOptions);
+
+  const isAuthor = session?.user.id === route?.authorId;
+
+  //todo -> v budoucnu toho cloveka presun na page, no auth access a ne na 404
+  if (!isAuthor) return { notFound: true };
+
   //nevim jestli to funguje
   route.createdAt = route.createdAt.toISOString() as unknown as Date;
   // route.createdAt = JSON.stringify(route.createdAt);
@@ -35,6 +44,7 @@ export const getServerSideProps: GetServerSideProps<{
   return {
     props: {
       route,
+      isAuthor,
     },
   };
 };
