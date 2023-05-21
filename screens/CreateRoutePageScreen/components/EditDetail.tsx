@@ -12,6 +12,7 @@ import {
   VerticalStack,
 } from "@/ui";
 import { locations } from "@/utils";
+import { useRouteContext } from "contexts/RouteContext";
 
 interface EditDetailProps {
   prefix?: string;
@@ -21,6 +22,8 @@ export const EditDetail = ({ prefix = "detail" }: EditDetailProps) => {
   const { query, ...router } = useRouter();
 
   const { watch, setValue } = useFormContext();
+
+  const { distance } = useRouteContext();
 
   //rename
   const terrains = watch(`${prefix}.terrain`);
@@ -91,19 +94,21 @@ export const EditDetail = ({ prefix = "detail" }: EditDetailProps) => {
     <div className="flex-1 p-12">
       <VerticalStack className="h-full gap-4">
         <LabelContainer label="Název trasy">
-          <FormInput name={`${prefix}.name`} variant="singleBorder" />
+          <FormInput name={`${prefix}.name`} variant="singleBorder" required />
         </LabelContainer>
         <LabelContainer label="Popis trasy">
-          <FormInput name={`${prefix}.description`} variant="singleBorder" />
+          <FormInput
+            name={`${prefix}.description`}
+            variant="singleBorder"
+            required
+          />
         </LabelContainer>
         <HorizontalStack className="justify-between">
           <LabelContainer label="Počet km" className="items-center">
-            <p>20</p>
-            {/* tohle dostanu z mapy ty hodnoty */}
+            <p>{distance}</p>
           </LabelContainer>
           <LabelContainer label="Převýšení (m)" className="items-center">
-            <p>250</p>
-            {/* tohle dostanu z mapy ty hodnoty */}
+            <p>-</p>
           </LabelContainer>
           <LabelContainer label="Vhodné pro">
             <HorizontalStack className="items-end gap-2">
@@ -179,17 +184,13 @@ export const EditDetail = ({ prefix = "detail" }: EditDetailProps) => {
           </HorizontalStack>
         </LabelContainer>
 
-        <ControlledSelect name={`${prefix}.regions`} options={locations} />
+        <ControlledSelect
+          name={`${prefix}.regions`}
+          options={locations}
+          required
+        />
 
-        <Button
-          // onClick={() =>
-
-          //   // router.push(`/locations/${query.locationId}/${query.routeId}/edit`)
-          // }
-          className="mt-auto mr-auto"
-        >
-          Uložit
-        </Button>
+        <Button className="mt-auto mr-auto">Uložit</Button>
       </VerticalStack>
     </div>
   );

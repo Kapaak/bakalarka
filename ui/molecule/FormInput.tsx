@@ -13,11 +13,14 @@ export const FormInput = ({
   placeholder,
   label,
   className,
+  required,
+  pattern,
   ...rest
 }: FormInputProps) => {
   return (
     <Controller
       name={name}
+      rules={{ required }}
       render={({ field: { ref, onChange, value } }) => (
         <div className="relative w-full border">
           {/* <label className="absolute">{label}</label> */}

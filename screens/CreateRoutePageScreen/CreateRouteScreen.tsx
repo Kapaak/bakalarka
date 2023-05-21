@@ -53,12 +53,6 @@ export const CreateRoutePageScreen = ({
     createRoute(newData).finally(() => {
       router.push(`/locations`);
     });
-
-    console.log(router, "rtr");
-
-    // setTimeout(() => {
-    //   router.push(`/locations`);
-    // }, 300);
   };
 
   const handleRouteReset = () => {
