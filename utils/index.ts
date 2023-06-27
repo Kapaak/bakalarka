@@ -85,3 +85,22 @@ export const convertMetersToKilometers = (meters: number) => {
   var km = meters / 1000;
   return km.toFixed(1);
 };
+
+export function countRegionOccurrences(data: any[]): {
+  [region: string]: number;
+} {
+  const regionCounts: { [region: string]: number } = {};
+
+  for (const item of data) {
+    const regions = item.detail.regions || [];
+    for (const region of regions) {
+      if (regionCounts.hasOwnProperty(region)) {
+        regionCounts[region]++;
+      } else {
+        regionCounts[region] = 1;
+      }
+    }
+  }
+
+  return regionCounts;
+}

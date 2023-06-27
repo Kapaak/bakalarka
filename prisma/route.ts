@@ -1,4 +1,5 @@
 import { GeneratedRoute } from "@/domains";
+import { countRegionOccurrences } from "@/utils";
 
 import { prisma } from "./prisma";
 
@@ -10,6 +11,22 @@ export const getAllRoutes = async () => {
   });
 
   return routes;
+};
+
+export const getAllRoutesPerLocation = async () => {
+  const routes = await prisma.route.findMany({
+    select: {
+      detail: {
+        select: {
+          regions: true,
+        },
+      },
+    },
+  });
+
+  const locationRoutes = countRegionOccurrences(routes);
+
+  return locationRoutes;
 };
 
 export const getAllRoutesByLocation = async (location: string) => {

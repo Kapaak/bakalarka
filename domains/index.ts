@@ -142,6 +142,8 @@ export type RouteModel = {
   routePoints: RoutePoint[];
 };
 
+export type Region = { [region: string]: number };
+
 export type LatLngLiteral = google.maps.LatLngLiteral;
 export type DirectionsResult = google.maps.DirectionsResult;
 export type MapOptions = google.maps.MapOptions;
