@@ -50,7 +50,9 @@ export function TableBody<T>({ rows, onRowClick }: TableBodyProps<T>) {
         >
           {row.getVisibleCells().map((cell: Cell<T, unknown>) => (
             <td key={cell.id} className="p-2">
-              <div className="flex justify-center">{renderCell(cell)}</div>
+              <div className="flex justify-start text-start">
+                {renderCell(cell)}
+              </div>
             </td>
           ))}
         </tr>
