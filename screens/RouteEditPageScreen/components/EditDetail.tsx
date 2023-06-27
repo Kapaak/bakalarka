@@ -137,7 +137,7 @@ export const EditDetail = ({ prefix = "detail" }) => {
             </HorizontalStack>
           </LabelContainer>
         </HorizontalStack>
-        <LabelContainer label="Po cestě potkám">
+        <LabelContainer label="Informace o trase">
           <HorizontalStack className="items-end gap-2">
             <Button
               type="button"
@@ -166,12 +166,12 @@ export const EditDetail = ({ prefix = "detail" }) => {
             </Button>
             <Button
               type="button"
-              {...isInterestingPlaceActive(PlaceOfInterest.TRAIL)}
+              {...isInterestingPlaceActive(PlaceOfInterest.CHILDREN)}
               onClick={() =>
-                handleInterestingPlaceChange(PlaceOfInterest.TRAIL)
+                handleInterestingPlaceChange(PlaceOfInterest.CHILDREN)
               }
             >
-              Trail
+              Vhodné pro děti
             </Button>
             <Button
               type="button"

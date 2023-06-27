@@ -38,14 +38,14 @@ export enum PlaceOfInterest {
   PUB = "pub",
   NATURE = "nature",
   CULTURE = "culture",
-  TRAIL = "trail",
+  CHILDREN = "children",
 }
 
 export type PlacesOfInterest = {
   swimming: boolean;
   pub: boolean;
   nature: boolean;
-  trail: boolean;
+  children: boolean;
   culture: boolean;
 };
 

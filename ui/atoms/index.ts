@@ -13,4 +13,5 @@ export * from './MainSubheadline';
 export * from './MaxWidth';
 export * from './TableHeaderCell';
 export * from './Text';
+export * from './Tooltip';
 export * from './VerticalStack';

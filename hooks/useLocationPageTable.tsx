@@ -3,10 +3,10 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 
 import { PlaceOfInterest, RouteRow } from "@/domains";
-import { Button, HorizontalStack, TableHeaderCell } from "@/ui";
+import { Button, HorizontalStack, TableHeaderCell, Tooltip } from "@/ui";
 import {
+  Baby,
   BeerStein,
-  Bicycle,
   CalendarBlank,
   CastleTurret,
   Drop,
@@ -18,6 +18,7 @@ import {
   PersonSimpleBike,
   User,
 } from "@phosphor-icons/react";
+// import * as Tooltip from "@radix-ui/react-tooltip";
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -92,7 +93,7 @@ export const useLocationPageTable = () => {
       columnHelper.accessor("interestingPlaces", {
         header: () => (
           <TableHeaderCell
-            title="Po cestě uvidím"
+            title="Informace o trase"
             icon={<Eye size="25" className="text-main-orange" />}
           />
         ),
@@ -104,26 +105,40 @@ export const useLocationPageTable = () => {
 
           return (
             <HorizontalStack className="gap-2">
-              <BeerStein
-                size={20}
-                color={hasInterestingPlace(PlaceOfInterest.PUB)}
-              />
-              <Flower
-                size={20}
-                color={hasInterestingPlace(PlaceOfInterest.NATURE)}
-              />
-              <Drop
-                size={20}
-                color={hasInterestingPlace(PlaceOfInterest.SWIMMING)}
-              />
-              <Bicycle
-                size={20}
-                color={hasInterestingPlace(PlaceOfInterest.TRAIL)}
-              />
-              <CastleTurret
-                size={20}
-                color={hasInterestingPlace(PlaceOfInterest.CULTURE)}
-              />
+              <Tooltip content="Občerstvení">
+                <BeerStein
+                  size={20}
+                  color={hasInterestingPlace(PlaceOfInterest.PUB)}
+                />
+              </Tooltip>
+
+              <Tooltip content="Hezká krajina">
+                <Flower
+                  size={20}
+                  color={hasInterestingPlace(PlaceOfInterest.NATURE)}
+                />
+              </Tooltip>
+
+              <Tooltip content="Koupání">
+                <Drop
+                  size={20}
+                  color={hasInterestingPlace(PlaceOfInterest.SWIMMING)}
+                />
+              </Tooltip>
+
+              <Tooltip content="Vhodné pro děti">
+                <Baby
+                  size={20}
+                  color={hasInterestingPlace(PlaceOfInterest.CHILDREN)}
+                />
+              </Tooltip>
+
+              <Tooltip content="Památky">
+                <CastleTurret
+                  size={20}
+                  color={hasInterestingPlace(PlaceOfInterest.CULTURE)}
+                />
+              </Tooltip>
             </HorizontalStack>
           );
         },
