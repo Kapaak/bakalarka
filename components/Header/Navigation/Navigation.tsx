@@ -25,9 +25,9 @@ export const Navigation = () => {
         <Link variant="underlined" href="/locations" onClick={handleClose}>
           trasy
         </Link>
-        <Link variant="underlined" href="/contact" onClick={handleClose}>
+        {/* <Link variant="underlined" href="/contact" onClick={handleClose}>
           kontakt
-        </Link>
+        </Link> */}
         {!session && (
           <Button onClick={() => router.push("/sign-in")}>Přihlásit se</Button>
         )}
