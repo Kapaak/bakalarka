@@ -1,11 +1,12 @@
-import { cva, VariantProps } from "class-variance-authority";
 import { InputHTMLAttributes, PropsWithChildren } from "react";
+
+import { cva, VariantProps } from "class-variance-authority";
 
 const inputVariant = cva(["px-6", "py-2"], {
   variants: {
     variant: {
       outlined: "rounded-small shadow-regular",
-      singleBorder: "border-b border-dashed border-black bg-transparent",
+      singleBorder: "border-black bg-transparent",
     },
   },
   defaultVariants: {

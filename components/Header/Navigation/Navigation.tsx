@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { Button, IconButton, Link, UserComponent } from "@/ui";
 import { List } from "@phosphor-icons/react";
@@ -12,9 +12,9 @@ export const Navigation = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setIsOpen(false);
-  };
+  }, []);
 
   return (
     <nav className="">

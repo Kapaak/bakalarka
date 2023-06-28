@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 import { Button, IconButton, Link, UserComponent } from "@/ui";
 import { X } from "@phosphor-icons/react";
@@ -15,6 +16,11 @@ export const MobileBurgerMenu = ({
 }: MobileBurgerMenuProps) => {
   const { data: session } = useSession();
   const router = useRouter();
+
+  useEffect(() => {
+    onClose();
+  }, [onClose, router.query]);
+
   return (
     <div
       className={`${

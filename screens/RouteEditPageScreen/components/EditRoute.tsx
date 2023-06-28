@@ -44,10 +44,10 @@ export const EditRoute = ({ onReturn, onReset }: EditRouteProps) => {
   }, [routePoints, setValue]);
 
   return (
-    <div>
-      <div className="flex-1 overflow-y-scroll">
+    <div className="flex-1">
+      <div className="h-full overflow-y-scroll">
         {isLoaded && (
-          <div className="h-full">
+          <div className="h-full ">
             <VerticalStack className="h-full flex-1  gap-4 p-12">
               {routePoints?.map((field, index) => (
                 <RouteInput
@@ -72,9 +72,9 @@ export const EditRoute = ({ onReturn, onReset }: EditRouteProps) => {
 
               <HorizontalStack className="mt-auto mr-auto gap-2">
                 <Button onClick={onReturn}>Zpět do editace popisu</Button>
-                <Button onClick={onReset} variant="outlined">
+                {/* <Button onClick={onReset} variant="outlined">
                   Zpět do editace popisu bez uložení
-                </Button>
+                </Button> */}
               </HorizontalStack>
             </VerticalStack>
           </div>

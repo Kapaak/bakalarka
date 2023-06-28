@@ -20,7 +20,7 @@ export const RouteInput = ({
   name,
 }: RouteInputProps) => {
   return (
-    <HorizontalStack className="max-w-3xl rounded-md bg-white shadow-regular">
+    <HorizontalStack className="max-w-3xl rounded-md border bg-white shadow-regular">
       <Controller
         name={name}
         render={({ field, fieldState }) => (

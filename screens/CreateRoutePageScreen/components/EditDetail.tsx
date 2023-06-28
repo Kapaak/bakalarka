@@ -11,7 +11,7 @@ import {
   LabelContainer,
   VerticalStack,
 } from "@/ui";
-import { locations } from "@/utils";
+import { convertMetersToKilometers, locations } from "@/utils";
 import { useRouteContext } from "contexts/RouteContext";
 
 interface EditDetailProps {
@@ -105,7 +105,7 @@ export const EditDetail = ({ prefix = "detail" }: EditDetailProps) => {
         </LabelContainer>
         <HorizontalStack className="justify-between">
           <LabelContainer label="Počet km" className="items-center">
-            <p>{distance}</p>
+            <p>{convertMetersToKilometers(distance)}</p>
           </LabelContainer>
           <LabelContainer label="Převýšení (m)" className="items-center">
             <p>-</p>

@@ -13,8 +13,14 @@ interface EditRouteProps {
 }
 
 export const EditRoute = ({ onReturn, onReset }: EditRouteProps) => {
-  const { routePoints, addPointBeforeLast, updatePointById, removePointById } =
-    useRouteContext();
+  const {
+    routePoints,
+    addPointBeforeLast,
+    updatePointById,
+    removePointById,
+    toggleAddCrossingPts,
+    allowAddCrossingPts,
+  } = useRouteContext();
 
   const { isLoaded } = useGoogleAutocomplete();
 
@@ -38,8 +44,8 @@ export const EditRoute = ({ onReturn, onReset }: EditRouteProps) => {
   }, [routePoints, setValue]);
 
   return (
-    <div>
-      <div className="flex-1 overflow-y-scroll">
+    <div className="flex-1">
+      <div className="h-full overflow-y-scroll">
         {isLoaded && (
           <div className="h-full">
             <VerticalStack className="h-full flex-1  gap-4 p-12">
@@ -55,11 +61,20 @@ export const EditRoute = ({ onReturn, onReset }: EditRouteProps) => {
                 />
               ))}
 
+              <Button
+                className="mr-auto"
+                variant={allowAddCrossingPts ? "contained" : "outlined"}
+                onClick={toggleAddCrossingPts}
+                type="button"
+              >
+                Přidat průnikový bod
+              </Button>
+
               <HorizontalStack className="mt-auto mr-auto gap-2">
                 <Button onClick={onReturn}>Zpět do editace popisu</Button>
-                <Button onClick={onReset} variant="outlined">
+                {/* <Button onClick={onReset} variant="outlined">
                   Zpět do editace popisu bez uložení
-                </Button>
+                </Button> */}
               </HorizontalStack>
             </VerticalStack>
           </div>
