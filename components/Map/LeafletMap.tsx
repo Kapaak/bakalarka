@@ -143,7 +143,7 @@ export const LeafletMap = ({ staticView }: LeafletMapProps) => {
           <ZoomControl position="topright" />
           <TileLayer
             attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
-            url={`https://api.mapbox.com/styles/v1/kapaakinos/clevb09lv001n01lsal61f8ys/tiles/256/{z}/{x}/{y}@2x?access_token=${accessToken}`}
+            url={`https://api.mapbox.com/styles/v1/kapaakinos/cljg8ydp100aw01qs1bpl3sn2/tiles/256/{z}/{x}/{y}@2x?access_token=${accessToken}`}
           />
           {/* <TileLayer
             attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
