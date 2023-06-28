@@ -16,9 +16,14 @@ import { useRouteContext } from "contexts/RouteContext";
 
 interface EditDetailProps {
   prefix?: string;
+  //ten isLoading je zbytecny, protoze se to pouziva jenom v RouteEditPageScreen
+  isLoading?: boolean;
 }
 
-export const EditDetail = ({ prefix = "detail" }: EditDetailProps) => {
+export const EditDetail = ({
+  prefix = "detail",
+  isLoading,
+}: EditDetailProps) => {
   const { query, ...router } = useRouter();
 
   const { watch, setValue } = useFormContext();
@@ -190,7 +195,9 @@ export const EditDetail = ({ prefix = "detail" }: EditDetailProps) => {
           required
         />
 
-        <Button className="mt-auto mr-auto">Uložit</Button>
+        <Button className="mt-auto mr-auto" disabled={isLoading}>
+          Uložit
+        </Button>
       </VerticalStack>
     </div>
   );

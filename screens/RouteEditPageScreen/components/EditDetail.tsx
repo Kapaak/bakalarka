@@ -13,7 +13,7 @@ import {
 import { convertMetersToKilometers, locations } from "@/utils";
 import { useRouteContext } from "contexts/RouteContext";
 
-export const EditDetail = ({ prefix = "detail" }) => {
+export const EditDetail = ({ prefix = "detail", isLoading = false }) => {
   const router = useRouter();
 
   const { distance } = useRouteContext();
@@ -191,7 +191,9 @@ export const EditDetail = ({ prefix = "detail" }) => {
           required
         />
 
-        <Button className="mt-auto mr-auto">Uložit</Button>
+        <Button className="mt-auto mr-auto" disabled={isLoading}>
+          Uložit
+        </Button>
       </VerticalStack>
     </div>
   );

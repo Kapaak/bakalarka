@@ -37,8 +37,9 @@ export const useGetRouteByRouteId = (routeId: string) => {
 };
 
 export const useCreateRoute = () => {
-  const { mutateAsync } = useMutation<GeneratedRoute>(["routes"], (data) =>
-    fetcherPost("route", data)
+  const { mutateAsync, isLoading } = useMutation<GeneratedRoute>(
+    ["routes"],
+    (data) => fetcherPost("route", data)
   );
 
   const handleCreate = useCallback(
@@ -51,6 +52,7 @@ export const useCreateRoute = () => {
 
   return {
     createRoute: handleCreate,
+    isLoading,
   };
 };
 

@@ -38,7 +38,7 @@ export const CreateRoutePageScreen = ({
 
   const { reset, handleSubmit } = form;
 
-  const { createRoute } = useCreateNewRoute();
+  const { createRoute, isLoading } = useCreateNewRoute();
 
   const onSubmit = (routeData: GeneratedRoute) => {
     const newData = structuredClone(routeData);
@@ -68,7 +68,7 @@ export const CreateRoutePageScreen = ({
     <TransparentCard returnPath="/locations">
       <FormProvider {...form}>
         <form onSubmit={handleSubmit(onSubmit)} className="flex h-full w-full">
-          {isDetailPage && <EditDetail />}
+          {isDetailPage && <EditDetail isLoading={isLoading} />}
           {isRoutePage && (
             <EditRoute
               onReturn={() => setPage(RouteEditSteps.DETAIL)}

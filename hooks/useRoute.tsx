@@ -23,9 +23,10 @@ export const useGetRouteById = (id: string) => {
 };
 
 export const useCreateNewRoute = () => {
-  const { createRoute } = useCreateRoute();
+  const { createRoute, isLoading } = useCreateRoute();
 
   return {
     createRoute,
+    isLoading,
   };
 };

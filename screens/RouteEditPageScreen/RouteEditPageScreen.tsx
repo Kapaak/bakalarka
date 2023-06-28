@@ -36,7 +36,7 @@ export const RouteEditPageScreen = ({ route }: RouteEditPageScreenProps) => {
 
   const { distance } = useRouteContext();
 
-  const { updateRouteDetail } = useUpdateRouteDetail();
+  const { updateRouteDetail, isLoading } = useUpdateRouteDetail();
 
   const onSubmit = (routeData: GeneratedRoute) => {
     const newRouteData = { ...routeData };
@@ -77,7 +77,7 @@ export const RouteEditPageScreen = ({ route }: RouteEditPageScreenProps) => {
     <TransparentCard returnPath={`/locations/${query.locationId}`}>
       <FormProvider {...form}>
         <form onSubmit={handleSubmit(onSubmit)} className="flex h-full w-full">
-          {isDetailPage && <EditDetail />}
+          {isDetailPage && <EditDetail isLoading={isLoading} />}
           {isRoutePage && (
             <EditRoute
               onReturn={() => setPage(RouteEditSteps.DETAIL)}
