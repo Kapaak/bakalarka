@@ -10,6 +10,7 @@ type RouteContextType = {
   toggleAddCrossingPts(): void;
   routePoints: RoutePoint[];
   addPointBeforeLast(coordinates?: LatLngLiteral): void;
+  addPointAfterId(id: string, coordinates?: LatLngLiteral): void;
   removePointById(id: string): void;
   updatePointById(id: string, coordinates: LatLngLiteral): void;
 };
@@ -20,6 +21,7 @@ const defaultValues = {
   routePoints: [],
   toggleAddCrossingPts: () => void 0,
   allowAddCrossingPts: false,
+  addPointAfterId: () => {},
   addPointBeforeLast: () => {},
   removePointById: () => {},
   updatePointById: () => {},

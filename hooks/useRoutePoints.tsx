@@ -87,6 +87,27 @@ export const useRoutePoints = () => {
     }
   };
 
+  const addPointAfterId = async (id: string, coordinates?: LatLngLiteral) => {
+    const newPoint: RoutePoint = {
+      coordinates:
+        coordinates ?? routePoints[routePoints.length - 1].coordinates,
+      id: nanoid(),
+      value: "",
+    };
+
+    if (coordinates) {
+      newPoint.value = await getAddressName(coordinates);
+    }
+
+    const newRoutePoints = structuredClone(routePoints);
+
+    const index = newRoutePoints.findIndex((pt) => pt.id === id);
+
+    newRoutePoints.splice(index + 1, 0, newPoint);
+
+    setRoutePoints(newRoutePoints);
+  };
+
   const removePointById = (id: string) => {
     const newRoutePoints = structuredClone(routePoints)?.filter(
       (routePoint) => routePoint.id !== id
@@ -110,6 +131,7 @@ export const useRoutePoints = () => {
     toggleAddCrossingPts,
     updatePointById,
     removePointById,
+    addPointAfterId,
     addPointBeforeLast,
     routePoints,
   };

@@ -15,6 +15,7 @@ interface EditRouteProps {
 export const EditRoute = ({ onReturn, onReset }: EditRouteProps) => {
   const {
     routePoints,
+    addPointAfterId,
     addPointBeforeLast,
     updatePointById,
     removePointById,
@@ -28,14 +29,14 @@ export const EditRoute = ({ onReturn, onReset }: EditRouteProps) => {
     (index: number) => ({
       ...(index < routePoints.length - 1 && index > 0
         ? {
-            onPointAdd: () => addPointBeforeLast(),
+            onPointAdd: () => addPointAfterId(routePoints[index].id),
             onPointRemove: () => removePointById(routePoints[index].id),
           }
         : index === 0
-        ? { onPointAdd: () => addPointBeforeLast() }
+        ? { onPointAdd: () => addPointAfterId("0") }
         : {}),
     }),
-    [addPointBeforeLast, removePointById, routePoints]
+    [removePointById, routePoints, addPointAfterId]
   );
   const { setValue } = useFormContext();
 
