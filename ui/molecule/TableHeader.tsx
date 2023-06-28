@@ -16,7 +16,7 @@ export const TableHeader = <T,>({ rows }: TableHeaderProps<T>) => {
             return (
               <td
                 key={cell.id}
-                className="p-2 "
+                className="p-2"
                 {...{ onClick: cell.column?.getToggleSortingHandler() }}
               >
                 {flexRender(cell.column.columnDef.header, cell.getContext())}

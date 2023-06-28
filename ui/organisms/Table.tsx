@@ -29,7 +29,7 @@ export function Table<T>({
 }: TableProps<T>) {
   return (
     <>
-      <table {...props}>
+      <table {...props} className="w-full">
         <TableHeader rows={headerCells} />
         <TableBody rows={bodyCells} onRowClick={onRowClick} />
       </table>

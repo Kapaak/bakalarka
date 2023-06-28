@@ -23,7 +23,7 @@ export const LocationPageScreen = ({
       <MaxWidth>
         <Container height="min-full" className="lg:pt-20">
           <MainHeadline>Destinace v okolí</MainHeadline>
-          <MainSubheadline> {locationName}</MainSubheadline>
+          <MainSubheadline className="mb-10"> {locationName}</MainSubheadline>
           <div className="overflow-x-auto">
             <Table<RouteRow>
               headerCells={table?.getHeaderGroups()}

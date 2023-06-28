@@ -1,9 +1,6 @@
 import Head from "next/head";
-import { useRouter } from "next/router";
 
 export const HeadSelector = () => {
-  const router = useRouter();
-
   return (
     <Head>
       <title>Routist | kolo</title>

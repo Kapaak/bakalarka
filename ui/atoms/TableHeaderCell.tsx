@@ -7,7 +7,7 @@ interface TableHeaderCellProps {
 
 export const TableHeaderCell = ({ icon, title }: TableHeaderCellProps) => {
   return (
-    <div className="m-5 flex flex-col items-center gap-1 text-center">
+    <div className="mr-5 flex flex-col gap-1 text-start">
       <div>{icon}</div>
       <h2>{title}</h2>
     </div>
