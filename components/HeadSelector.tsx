@@ -10,15 +10,11 @@ export const HeadSelector = () => {
         name="keywords"
         content="routist, cycklistika, kolo, cyklovýlety, cyklovylety, cykloturismus, kolo výlety, kolo výlety, turistika, výlety, výlety po okolí"
       />
-      {/* <link
-        rel="canonical"
-        href={`https://www.primestak-brno.cz${currentRoute}`}
-      /> */}
-      {/* <meta
-        name="google-site-verification"
-        content="KV7BmFAqyUFzPz1ft0TFad03jyyUR8o0b-1CvI4FmGs"
-      /> */}
-      {/* <meta name="description" content={currentRouteMetaDesc} /> */}
+      <link rel="canonical" href={`https://www.routist.cz/`} />
+      <meta
+        name="description"
+        content="Turistické trasy pro všechny nadšené cyklisty / cyklistky. Podělte se s ostatními o svá oblíbená místa a nebo se nechte inspirovat jinými."
+      />
     </Head>
   );
 };

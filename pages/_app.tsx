@@ -2,6 +2,7 @@ import type { AppProps } from "next/app";
 import { QueryClient, QueryClientProvider } from "react-query";
 import "../styles/globals.css";
 
+import { HeadSelector } from "@/components";
 import { MainLayout } from "@/ui";
 import { SessionProvider } from "next-auth/react";
 import { ReactQueryDevtools } from "react-query/devtools";
@@ -15,6 +16,7 @@ export default function App({
   return (
     <QueryClientProvider client={queryClient}>
       <SessionProvider session={session}>
+        <HeadSelector />
         <MainLayout>
           <Component {...pageProps} />
         </MainLayout>

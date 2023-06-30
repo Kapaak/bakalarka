@@ -91,6 +91,17 @@ export const createRoute = async (data: GeneratedRoute) => {
   return newRoute;
 };
 
+export const deleteRouteById = async (id: string) => {
+  const deletedRoute = await prisma.route.delete({
+    where: {
+      id,
+    },
+  });
+  console.log(deletedRoute, "dl");
+
+  return deletedRoute;
+};
+
 // data: {
 //   detail: {
 //     name: "Generated",

@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 
 import { GeneratedRoute } from "@/domains";
 import { Button, TransparentCard, VerticalStack } from "@/ui";
+import axios from "axios";
 import { MapContainer } from "components/Map";
 
 import { RouteLabel } from "./components";
@@ -32,16 +33,33 @@ export const RoutePageScreen = ({ route, isAuthor }: RoutePageScreenProps) => {
           description={route?.author?.name}
         />
         {isAuthor && (
-          <Button
-            onClick={() =>
-              router.push(
-                `/locations/${query.locationId}/${query.routeId}/edit`
-              )
-            }
-            className="mt-auto mr-auto hidden lg:block"
-          >
-            Upravit
-          </Button>
+          <div className="mt-auto mr-auto hidden gap-4 lg:flex">
+            <Button
+              onClick={() =>
+                router.push(
+                  `/locations/${query.locationId}/${query.routeId}/edit`
+                )
+              }
+            >
+              Upravit
+            </Button>
+            <Button
+              className="border-black hover:border-red-500 hover:bg-red-500 hover:text-white"
+              variant="outlined"
+              onClick={() => {
+                axios
+                  .delete(`/api/route?id=${route.id}`)
+                  .then(() => {
+                    console.log("route deleted");
+                  })
+                  .finally(() => {
+                    router.push(`/locations`);
+                  });
+              }}
+            >
+              Odstranit
+            </Button>
+          </div>
         )}
       </VerticalStack>
       <div className="relative h-[35rem] lg:h-full lg:flex-1 lg:p-4">

@@ -42,6 +42,7 @@ export const RouteInput = ({
           }
           className=" p-2"
           onClick={onPointRemove}
+          type="button"
         />
       )}
 
@@ -52,6 +53,7 @@ export const RouteInput = ({
           }
           className="pl-2 pr-4"
           onClick={onPointAdd}
+          type="button"
         />
       )}
     </HorizontalStack>

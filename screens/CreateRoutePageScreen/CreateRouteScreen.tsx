@@ -41,7 +41,7 @@ export const CreateRoutePageScreen = ({
   const { createRoute, isLoading } = useCreateNewRoute();
 
   const onSubmit = (routeData: GeneratedRoute) => {
-    const newData = structuredClone(routeData);
+    const newData = { ...routeData };
 
     newData.detail.distance = +convertMetersToKilometers(distance);
     //@ts-ignore

@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import {
   createRoute,
+  deleteRouteById,
   getAllRoutes,
   getAllRoutesByLocation,
   getRouteById,
@@ -44,6 +45,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const newRoute = await createRoute(req.body);
 
         return res.send(newRoute);
+      }
+      case "DELETE": {
+        if (req.query.id) {
+          const id = req.query.id as string;
+
+          const deletedRoute = await deleteRouteById(id);
+
+          return res.send(deletedRoute);
+        }
       }
     }
   } catch (e) {

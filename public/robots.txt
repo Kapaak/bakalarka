@@ -1,0 +1,11 @@
+user-agent: *
+Sitemap: https://www.routist.cz/sitemap.xml
+Disallow: /api/*
+
+user-agent: Googlebot
+Sitemap: https://www.routist.cz/sitemap.xml
+Allow: /
+
+user-agent: *
+Sitemap: https://www.routist.cz/sitemap.xml
+Allow: /
