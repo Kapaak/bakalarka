@@ -12,7 +12,6 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
     <>
       <Header />
       <main className={karla.className}>{children}</main>
-      {/* <Footer /> */}
     </>
   );
 };

@@ -5,7 +5,7 @@ import { useRouteContext } from "@/contexts";
 import { useGoogleAutocomplete } from "@/hooks";
 import { Button, HorizontalStack, VerticalStack } from "@/ui";
 
-import { RouteInput } from "./RouteInput";
+import { RouteInput } from "../RouteInput";
 
 interface EditRouteProps {
   onReturn?(): void;
@@ -15,12 +15,12 @@ interface EditRouteProps {
 export const EditRoute = ({ onReturn, onReset }: EditRouteProps) => {
   const {
     routePoints,
-    addPointBeforeLast,
     addPointAfterId,
+    addPointBeforeLast,
     updatePointById,
     removePointById,
-    allowAddCrossingPts,
     toggleAddCrossingPts,
+    allowAddCrossingPts,
   } = useRouteContext();
 
   const { isLoaded } = useGoogleAutocomplete();
@@ -48,7 +48,7 @@ export const EditRoute = ({ onReturn, onReset }: EditRouteProps) => {
     <div className="flex-1">
       <div className="h-full overflow-y-scroll">
         {isLoaded && (
-          <div className="h-full ">
+          <div className="h-full">
             <VerticalStack className="h-full flex-1  gap-4 p-12">
               {routePoints?.map((field, index) => (
                 <RouteInput

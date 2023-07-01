@@ -4,7 +4,7 @@ export const HeadSelector = () => {
   return (
     <Head>
       <title>Routist | kolo</title>
-      {/* <link rel="icon" href="/icons/logo-tabory.svg" /> */}
+      {/* <link rel="icon" href="/icons/icon.svg" /> */}
       <meta name="author" content="Pavel Zapletal" />
       <meta
         name="keywords"

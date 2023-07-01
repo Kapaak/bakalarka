@@ -1,9 +1,10 @@
-import { useRouter } from "next/router";
 import { useFormContext } from "react-hook-form";
 
+import { useRouteContext } from "@/contexts";
 import { BikeType, PlaceOfInterest } from "@/domains";
 import {
   Button,
+  ButtonProps,
   ControlledSelect,
   FormInput,
   HorizontalStack,
@@ -11,24 +12,25 @@ import {
   VerticalStack,
 } from "@/ui";
 import { convertMetersToKilometers, locations } from "@/utils";
-import { useRouteContext } from "contexts/RouteContext";
 
-export const EditDetail = ({ prefix = "detail", isLoading = false }) => {
-  const router = useRouter();
+interface EditDetailProps {
+  prefix?: string;
+  isLoading?: boolean;
+}
+
+export const EditDetail = ({
+  prefix = "detail",
+  isLoading,
+}: EditDetailProps) => {
+  const { watch, setValue } = useFormContext();
 
   const { distance } = useRouteContext();
-
-  const { watch, setValue } = useFormContext();
 
   //rename
   const terrains = watch(`${prefix}.terrain`);
   const interestingPlaces = watch(`${prefix}.interestingPlaces`);
 
-  const isTerrainActive = (
-    terrain: BikeType
-  ): {
-    variant: "contained" | "outlined" | "tinted" | "plain" | null | undefined;
-  } => {
+  const isTerrainActive = (terrain: BikeType): ButtonProps => {
     const included = terrains?.includes(terrain);
 
     if (included)
@@ -43,9 +45,7 @@ export const EditDetail = ({ prefix = "detail", isLoading = false }) => {
 
   const isInterestingPlaceActive = (
     interestingPlace: PlaceOfInterest
-  ): {
-    variant: "contained" | "outlined" | "tinted" | "plain" | null | undefined;
-  } => {
+  ): ButtonProps => {
     const included = interestingPlaces?.includes(interestingPlace);
 
     if (included)

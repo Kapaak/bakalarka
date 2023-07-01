@@ -7,6 +7,7 @@ import {
   MaxWidth,
   Table,
 } from "@/ui";
+import { useRouter } from "next/router";
 
 interface LocationpageScreenProps {
   locationName?: string;
@@ -17,7 +18,12 @@ export const LocationPageScreen = ({
   locationName,
   locationValue,
 }: LocationpageScreenProps) => {
-  const { table } = useLocationPageTable();
+  const { query } = useRouter();
+
+  const { table, isLoading } = useLocationPageTable({
+    locationId: String(query.locationId),
+  });
+
   return (
     <section className="relative">
       <MaxWidth>
@@ -25,6 +31,7 @@ export const LocationPageScreen = ({
           <MainHeadline>Destinace v okolí</MainHeadline>
           <MainSubheadline className="mb-10"> {locationName}</MainSubheadline>
           <div className="overflow-x-auto">
+            {isLoading && <p>Načítají se trasy ke kraji.</p>}
             <Table<RouteRow>
               headerCells={table?.getHeaderGroups()}
               bodyCells={table?.getRowModel()}

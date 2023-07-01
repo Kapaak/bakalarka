@@ -2,14 +2,12 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
-import { MapContainer } from "@/components";
+import { EditDetail, EditRoute, MapContainer } from "@/components";
 import { GeneratedRoute } from "@/domains";
 import { useUpdateRouteDetail } from "@/hooks";
 import { Button, TransparentCard } from "@/ui";
 import { convertMetersToKilometers, locations } from "@/utils";
 import { useRouteContext } from "contexts/RouteContext";
-
-import { EditDetail, EditRoute } from "./components";
 
 enum RouteEditSteps {
   DETAIL = "detail",

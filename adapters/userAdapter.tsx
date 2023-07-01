@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { User } from "@/domains";
 import { fetcher } from "@/utils";
 
-export const useGetUsers = () => {
+export const useGetAllUsers = () => {
   const { data, isLoading, isError, error, isSuccess } = useQuery<User[]>(
     ["users"],
     () => fetcher("user"),

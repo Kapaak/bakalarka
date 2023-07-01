@@ -24,7 +24,6 @@ export const SignInPageScreen = () => {
   const { handleSubmit } = form;
 
   const onSubmit = (formVals: SignUpFormModel) => {
-    console.log(formVals, "form vals");
     signIn("credentials", {
       redirect: true,
       email: formVals.email,

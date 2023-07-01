@@ -27,10 +27,16 @@ import {
 
 import { useGetAllRoutesByLocation } from "./useRoutes";
 
-export const useLocationPageTable = () => {
+interface LocationPageTableProps {
+  locationId: string;
+}
+
+export const useLocationPageTable = ({
+  locationId,
+}: LocationPageTableProps) => {
   const { query } = useRouter();
 
-  const { routes } = useGetAllRoutesByLocation(query.locationId as string);
+  const { routes, isLoading } = useGetAllRoutesByLocation(locationId);
 
   const columns = useMemo(() => {
     const columnHelper = createColumnHelper<RouteRow>();
@@ -164,5 +170,6 @@ export const useLocationPageTable = () => {
 
   return {
     table,
+    isLoading,
   };
 };
