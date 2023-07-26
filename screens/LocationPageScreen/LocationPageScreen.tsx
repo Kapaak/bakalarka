@@ -19,9 +19,7 @@ export const LocationPageScreen = ({
 }: LocationpageScreenProps) => {
   const { query } = useRouter();
 
-  const { table, isLoading } = useLocationPageTable({
-    locationId: String(query.locationId),
-  });
+  const { table, isLoading } = useLocationPageTable(query.locationId as string);
 
   return (
     <section className="relative">

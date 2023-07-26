@@ -9,12 +9,7 @@ interface LocationPageProps {
 }
 
 export const LocationPage: NextPage<LocationPageProps> = ({ location }) => {
-  return (
-    <LocationPageScreen
-      locationName={location?.label}
-      locationValue={location?.value}
-    />
-  );
+  return <LocationPageScreen locationName={location?.label} />;
 };
 
 export const getServerSideProps: GetServerSideProps<{

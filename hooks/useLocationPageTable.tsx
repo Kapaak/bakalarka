@@ -12,8 +12,6 @@ import {
   Drop,
   Eye,
   Flower,
-  Heart,
-  Mountains,
   Path,
   PersonSimpleBike,
   User,
@@ -27,13 +25,7 @@ import {
 
 import { useGetAllRoutesByLocation } from "./useRoutes";
 
-interface LocationPageTableProps {
-  locationId: string;
-}
-
-export const useLocationPageTable = ({
-  locationId,
-}: LocationPageTableProps) => {
+export const useLocationPageTable = (locationId: string) => {
   const { query } = useRouter();
 
   const { routes, isLoading } = useGetAllRoutesByLocation(locationId);
@@ -60,24 +52,24 @@ export const useLocationPageTable = ({
         ),
         cell: (info) => <div>{info.getValue()}</div>,
       }),
-      columnHelper.accessor("elevation", {
-        header: () => (
-          <TableHeaderCell
-            title="Převýšení"
-            icon={<Mountains size="25" className="text-main-orange" />}
-          />
-        ),
-        cell: (info) => <div>{info.getValue()}</div>,
-      }),
-      columnHelper.accessor("likes", {
-        header: () => (
-          <TableHeaderCell
-            title="Počet liků"
-            icon={<Heart size="25" className="text-main-orange" />}
-          />
-        ),
-        cell: (info) => <div>{info.getValue()}</div>,
-      }),
+      // columnHelper.accessor("elevation", {
+      //   header: () => (
+      //     <TableHeaderCell
+      //       title="Převýšení"
+      //       icon={<Mountains size="25" className="text-main-orange" />}
+      //     />
+      //   ),
+      //   cell: (info) => <div>{info.getValue()}</div>,
+      // }),
+      // columnHelper.accessor("likes", {
+      //   header: () => (
+      //     <TableHeaderCell
+      //       title="Počet liků"
+      //       icon={<Heart size="25" className="text-main-orange" />}
+      //     />
+      //   ),
+      //   cell: (info) => <div>{info.getValue()}</div>,
+      // }),
       columnHelper.accessor("authorName", {
         header: () => (
           <TableHeaderCell
