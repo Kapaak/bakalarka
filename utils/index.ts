@@ -1,4 +1,4 @@
-import { LatLngLiteral } from "@/domains";
+import { LatLngLiteral, RoutesPerLocationResponse } from "@/domains";
 import axios from "axios";
 import bcrypt from "bcryptjs";
 import dayjs from "dayjs";
@@ -23,6 +23,7 @@ export const locations = [
   { value: "plzensky-kraj", label: "Plzeňský kraj" },
   { value: "jihocesky-kraj", label: "Jihočeský kraj" },
   { value: "stredocesky-kraj", label: "Středočeský kraj" },
+  { value: "praha-kraj", label: "Hlavní město Praha" },
 ];
 
 export const createUrl = (stringValue: string): string => {
@@ -86,7 +87,7 @@ export const convertMetersToKilometers = (meters: number) => {
   return km.toFixed(1);
 };
 
-export function countRegionOccurrences(data: any[]): {
+export function countRegionOccurrences(data: RoutesPerLocationResponse[]): {
   [region: string]: number;
 } {
   const regionCounts: { [region: string]: number } = {};

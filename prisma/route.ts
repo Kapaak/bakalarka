@@ -36,7 +36,6 @@ export const getAllRoutesByLocation = async (location: string) => {
     },
   });
 
-  //unfortunately I dont know how to filter it directly in prisma.findMany
   const filtered = routes.filter((route) =>
     route.detail.regions.includes(location)
   );

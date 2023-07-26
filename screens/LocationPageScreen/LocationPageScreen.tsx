@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+
 import { RouteRow } from "@/domains";
 import { useLocationPageTable } from "@/hooks";
 import {
@@ -7,16 +9,13 @@ import {
   MaxWidth,
   Table,
 } from "@/ui";
-import { useRouter } from "next/router";
 
 interface LocationpageScreenProps {
   locationName?: string;
-  locationValue?: string;
 }
 
 export const LocationPageScreen = ({
   locationName,
-  locationValue,
 }: LocationpageScreenProps) => {
   const { query } = useRouter();
 

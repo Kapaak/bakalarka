@@ -46,7 +46,7 @@ export function TableBody<T>({ rows, onRowClick }: TableBodyProps<T>) {
         <tr
           key={row.id}
           onClick={() => handleRowClick(row)}
-          className=" relative border border-white border-b-slate-200 bg-white hover:border-b-main-orange"
+          className="relative border border-white border-b-slate-200 bg-white hover:border-b-main-orange"
         >
           {row.getVisibleCells().map((cell: Cell<T, unknown>) => (
             <td key={cell.id} className="p-2">

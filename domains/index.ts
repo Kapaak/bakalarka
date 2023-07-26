@@ -155,4 +155,8 @@ export type Location = {
   name: string;
 };
 
+export type RoutesPerLocationResponse = {
+  detail: { regions: string[] };
+};
+
 export type CreateRoute = Omit<Route, "createdAt" | "id">;
