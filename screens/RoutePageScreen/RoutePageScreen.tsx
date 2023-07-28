@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 import { Rating } from "@/components";
 import { GeneratedRoute } from "@/domains";
@@ -16,13 +17,34 @@ interface RoutePageScreenProps {
 export const RoutePageScreen = ({ route, isAuthor }: RoutePageScreenProps) => {
   const { query, ...router } = useRouter();
 
+  const [rating, setRating] = useState(
+    Math.floor(route?.rating ?? 0 / route?.votesNumber) ?? 0
+  );
+
+  const handleOnChange = async (value: number) => {
+    console.log(value);
+
+    const req = await axios.post(`/api/rating?id=${query.routeId}`, {
+      rating: value,
+    });
+
+    const data = req.data;
+
+    console.log(data, "dd");
+
+    if (!data) return;
+
+    setRating(Math.floor(data.rating / data.votesNumber) ?? 0);
+  };
+
   return (
     <TransparentCard returnPath={`/locations/${query.locationId}`}>
       <VerticalStack className="relative flex-1 gap-4 p-12 lg:flex">
         <Rating
-          rating={1}
+          rating={rating}
           label="hodnocení trasy"
           className="absolute right-0 pr-12 lg:top-4 lg:pr-0"
+          onChange={handleOnChange}
         />
         <RouteLabel title="Název trasy" description={route?.detail?.name} />
         <RouteLabel

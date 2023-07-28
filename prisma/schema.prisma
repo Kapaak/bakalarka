@@ -50,4 +50,6 @@ model Route {
   author User @relation(fields:[authorId],references: [id])
   detail Detail
   routePoints RoutePoint[]
+  votesNumber Int @default(0)
+  rating Float?
 }

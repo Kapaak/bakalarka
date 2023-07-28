@@ -8,6 +8,7 @@ interface RatingProps {
   className?: string;
   label?: string;
   alreadyVoted?: boolean;
+  onChange?: (value: number) => void;
 }
 
 export const Rating = ({
@@ -15,7 +16,12 @@ export const Rating = ({
   className,
   label,
   alreadyVoted,
+  onChange,
 }: RatingProps) => {
+  const handleOnChange = (value: number) => {
+    onChange && onChange(value);
+  };
+
   return (
     <div className={`flex items-center gap-0.5 ${className}`}>
       <Text color="gray" size="small" className="pr-2">
@@ -24,6 +30,7 @@ export const Rating = ({
 
       <SmastromRating
         value={rating}
+        onChange={handleOnChange}
         items={5}
         readOnly={alreadyVoted}
         itemStyles={{

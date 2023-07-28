@@ -36,6 +36,8 @@ export const getAllRoutesByLocation = async (location: string) => {
     },
   });
 
+  console.log("pepe");
+
   const filtered = routes.filter((route) =>
     route.detail.regions.includes(location)
   );
@@ -50,7 +52,26 @@ export const getRouteById = async (id: string) => {
       author: true,
     },
   });
+
   return route;
+};
+
+export const updateRatingById = async (id: string, rating: number) => {
+  const updatedRating = await prisma.route.update({
+    where: {
+      id,
+    },
+    data: {
+      rating: {
+        increment: rating,
+      },
+      votesNumber: {
+        increment: 1,
+      },
+    },
+  });
+
+  return updatedRating;
 };
 
 export const updateRouteById = async (id: string, data: GeneratedRoute) => {

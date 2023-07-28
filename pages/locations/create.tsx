@@ -1,9 +1,10 @@
 import { useMemo } from "react";
 
-import { RouteContextProvider } from "@/contexts";
-import { GeneratedRoute } from "@/domains";
 import { nanoid } from "nanoid";
 import { useSession } from "next-auth/react";
+
+import { RouteContextProvider } from "@/contexts";
+import { GeneratedRoute } from "@/domains";
 
 import { CreateRoutePageScreen } from "../../screens";
 
@@ -27,6 +28,8 @@ const RouteEditPage = () => {
         interestingPlaces: [],
       },
       routePoints: [],
+      votesNumber: 0,
+      rating: 0,
     };
   }, [userId]);
 
