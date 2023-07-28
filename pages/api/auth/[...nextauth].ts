@@ -33,13 +33,11 @@ export const authOptions = {
       credentials: {},
       async authorize(credentials) {
         const { email, password } = credentials as Input;
-        console.log(email, password, "what");
 
         const user = await getUserByEmail(email);
 
         if (!user) return null;
 
-        //todo verify it using 0AUTH
         const isPasswordValid = await verifyPassword(
           password,
           user?.password ?? ""

@@ -19,11 +19,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
       }
       case "POST": {
-        //create user
         const { email, name, password } = req.body;
 
         const hashedPassword = await hashPassword(password);
-        //todo -> send verification email and verified:true/false to each user
+
         const userExists = await getUserByEmail(email);
 
         if (userExists)
