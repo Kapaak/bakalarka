@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 
+import { Rating } from "@/components";
 import { GeneratedRoute } from "@/domains";
 import { Button, TransparentCard, VerticalStack } from "@/ui";
 import axios from "axios";
@@ -17,7 +18,12 @@ export const RoutePageScreen = ({ route, isAuthor }: RoutePageScreenProps) => {
 
   return (
     <TransparentCard returnPath={`/locations/${query.locationId}`}>
-      <VerticalStack className="flex-1 gap-4 p-12 lg:flex">
+      <VerticalStack className="relative flex-1 gap-4 p-12 lg:flex">
+        <Rating
+          rating={1}
+          label="hodnocení trasy"
+          className="absolute right-0 pr-12 lg:top-4 lg:pr-0"
+        />
         <RouteLabel title="Název trasy" description={route?.detail?.name} />
         <RouteLabel
           title="Popis trasy"
