@@ -51,5 +51,5 @@ model Route {
   detail Detail
   routePoints RoutePoint[]
   votesNumber Int @default(0)
-  rating Float?
+  rating Float @default(0)
 }
