@@ -105,6 +105,9 @@ export const SignUpPageScreen = () => {
                       type="password"
                       required
                     />
+                    <Text size="small" color="danger">
+                      {errors.password?.message}
+                    </Text>
                     <FormInput
                       name="verifyPassword"
                       label="Potvrzení hesla"
