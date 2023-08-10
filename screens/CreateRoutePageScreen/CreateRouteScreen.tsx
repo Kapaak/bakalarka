@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { Toaster, toast } from "react-hot-toast";
 
 import { EditDetail, EditRoute, MapContainer } from "@/components";
 import { GeneratedRoute } from "@/domains";
@@ -36,10 +37,21 @@ export const CreateRoutePageScreen = ({
 
   const { reset, handleSubmit } = form;
 
+  const notifyError = (message: string) =>
+    toast.error(message, {
+      position: "bottom-right",
+      style: {
+        zIndex: "90",
+      },
+    });
   const { createRoute, isLoading } = useCreateNewRoute();
 
   const onSubmit = (routeData: GeneratedRoute) => {
     const newData = { ...routeData };
+    if (newData.routePoints.length === 0) {
+      notifyError("Trasa musí mít zadaný alespoň počáteční a koncový bod.");
+      return;
+    }
 
     newData.detail.distance = +convertMetersToKilometers(distance);
     //@ts-ignore
@@ -64,6 +76,7 @@ export const CreateRoutePageScreen = ({
 
   return (
     <TransparentCard returnPath="/locations">
+      <Toaster />
       <FormProvider {...form}>
         <form onSubmit={handleSubmit(onSubmit)} className="flex h-full w-full">
           {isDetailPage && <EditDetail isLoading={isLoading} />}
