@@ -191,7 +191,7 @@ export const EditDetail = ({
           required
         />
 
-        <Button className="mt-auto mr-auto" disabled={isLoading}>
+        <Button className="mt-auto mr-auto" type="submit">
           Uložit
         </Button>
       </VerticalStack>

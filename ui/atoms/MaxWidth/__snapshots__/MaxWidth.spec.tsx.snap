@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MaxWidth should render successfully 1`] = `
+<body>
+  <div>
+    <div
+      class="mx-auto max-w-screen-2xl px-8  md:px-14 undefined"
+    />
+  </div>
+</body>
+`;

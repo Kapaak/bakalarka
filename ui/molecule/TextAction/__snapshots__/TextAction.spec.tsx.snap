@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextAction should render successfully 1`] = `
+<body>
+  <div>
+    <div
+      class="flex justify-normal items-stretch gap-2"
+    >
+      <p
+        class="text-black text-sm font-light"
+      />
+      <a
+        class="relative"
+        href=""
+      >
+        <p
+          class="text-main-orange text-sm"
+        />
+      </a>
+    </div>
+  </div>
+</body>
+`;

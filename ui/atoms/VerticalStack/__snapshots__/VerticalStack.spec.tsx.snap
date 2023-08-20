@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VerticalStack should render successfully 1`] = `
+<body>
+  <div>
+    <div
+      class="flex flex-col undefined"
+    />
+  </div>
+</body>
+`;

@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input should render successfully 1`] = `
+<body>
+  <div>
+    <input
+      class="px-6 py-2 rounded-small shadow-regular"
+    />
+  </div>
+</body>
+`;

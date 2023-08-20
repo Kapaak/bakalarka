@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LabelContainer should render successfully 1`] = `
+<body>
+  <div>
+    <div
+      class="flex flex-col"
+    >
+      <label />
+    </div>
+  </div>
+</body>
+`;
